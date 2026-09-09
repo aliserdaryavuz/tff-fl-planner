@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* Görsel dil: siyah zemin, kırmızı vurgu, sıkışık başlık.
+   Zorluk bantları buraya girmez; onlar lib/bands.ts'te. */
+@theme {
+  /* Zemin rengi "ground" adında: --color-base olsaydı Tailwind'in text-base
+     yardımcı sınıfı yazı boyutu yerine renk üretirdi. */
+  --color-ground: #000000;
+  --color-surface: #141417;
+  --color-surface-2: #212127;
+  --color-line: #2f2f38;
+  --color-line-strong: #4a4a56;
+  --color-ink: #f4f4f5;
+  --color-muted: #a1a1ab;
+  --color-accent: #ff3b30;
+  --color-accent-ink: #250000;
+  --color-easier: #7fe0a3;
+  --color-harder: #ff9c8f;
+
+  /* Kadro kurucudaki saha: süs, veri değil; zorluk yeşiliyle karışmasın diye
+     daha koyu ve mavimsi. */
+  --color-pitch: #14532d;
+  --color-pitch-2: #166534;
+  --color-pitch-line: rgba(255, 255, 255, 0.28);
+
+  /* Takım paneli ile tablonun yan yana geçtiği genişlik (prototiple aynı). */
+  --breakpoint-desk: 900px;
+
+  --font-sans: var(--font-barlow), "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-cond: var(--font-barlow-condensed), "Arial Narrow", "Segoe UI",
+    sans-serif;
+
+  /* Tailwind'in varsayılan küçük punto satır aralıkları (1,33) bu kadar açıklama
+     metni için sıkışık kalıyor; hepsini tek yerden açıyoruz. */
+  --text-xs--line-height: 1.5;
+  --text-sm--line-height: 1.55;
+}
+
+@layer base {
+  html {
+    background: var(--color-ground);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-ground);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* Açıklama paragrafları 1040 px'lik kolonu baştan sona doldurmasın: göz satır
+     sonundan başına dönerken kaybolmasın diye ~70 karakterde kesiliyor. */
+  p {
+    max-width: 70ch;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  /* Bölüm başlıkları: soldaki ince kırmızı çizgi, veri yoğun sayfada bölümlerin
+     nerede başladığını başlık boyutu büyütmeden gösteriyor. */
+  h2 {
+    position: relative;
+    padding-left: 11px;
+  }
+
+  h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    bottom: 0.2em;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--color-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  button,
+  select,
+  input,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}

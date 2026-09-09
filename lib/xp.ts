@@ -1,0 +1,269 @@
+import { type HomeAway, leagueAvgGoals, schedule } from "@/lib/data";
+import type { Player, Position } from "@/lib/fantasy";
+import {
+  type LineupInfo,
+  lineupOf,
+  type RecentSummary,
+  startProbability,
+  summarizeRecent,
+} from "@/lib/lineups";
+import { withHomeAway } from "@/lib/models";
+import { SCORING } from "@/lib/scoring.mjs";
+
+/**
+ * Beklenen fantasy puanı (xP): TFF puan tablosunun her kalemi için beklenen
+ * değer. Girdiler:
+ *  - takım güçleri (0-100, seçili karışım) -> iki takımın beklenen golü
+ *    (Poisson ortalaması), oradan gol yememe olasılığı ve yenilen gol sayısı,
+ *  - oyuncunun son maçlardaki oranları (gol/90, asist/90, kart/90, bonus/90),
+ *    az veride mevki önceliğine (prior) doğru çekilerek,
+ *  - başlama olasılığı ve beklenen dakika (lib/lineups.ts).
+ * Kesin bir tahmin değil, aynı ölçekte karşılaştırılabilir bir beklenti.
+ */
+
+/** Mevki başına 90 dakikalık öncelik oranları (Süper Lig düzeyi, kaba). */
+export const PRIORS: Record<
+  Position,
+  { g90: number; a90: number; y90: number; r90: number; bonus90: number; saves90: number }
+> = {
+  GK: { g90: 0, a90: 0.005, y90: 0.08, r90: 0.005, bonus90: 0.35, saves90: 3.0 },
+  DEF: { g90: 0.05, a90: 0.06, y90: 0.22, r90: 0.012, bonus90: 0.3, saves90: 0 },
+  MID: { g90: 0.13, a90: 0.14, y90: 0.2, r90: 0.01, bonus90: 0.35, saves90: 0 },
+  FWD: { g90: 0.35, a90: 0.14, y90: 0.16, r90: 0.008, bonus90: 0.45, saves90: 0 },
+};
+
+/** Öncelik bu kadar maç değerinde sayılır: 4 maç = 360 dk. */
+export const PRIOR_MATCHES = 4;
+
+/** Başlayan oyuncunun varsayılan dakikası, yedek girenin dakikası, 60+ oranı. */
+const DEFAULT_MINUTES_STARTED = 84;
+const DEFAULT_MINUTES_SUB = 15;
+const DEFAULT_OVER60 = 0.85;
+/** Son maç verisi olmayan oyuncunun yedekten girme olasılığı. */
+const DEFAULT_SUB_RATE = 0.3;
+
+/** Güç farkının gol beklentisine etkisi: e^(k·100/100) ≈ 2,2 kat (0 ile 100 arası). */
+export const GOAL_K = 0.8;
+
+export type Rates = {
+  g90: number;
+  a90: number;
+  y90: number;
+  r90: number;
+  bonus90: number;
+  saves90: number;
+  /** Oyuncunun gözlenen dakikası (güven göstergesi). */
+  minutes: number;
+};
+
+/** Gözlenen oranları mevki önceliğine doğru çeker (Bayes tarzı basit ağırlık). */
+export function shrunkRates(pos: Position, s: RecentSummary): Rates {
+  const prior = PRIORS[pos];
+  const priorMin = PRIOR_MATCHES * 90;
+  const n = s.minutes;
+  const rate = (count: number, p90: number) =>
+    (count + (p90 * priorMin) / 90) / ((n + priorMin) / 90);
+  return {
+    g90: rate(s.goals, prior.g90),
+    a90: rate(s.assists, prior.a90),
+    y90: rate(s.yellow, prior.y90),
+    r90: rate(s.red, prior.r90),
+    bonus90: rate(s.bonus, prior.bonus90),
+    saves90: prior.saves90,
+    minutes: n,
+  };
+}
+
+/** İki takımın beklenen golü: lig ortalaması × e^(k·güç farkı/100), ev avantajı güç ölçeğinde. */
+export function expectedGoals(
+  myStrength: number,
+  oppStrength: number,
+  ha: HomeAway,
+  homeAdvantage: number,
+  mu: number = leagueAvgGoals(),
+): { forUs: number; against: number } {
+  // Deplasmandaysak rakip +HA (withHomeAway), evdeysek -HA.
+  const d = myStrength - withHomeAway(oppStrength, ha, homeAdvantage);
+  return {
+    forUs: mu * Math.exp((GOAL_K * d) / 100),
+    against: mu * Math.exp((-GOAL_K * d) / 100),
+  };
+}
+
+const poissonCache = new Map<number, number[]>();
+
+/** Poisson(λ) için P(0..12). */
+export function poisson(lambda: number): number[] {
+  const key = Math.round(lambda * 1000);
+  const hit = poissonCache.get(key);
+  if (hit) return hit;
+  const out: number[] = [];
+  let p = Math.exp(-lambda);
+  for (let k = 0; k <= 12; k++) {
+    out.push(p);
+    p = (p * lambda) / (k + 1);
+  }
+  poissonCache.set(key, out);
+  return out;
+}
+
+/** E[floor(G / per)] for G ~ Poisson(λ). */
+export function expectedConcededSteps(lambda: number, per: number): number {
+  const probs = poisson(lambda);
+  return probs.reduce((sum, p, g) => sum + p * Math.floor(g / per), 0);
+}
+
+export type MinutesModel = {
+  pStart: number;
+  /** Oynama olasılığı (başlama + yedekten girme). */
+  pPlay: number;
+  /** 60 dakikadan fazla oynama olasılığı. */
+  p60: number;
+  expectedMinutes: number;
+};
+
+export function minutesModel(
+  player: Player,
+  info: LineupInfo | undefined = lineupOf(player),
+  summary: RecentSummary = summarizeRecent(player, info),
+): MinutesModel {
+  const pStart = startProbability(player, info);
+  const benchMatches = summary.matches - summary.starts;
+  const subRate = benchMatches > 0 ? summary.subIns / benchMatches : DEFAULT_SUB_RATE;
+  const pPlay = pStart + (1 - pStart) * subRate;
+  const minStarted = summary.minutesWhenStarted ?? DEFAULT_MINUTES_STARTED;
+  const minSub = summary.minutesWhenSub ?? DEFAULT_MINUTES_SUB;
+  const over60 = summary.over60WhenStarted ?? DEFAULT_OVER60;
+  return {
+    pStart,
+    pPlay,
+    p60: pStart * over60,
+    expectedMinutes: pStart * minStarted + (1 - pStart) * subRate * minSub,
+  };
+}
+
+export type XpBreakdown = {
+  appearance: number;
+  goals: number;
+  assists: number;
+  cleanSheet: number;
+  conceded: number;
+  saves: number;
+  cards: number;
+  bonus: number;
+  total: number;
+  /** Takımın beklenen golü ve yiyeceği gol. */
+  lambdaFor: number;
+  lambdaAgainst: number;
+  pCleanSheet: number;
+};
+
+export type XpContext = {
+  strength: Record<string, number>;
+  homeAdvantage: number;
+  /** Lig ortalaması gol (takım başına); verilmezse veriden. */
+  mu?: number;
+};
+
+/** Tek maç için beklenen puan (kaptan hariç). */
+export function expectedPointsForFixture(
+  player: Player,
+  fixture: { opp: string; ha: HomeAway },
+  ctx: XpContext,
+  minutes: MinutesModel,
+  rates: Rates,
+): XpBreakdown {
+  const mu = ctx.mu ?? leagueAvgGoals();
+  const { forUs, against } = expectedGoals(
+    ctx.strength[player.team] ?? 50,
+    ctx.strength[fixture.opp] ?? 50,
+    fixture.ha,
+    ctx.homeAdvantage,
+    mu,
+  );
+  const share = minutes.expectedMinutes / 90;
+  const attack = forUs / mu;
+  const pos = player.pos;
+
+  const appearance =
+    minutes.pPlay * SCORING.appearance.upTo60 +
+    minutes.p60 * (SCORING.appearance.over60 - SCORING.appearance.upTo60);
+  const goals = rates.g90 * share * attack * SCORING.goal[pos];
+  const assists = rates.a90 * share * attack * SCORING.assist;
+  const pCleanSheet = Math.exp(-against);
+  const cleanSheet = minutes.p60 * pCleanSheet * SCORING.cleanSheet[pos];
+  const conceded =
+    pos === "GK" || pos === "DEF"
+      ? share * expectedConcededSteps(against, SCORING.concededPer) * SCORING.concededPenalty
+      : 0;
+  const saves =
+    pos === "GK"
+      ? (rates.saves90 * share * (against / mu)) / SCORING.savesPerPoint
+      : 0;
+  const cards = share * (rates.y90 * SCORING.yellow + rates.r90 * SCORING.red);
+  const bonus = rates.bonus90 * share * Math.sqrt(attack);
+
+  const total = appearance + goals + assists + cleanSheet + conceded + saves + cards + bonus;
+  return {
+    appearance,
+    goals,
+    assists,
+    cleanSheet,
+    conceded,
+    saves,
+    cards,
+    bonus,
+    total,
+    lambdaFor: forUs,
+    lambdaAgainst: against,
+    pCleanSheet,
+  };
+}
+
+export type WeekXp = {
+  md: number;
+  weight: number;
+  fixture: { opp: string; ha: HomeAway } | null;
+  xp: XpBreakdown | null;
+};
+
+export type PlayerXp = {
+  /** Haftaların ağırlıklı ortalaması: "hafta başına beklenen puan". */
+  xp: number;
+  weeks: WeekXp[];
+  minutes: MinutesModel;
+  rates: Rates;
+  summary: RecentSummary;
+};
+
+/**
+ * Seçili haftalar için beklenen puan. `weekWeights` 34 elemanlı; 0 olan hafta
+ * hesaba girmez. Maçı olmayan haftada 0 puan (ağırlık yine sayılır: bye haftası
+ * gerçek bir kayıptır).
+ */
+export function playerExpectedPoints(
+  player: Player,
+  weekWeights: number[],
+  ctx: XpContext,
+): PlayerXp {
+  const info = lineupOf(player);
+  const summary = summarizeRecent(player, info);
+  const minutes = minutesModel(player, info, summary);
+  const rates = shrunkRates(player.pos, summary);
+  const weeks: WeekXp[] = [];
+  let sum = 0;
+  let wsum = 0;
+  weekWeights.forEach((weight, i) => {
+    if (weight <= 0) return;
+    const md = i + 1;
+    const f = schedule[player.team]?.[i];
+    const fixture = f && f.md === md ? { opp: f.opp, ha: f.ha } : null;
+    const xp = fixture
+      ? expectedPointsForFixture(player, fixture, ctx, minutes, rates)
+      : null;
+    weeks.push({ md, weight, fixture, xp });
+    sum += weight * (xp?.total ?? 0);
+    wsum += weight;
+  });
+  return { xp: wsum > 0 ? sum / wsum : 0, weeks, minutes, rates, summary };
+}
