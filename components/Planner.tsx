@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { GameweekBar } from "@/components/GameweekBar";
 import { ModelPanel, type ParamValue } from "@/components/ModelPanel";
 import { PickList } from "@/components/PickList";
-import { PickWeightsPanel } from "@/components/PickWeightsPanel";
 import { SquadBuilder } from "@/components/SquadBuilder";
 import { Standings } from "@/components/Standings";
 import { TeamPanel } from "@/components/TeamPanel";
@@ -16,7 +15,14 @@ import { computeAll, DEFAULT_PARAMS, type ModelKey, windowMask } from "@/lib/mod
 import { type PickWeights, rankPicks, weekDecayWeights } from "@/lib/picks";
 import type { PlannerState } from "@/lib/url-state";
 
-/** Durumun sahibi Shell; burada sadece okunur ve güncellenir. */
+/**
+ * Sayfanın akışı, kararların sırasıyla aynı:
+ *   1. hangi hafta (ve kaç hafta ileri) -> hafta ağırlıkları
+ *   2. fikstür zorluğu bu ağırlıklarla hesaplanır (model paneli, takım tablosu)
+ *   3. oyuncu sıralaması: zorluk + seçilme + geçmiş puan, kendi ağırlıklarınla
+ *   4. haftanın kadrosu bu sıralamadan kurulur
+ * Durumun sahibi Shell; burada sadece okunur ve güncellenir.
+ */
 export function Planner({
   state,
   onChange: setState,
@@ -24,10 +30,24 @@ export function Planner({
   state: PlannerState;
   onChange: React.Dispatch<React.SetStateAction<PlannerState>>;
 }) {
-  const { team, model, params, gw, horizon, weekDecay, benchWeight, picks, selInvert } = state;
+  const {
+    team,
+    model,
+    params,
+    gw,
+    horizon,
+    weekDecay,
+    benchWeight,
+    picks,
+    minutesImpact,
+    selInvert,
+  } = state;
 
   const weeks = useMemo(() => windowMask(gw, horizon), [gw, horizon]);
-  const weekWeights = useMemo(() => weekDecayWeights(gw, horizon, weekDecay), [gw, horizon, weekDecay]);
+  const weekWeights = useMemo(
+    () => weekDecayWeights(gw, horizon, weekDecay),
+    [gw, horizon, weekDecay],
+  );
 
   const { results, strength, order } = useMemo(
     () => computeAll({ model, params, weeks }),
@@ -40,12 +60,14 @@ export function Planner({
   const deferredWeekWeights = useDebouncedValue(weekWeights);
   const deferredHa = useDebouncedValue(params[model].ha);
   const deferredPicks = useDebouncedValue(picks);
+  const deferredImpact = useDebouncedValue(minutesImpact);
   const pending =
     deferredStrength !== strength ||
     deferredResults !== results ||
     deferredWeekWeights !== weekWeights ||
     deferredHa !== params[model].ha ||
-    deferredPicks !== picks;
+    deferredPicks !== picks ||
+    deferredImpact !== minutesImpact;
 
   const pickRows = useMemo(
     () =>
@@ -54,9 +76,18 @@ export function Planner({
         ctx: { strength: deferredStrength, homeAdvantage: deferredHa },
         weekWeights: deferredWeekWeights,
         weights: deferredPicks,
+        minutesImpact: deferredImpact,
         selInvert,
       }),
-    [deferredResults, deferredStrength, deferredHa, deferredWeekWeights, deferredPicks, selInvert],
+    [
+      deferredResults,
+      deferredStrength,
+      deferredHa,
+      deferredWeekWeights,
+      deferredPicks,
+      deferredImpact,
+      selInvert,
+    ],
   );
 
   const setTeam = (id: string) => setState((s) => ({ ...s, team: id }));
@@ -74,10 +105,12 @@ export function Planner({
   const setDecay = (d: number) => setState((s) => ({ ...s, weekDecay: d }));
   const setBenchWeight = (b: number) => setState((s) => ({ ...s, benchWeight: b }));
   const setPicks = (next: PickWeights) => setState((s) => ({ ...s, picks: next }));
+  const setMinutesImpact = (v: number) => setState((s) => ({ ...s, minutesImpact: v }));
   const setSelInvert = (v: boolean) => setState((s) => ({ ...s, selInvert: v }));
 
   return (
     <div className="grid gap-8">
+      {/* 1. Hangi hafta */}
       <GameweekBar
         gw={gw}
         horizon={horizon}
@@ -88,25 +121,7 @@ export function Planner({
         onDecayChange={setDecay}
       />
 
-      <PickWeightsPanel
-        weights={picks}
-        selInvert={selInvert}
-        onChange={setPicks}
-        onInvertChange={setSelInvert}
-      />
-
-      <SquadBuilder
-        rows={pickRows}
-        gw={gw}
-        pending={pending}
-        benchWeight={benchWeight}
-        onBenchWeightChange={setBenchWeight}
-      />
-
-      <PickList rows={pickRows} gw={gw} />
-
-      <WeekSchedule gw={gw} results={results} selected={team} onSelect={setTeam} />
-
+      {/* 2. Fikstür zorluğu */}
       <ModelPanel
         model={model}
         params={params}
@@ -126,19 +141,42 @@ export function Planner({
           strength={strength}
           model={model}
         />
-        <div className="grid gap-4">
-          <TeamsTable
-            results={results}
-            strength={strength}
-            order={order}
-            gw={gw}
-            horizon={horizon}
-            selected={team}
-            onSelect={setTeam}
-          />
-          <Standings selected={team} onSelect={setTeam} />
-        </div>
+
+        <TeamsTable
+          results={results}
+          strength={strength}
+          order={order}
+          gw={gw}
+          horizon={horizon}
+          selected={team}
+          onSelect={setTeam}
+        />
       </div>
+
+      {/* 3. Oyuncu sıralaması ve ağırlıkları */}
+      <PickList
+        rows={pickRows}
+        gw={gw}
+        weights={picks}
+        onWeightsChange={setPicks}
+        minutesImpact={minutesImpact}
+        onMinutesImpactChange={setMinutesImpact}
+        selInvert={selInvert}
+        onSelInvertChange={setSelInvert}
+      />
+
+      {/* 4. Haftanın kadrosu */}
+      <SquadBuilder
+        rows={pickRows}
+        gw={gw}
+        pending={pending}
+        benchWeight={benchWeight}
+        onBenchWeightChange={setBenchWeight}
+      />
+
+      <WeekSchedule gw={gw} results={results} selected={team} onSelect={setTeam} />
+
+      <Standings selected={team} onSelect={setTeam} />
     </div>
   );
 }

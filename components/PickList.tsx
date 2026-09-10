@@ -16,19 +16,49 @@ import {
   predictedMeta,
   predictedXi,
 } from "@/lib/lineups";
-import { officialPerMatch, PICK_SIGNALS, type PickRow } from "@/lib/picks";
+import {
+  DEFAULT_MINUTES_IMPACT,
+  DEFAULT_PICK_WEIGHTS,
+  officialPerMatch,
+  PICK_SIGNALS,
+  type PickRow,
+  type PickWeights,
+  pickShares,
+} from "@/lib/picks";
 
 type PosFilter = Position | "ALL";
 
 const PRICE_MIN = 3;
 const PRICE_MAX = 20;
 
-/** Beklenen puana göre oyuncu önerisi; fiyat sadece alt/üst sınır filtresi. */
-export function PickList({ rows: allRows, gw }: { rows: PickRow[]; gw: number }) {
+/**
+ * Oyuncu önerisi: ağırlık kaydırakları + sıralı liste. Ağırlıklar hem bu
+ * listeyi hem aşağıdaki haftanın kadrosunu belirler.
+ */
+export function PickList({
+  rows: allRows,
+  gw,
+  weights,
+  onWeightsChange,
+  minutesImpact,
+  onMinutesImpactChange,
+  selInvert,
+  onSelInvertChange,
+}: {
+  rows: PickRow[];
+  gw: number;
+  weights: PickWeights;
+  onWeightsChange: (weights: PickWeights) => void;
+  minutesImpact: number;
+  onMinutesImpactChange: (value: number) => void;
+  selInvert: boolean;
+  onSelInvertChange: (value: boolean) => void;
+}) {
   const { t, f } = useI18n();
   const [position, setPosition] = useState<PosFilter>("ALL");
   const [minPrice, setMinPrice] = useState(PRICE_MIN);
   const [maxPrice, setMaxPrice] = useState(PRICE_MAX);
+  const shares = pickShares(weights);
 
   const setFloor = (v: number) => {
     setMinPrice(v);
@@ -74,14 +104,97 @@ export function PickList({ rows: allRows, gw }: { rows: PickRow[]; gw: number })
           : ""}
       </p>
 
-      <Segmented
-        label={t.picks.positionLabel}
-        size="sm"
-        wrap
-        value={position}
-        options={posOptions}
-        onChange={setPosition}
-      />
+      <div className="grid gap-1.5 rounded-lg border border-line p-2">
+        <p className="text-xs text-muted">{t.pickWeights.note}</p>
+        {PICK_SIGNALS.map((key) => {
+          const id = `pick-weight-${key}`;
+          const copy = t.pickWeights.signals[key];
+          return (
+            <div key={key} className="grid grid-cols-[1fr_auto] items-center gap-x-2.5">
+              <label htmlFor={id} className="text-sm">
+                {copy.label}
+              </label>
+              <output
+                htmlFor={id}
+                className="text-right font-cond text-lg font-semibold text-accent tabular-nums"
+              >
+                {f.pct(shares[key], 0)}
+              </output>
+              <input
+                id={id}
+                type="range"
+                min={0}
+                max={100}
+                step={5}
+                value={weights[key] ?? 0}
+                onChange={(e) => onWeightsChange({ ...weights, [key]: Number(e.target.value) })}
+                className="col-span-2 w-full accent-accent"
+              />
+              <p className="col-span-2 -mt-0.5 text-xs text-muted">{copy.note}</p>
+              {key === "sel" ? (
+                <>
+                  <label className="col-span-2 flex min-h-9 items-center gap-2 text-[13px]">
+                    <input
+                      type="checkbox"
+                      checked={selInvert}
+                      onChange={(e) => onSelInvertChange(e.target.checked)}
+                      className="h-4 w-4 accent-accent"
+                    />
+                    {t.pickWeights.invert}
+                  </label>
+                  <p className="col-span-2 -mt-1 text-xs text-muted">{t.pickWeights.invertNote}</p>
+                </>
+              ) : null}
+            </div>
+          );
+        })}
+
+        <div className="grid grid-cols-[1fr_auto] items-center gap-x-2.5 border-t border-line pt-1.5">
+          <label htmlFor="pick-minutes" className="text-sm">
+            {t.pickWeights.minutes.label}
+          </label>
+          <output
+            htmlFor="pick-minutes"
+            className="text-right font-cond text-lg font-semibold text-accent tabular-nums"
+          >
+            {f.num(minutesImpact, 2)}
+          </output>
+          <input
+            id="pick-minutes"
+            type="range"
+            min={0}
+            max={1}
+            step={0.05}
+            value={minutesImpact}
+            onChange={(e) => onMinutesImpactChange(Number(e.target.value))}
+            className="col-span-2 w-full accent-accent"
+          />
+          <p className="col-span-2 -mt-0.5 text-xs text-muted">{t.pickWeights.minutes.note}</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => {
+            onWeightsChange(DEFAULT_PICK_WEIGHTS);
+            onMinutesImpactChange(DEFAULT_MINUTES_IMPACT);
+            onSelInvertChange(false);
+          }}
+          className="min-h-11 justify-self-start rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+        >
+          {t.pickWeights.reset}
+        </button>
+      </div>
+
+      <div className="mt-2">
+        <Segmented
+          label={t.picks.positionLabel}
+          size="sm"
+          wrap
+          value={position}
+          options={posOptions}
+          onChange={setPosition}
+        />
+      </div>
 
       {hasPrices ? (
         <div className="mt-2 grid gap-1.5 desk:grid-cols-2 desk:gap-x-4">
@@ -187,8 +300,9 @@ function signalTitle(
   t: ReturnType<typeof useI18n>["t"],
   f: ReturnType<typeof useI18n>["f"],
 ): string {
+  const value = { model: row.modelScore, sel: row.selScore, points: row.pointsScore };
   return PICK_SIGNALS.map(
-    (key) => `${t.pickWeights.signals[key].label}: ${f.num(row.signals[key], 0)}/100`,
+    (key) => `${t.pickWeights.signals[key].label}: ${f.num(value[key], 0)}/100`,
   ).join("\n");
 }
 

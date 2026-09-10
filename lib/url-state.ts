@@ -13,8 +13,8 @@ import {
   DEFAULT_PICK_WEIGHTS,
   DEFAULT_WEEK_DECAY,
   MAX_HORIZON,
+  DEFAULT_MINUTES_IMPACT,
   PICK_SIGNALS,
-  type PickSignal,
   type PickWeights,
 } from "@/lib/picks";
 import { DEFAULT_BENCH_WEIGHT } from "@/lib/squad";
@@ -38,6 +38,8 @@ export type PlannerState = {
   benchWeight: number;
   /** Oyuncu sıralamasındaki sinyal ağırlıkları. */
   picks: PickWeights;
+  /** Başlama olasılığının skora etkisi, 0-1. */
+  minutesImpact: number;
   /** Seçilme oranını ters çevir: az seçilenler öne. */
   selInvert: boolean;
 };
@@ -53,6 +55,7 @@ export const DEFAULT_STATE: PlannerState = {
   weekDecay: DEFAULT_WEEK_DECAY,
   benchWeight: DEFAULT_BENCH_WEIGHT,
   picks: DEFAULT_PICK_WEIGHTS,
+  minutesImpact: DEFAULT_MINUTES_IMPACT,
   selInvert: false,
 };
 
@@ -96,7 +99,7 @@ function parsePickWeights(raw: string | null, base: PickWeights): PickWeights {
     const [key, value] = part.split(":");
     const n = Number(value);
     if (known.has(key) && Number.isFinite(n)) {
-      out[key as PickSignal] = clamp(Math.round(n), 0, WEIGHT_MAX);
+      out[key as keyof PickWeights] = clamp(Math.round(n), 0, WEIGHT_MAX);
       seen = true;
     }
   }
@@ -132,6 +135,7 @@ export function encodeState(state: PlannerState): string {
       .map((key) => `${key}:${state.picks[key]}`)
       .join(","),
   );
+  q.set("mi", String(state.minutesImpact));
   if (state.selInvert) q.set("si", "1");
   return q.toString();
 }
@@ -160,6 +164,7 @@ export function decodeState(
     weekDecay: parseNumber(q.get("wd"), base.weekDecay, 0, 1),
     benchWeight: parseNumber(q.get("bw"), base.benchWeight, 0, 0.5),
     picks: parsePickWeights(q.get("pw"), base.picks),
+    minutesImpact: parseNumber(q.get("mi"), base.minutesImpact, 0, 1),
     selInvert: q.get("si") === "1" ? true : base.selInvert,
   };
 

@@ -255,7 +255,7 @@ export function buildSquad(
   {
     maxOptions = 40,
     budget = BUDGET,
-    tolerance = 1.5,
+    tolerance = 2,
     benchWeight = DEFAULT_BENCH_WEIGHT,
     locked = [],
     excluded = [],

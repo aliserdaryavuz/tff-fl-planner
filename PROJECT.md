@@ -81,19 +81,26 @@ Her oyuncu × maç için TFF puan tablosunun beklenen değeri:
 
 Kalibre edilmemiş bir beklenti; arayüzde böyle söyleniyor. Gerçek fantasy puanı/90 (son maçlardan, TFF tablosuyla) ayrıca gösterilir.
 
-### 4.2b Sıralama ağırlıkları (`lib/picks.ts`)
+### 4.2b Sıralama (`lib/picks.ts`)
 
-Kullanıcı altı ölçütün ağırlığını ayarlayabilir: beklenen puan (xP), fikstür kolaylığı, form (oyunun son haftalar ortalaması), sezon toplam puanı, ilk 11 olasılığı, seçilme oranı. Her ölçüt **seçilebilir tüm oyuncu havuzunda** 0-100'e yayılır (mevki ve fiyat filtresi puanlamadan sonra uygulanır; yoksa filtre normalleştirme havuzunu daraltıp sırayı kaydırır), ağırlıklı ortalaması alınır ve sonuç yeniden xP aralığına eşlenir:
+UCL projesindeki yapıyla aynı: üç sinyal 0-100'e çevrilip ağırlıklı ortalaması alınır, sonuç süre çarpanıyla ölçeklenir.
 
 ```
-skor = xpMin + (blend / 100) × (xpMax − xpMin)
+skor = (w_model·model + w_sel·seçilme + w_points·puan) × süre çarpanı
 ```
 
-Böylece tüm ağırlık xP'deyken skor birebir xP'ye eşit olur; kadro kurucunun toleransı ve ölçek bağımlı etiketleri anlamlı kalır. `selInvert` seçilme oranını ters çevirir (differential). Fikstür, form ve ilk 11 zaten xP'nin içinde; kaydıraklar o ölçüte *fazladan* ağırlık verir ve arayüzde böyle yazar. Kadro kurucu `score` üzerinden çalışır, saf xP toplamı ayrıca gösterilir.
+- **model**: oyuncu 90 dakika oynarsa seçili haftalardan beklenen puanı (`PlayerXp.xpPerStart`). Fikstür zorluğu, ev/deplasman, mevki ve oyuncunun oranları bunun içinde; havuzun en iyisi 100 olacak şekilde oranlanır. UCL'deki ham `fixtureScore`un yerini alır.
+- **sel**: seçilme oranı, logaritmik (UCL ile aynı formül).
+- **points**: birikmiş puan / 90 dakika, az dakikada 270 dakikalık öncelikle güvensiz sayılarak (UCL ile aynı). Modelin oranlarıyla kısmen örtüştüğü için varsayılanı 0.
+- **süre çarpanı**: `1 − k + k·(0,15 + 0,85·başlama olasılığı)`, `k` = ilk 11 etkisi kaydırağı.
+
+Ayrı bir "fikstür" ya da "ilk 11" kaydırağı **yok**: ikisi de modelin içinde ve iki kez sayılırdı. Bu yüzden model çıktısı bilerek "oynarsa" varsayımıyla hesaplanır (`FULL_MINUTES`), oynama olasılığı yalnız süre çarpanında bir kez uygulanır. Fikstürün ağırlığı zorluk modeli panelinden, hangi haftaların sayılacağı hafta seçicisinden gelir.
+
+Ölçekler (havuzun en iyisi) **seçilebilir tüm oyuncu havuzundan** hesaplanır; mevki ve fiyat filtresi puanlamadan sonra uygulanır, yoksa filtre sırayı kaydırırdı. `selInvert` seçilme oranını ters çevirir (differential). Varsayılan ağırlıklar: model 100, seçilme 50, geçmiş puan 0.
 
 ### 4.3 Kadro kurucu (`lib/squad.ts`, `lib/formations.ts`)
 
-Hedef: `Σ_XI xP + kaptan xP + benchWeight · Σ_yedek xP` (benchWeight varsayılan 0,1).
+Hedef: `Σ_XI skor + kaptan skoru + benchWeight · Σ_yedek skor` (benchWeight varsayılan 0,1). Skor 0-100 ölçeğinde olduğu için tolerans 2. Saf beklenen puan toplamı arayüzde ayrıca gösterilir.
 
 1. Kulüp kulüp DP ile ilk 11: durum (KL 0-1, DF 0-5, OS 0-5, FV 0-3, harcanan); kulüp teklifleri ≤3 oyuncu; aday budaması: aynı kulüp/mevkide kendisinden hem ucuz hem iyi ≥3 oyuncu varsa atılır, kalanların en iyi 6'sı. DP yarım birimde (0,1 fiyatlar yukarı yuvarlanır); bitişte her geçerli diziliş için yedek rezervi (mevki başına en ucuzlar) düşülür.
 2. Geri izlemeyle en iyiye `tolerance` (1,5) yakın ilk 11'ler; her biri için yedekler en ucuzdan, kulüp ≤3 ve kesin bütçeyle doldurulur.
@@ -106,12 +113,15 @@ Gerçek havuz + yapay 0,1 adımlı fiyatla ~0,3 s (`lib/squad-real.test.ts`).
 
 ## 5. Ekranlar (tek sayfa, mobil öncelikli)
 
-1. Hafta çubuğu: hafta seçici (tarih, oynandı), son kayıt saati (ilk maç − 1 sa), ufuk ve azalma kaydırakları, hafta payları.
-2. Haftanın kadrosu: saha (diziliş etiketi, K/Y rozetleri), yedek sırası, KPI'lar, kilit/çıkar/kulüp dışla, yedek ağırlığı, alternatif listesi, görsel kaydet. Fiyat yoksa açıklama kutusu.
-3. Beklenen puan sıralaması: mevki ve fiyat filtresi, satırda takım/zorluk/mevki/başlama, p/90, xP; title'da kalem kalem döküm ve beklenen goller.
-4. Hafta programı: 9 maç, saat (seçili dilimde) ya da skor, iki tarafın zorluğu.
-5. Zorluk modeli paneli; takım paneli (rozetler, KPI, ufuk şeridi, fikstür listesi, kadro/fiyat listesi); tüm takımlar tablosu; puan durumu (açılır).
-6. Renk ölçeği, dipnot (nasıl hesaplanır, kurallar, kaynaklar, sorumluluk reddi).
+Sıra, kararların sırasıyla aynı (UCL projesindeki düzen, başa hafta seçici eklenmiş):
+
+1. **Hafta çubuğu**: hafta seçici (tarih, oynandı), son kadro kaydı, ufuk ve azalma kaydırakları, hafta payları. Buradan çıkan hafta ağırlıkları her şeyin girdisi.
+2. **Fikstür zorluğu modeli**: model seçimi, güç kaynakları ve ağırlıkları, ev avantajı, γ.
+3. **Takım paneli** (rozetler, KPI, ufuk şeridi, fikstür listesi, kadro/fiyat listesi) | **tüm takımlar tablosu**.
+4. **Kim alınmalı?**: üç ağırlık kaydırağı + ilk 11 etkisi + differential kutusu, mevki ve fiyat filtresi, sıralı liste (fiyat, xP, skor; title'da kalem kalem döküm).
+5. **Haftanın kadrosu**: saha (diziliş etiketi, K/Y rozetleri), yedek sırası, KPI'lar, kilit/çıkar/kulüp dışla, yedek ağırlığı, alternatif listesi, görsel kaydet.
+6. **Hafta programı** (9 maç, saat ya da skor, iki tarafın zorluğu) ve **puan durumu** (açılır).
+7. Renk ölçeği, dipnot (nasıl hesaplanır, kurallar, kaynaklar, sorumluluk reddi).
 
 Tasarım UCL projesiyle aynı: siyah zemin, kırmızı vurgu, Barlow / Barlow Condensed, tabular sayılar, 44 px dokunma hedefi, renk + sayı birlikte.
 

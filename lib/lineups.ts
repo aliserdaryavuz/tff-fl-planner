@@ -268,6 +268,17 @@ export function startProbability(
   return Math.min(0.97, Math.max(0, p));
 }
 
+/**
+ * Başlama olasılığının skora etkisi, tek yerde. `impact` 0-1: 1 = tam çarpan
+ * (hiç oynamayacak oyuncu ×0,15'e iner), 0 = süre tamamen yok sayılır.
+ * Model çıktısı "oynarsa kaç puan" olduğu için oynama olasılığı yalnız burada
+ * sayılır; iki kez uygulanmaz.
+ */
+export function minutesMultiplier(startProb: number, impact: number): number {
+  const k = Math.min(1, Math.max(0, impact));
+  return 1 - k + k * (0.15 + 0.85 * startProb);
+}
+
 /** Son maçlardan dakika ve oran özeti; beklenen puan modeli buradan besleniyor. */
 export type RecentSummary = {
   matches: number;

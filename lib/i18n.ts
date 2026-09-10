@@ -236,42 +236,33 @@ const tr = {
     noPrice: "fiyat yok",
   },
   pickWeights: {
-    heading: "Oyuncu seçim ağırlıkları",
-    note: "Sıralamayı ve haftanın kadrosunu birlikte belirler. Her ölçüt tüm oyuncu havuzunda 0-100'e yayılır, ağırlıklı ortalaması alınır ve sonuç yeniden beklenen puan ölçeğine çevrilir; böylece tüm ağırlık beklenen puandayken skor birebir beklenen puana eşit olur. Fikstür, form ve ilk 11 olasılığı zaten beklenen puanın içinde; buradaki kaydıraklar o ölçüte fazladan ağırlık vermek içindir.",
-    reset: "Yalnız beklenen puan",
+    heading: "Ağırlıklar",
+    note: "Skor = (model × ağırlık + seçilme × ağırlık + geçmiş puan × ağırlık) × süre çarpanı. Her ölçüt havuzun tamamında 0-100e çevrilir; ağırlıkların büyüklüğü değil oranı önemlidir. Fikstür ayrı bir kaydırak değil: zorluk modelinin çıktısı zaten model sinyalinin içinde, hangi haftaların sayılacağı da yukarıdaki hafta seçicisinden geliyor.",
+    reset: "Varsayılan ağırlıklar",
     invert: "Az seçilen oyuncuları öne al",
     invertNote: "Açıkken seçilme oranı tersine döner: kalabalığın gitmediği oyuncular yükselir.",
-    empty: "Tüm ağırlıklar sıfır: yalnız beklenen puan kullanılıyor.",
     signals: {
-      xp: {
-        label: "Beklenen puan (xP)",
-        note: "Modelin kendi tahmini: fikstür, dakika, gol/asist oranı, gol yememe, kart ve bonus birlikte.",
-      },
-      fixture: {
-        label: "Fikstür kolaylığı",
-        note: "Seçili haftalardaki ağırlıklı zorluğun tersi. Kolay fikstürlü takımların oyuncularını öne alır.",
-      },
-      form: {
-        label: "Form (son haftalar)",
-        note: "Oyunun kendi form değeri: son haftalardaki ortalama puan.",
-      },
-      points: {
-        label: "Toplam puan (sezon)",
-        note: "Oyunun bu sezon verdiği toplam puan. Sezon başında ayırt ediciliği düşüktür.",
-      },
-      start: {
-        label: "İlk 11 olasılığı",
-        note: "Son maçlardaki ilk 11 ve dakikalar, varsa tahmini kadrolar ve sakat listesi.",
+      model: {
+        label: "Model: oynarsa beklenen puan",
+        note: "Oyuncu 90 dakika oynarsa seçili haftalardan kaç puan beklenir. Fikstür zorluğu, ev/deplasman, mevki ve oyuncunun kendi gol, asist, kart, bonus oranları bunun içinde.",
       },
       sel: {
         label: "Seçilme oranı",
-        note: "Oyunda kaç menajerin aldığı. Kalabalıkla aynı yönde gitmek için aç; tersi için alttaki kutuyu işaretle.",
+        note: "Oyunda kaç menajerin aldığı; logaritmik ölçekte. Kalabalığın bilgisi ve dolaylı bir oynar sinyali.",
       },
+      points: {
+        label: "Geçmiş puan",
+        note: "Oyunun verdiği toplam puan, 90 dakika başına ve az dakikada güvensiz sayılarak. Modelin oranlarıyla kısmen örtüşür, o yüzden varsayılanı sıfır.",
+      },
+    },
+    minutes: {
+      label: "İlk 11 olasılığının etkisi",
+      note: "Skor süre çarpanıyla ölçeklenir. 1 = tam etki (hiç oynamayacak oyuncu 0,15 katına iner), 0 = süre yok sayılır. Olasılık son maçlardaki ilk 11, dakikalar, tahmini kadrolar ve sakat listesinden.",
     },
   },
   picks: {
     heading: "Kim alınmalı? Beklenen puan sıralaması",
-    note: "Her oyuncu için TFF puan tablosunun beklenen değeri: dakika puanı, gol ve asist (oyuncunun sezon oranı × takımın beklenen golü), gol yememe (rakibin beklenen golüne göre Poisson), yenilen gol, kurtarış, kart ve bonus. Gol, asist, kurtarış, kart ve bonus sayıları oyunun kendi resmî verisinden; az dakikada mevki ortalamasına çekilir. Başlama olasılığı son maçlardaki ilk 11, dakikalar ve varsa tahmini kadrolardan. Fiyat puana girmez; bütçe kadro kurucuda sert kısıt. Sakat ve cezalılar listeye girmez, şüpheliler işaretli. Bu bir kesin tahmin değil, aynı ölçekte bir beklenti.",
+    note: "Sıralama üç sinyalin ağırlıklı ortalaması, sonucu süre çarpanı ölçekler. Model sinyali, yukarıdaki adımda hesaplanan fikstür zorluğuyla birlikte TFF puan tablosunun beklenen değeridir: dakika puanı, gol ve asist (oyuncunun sezon oranı × takımın beklenen golü), gol yememe (Poisson), yenilen gol, kurtarış, kart, bonus. Sayılar oyunun resmî verisinden; az dakikada mevki ortalamasına çekilir. Fiyat sıralamaya girmez, bütçe kadro kurucuda sert kısıt. Sakat ve cezalılar listeye girmez, şüpheliler işaretli. Kesin bir tahmin değil, aynı ölçekte bir beklenti.",
     positionLabel: "Mevki",
     all: "Tümü",
     floor: "Alt fiyat sınırı",
@@ -281,9 +272,9 @@ const tr = {
       player: "Oyuncu",
       price: "Fiyat",
       xp: "xP",
-      xpTitle: "Saf beklenen puan (hafta başına), ağırlıklardan bağımsız",
+      xpTitle: "Beklenen puan (hafta başına): oynama olasılığı dahil, ağırlıklardan bağımsız",
       score: "Skor",
-      scoreTitle: "Seçtiğin ağırlıklarla sıralama skoru; beklenen puan ölçeğinde",
+      scoreTitle: "Ağırlıklı sinyal toplamı × süre çarpanı (0-100)",
       start: "Başlar",
       ppm: "PM",
       ppmTitle: "Oyunun kendi verisi: maç başına puan",
@@ -334,7 +325,7 @@ const tr = {
     heading: "Haftanın kadrosu: ilk 11 + 4 yedek + kaptan",
     headingShort: "Haftanın kadrosu",
     note: (budget: string, perClub: number, formation: string) =>
-      `${budget} bütçe, kulüp başına en fazla ${perClub} oyuncu, ${formation} kadro; ilk 11'de 1 kaleci, en az 3 defans ve 1 forvet (3-5-2, 3-4-3, 4-4-2, 4-3-3, 4-5-1, 5-4-1, 5-3-2, 5-2-3). Hedef: ilk 11'in beklenen puanı + kaptanın puanı bir daha + yedeklerin küçük bir payı. Para ilk 11'e gider, yedekler en ucuzdan seçilir. Transfer sınırsız olduğu için her hafta sıfırdan kurulabilir.`,
+      `${budget} bütçe, kulüp başına en fazla ${perClub} oyuncu, ${formation} kadro; ilk 11'de 1 kaleci, en az 3 defans ve 1 forvet (3-5-2, 3-4-3, 4-4-2, 4-3-3, 4-5-1, 5-4-1, 5-3-2, 5-2-3). Hedef: ilk 11'in skoru + kaptanın skoru bir daha + yedeklerin küçük bir payı; skor yukarıdaki ağırlıklardan geliyor. Para ilk 11'e gider, yedekler en ucuzdan seçilir. Transfer sınırsız olduğu için her hafta sıfırdan kurulabilir.`,
     noPrices:
       "Fiyat verisi yok: oyuncu fiyatları oyunun giriş gerektiren API'sinden geliyor. `node scripts/chrome-login.mjs` ile bir kez giriş yapıp `node scripts/fetch-game.mjs` çalıştırınca liste ve fiyatlar dolar; o zamana kadar yalnız beklenen puan sıralaması çalışır.",
     errors: {
@@ -623,42 +614,33 @@ const en: Strings = {
     noPrice: "no price",
   },
   pickWeights: {
-    heading: "Player selection weights",
-    note: "These drive the ranking and the squad of the week together. Each metric is spread over 0-100 across the whole player pool, averaged by your weights, then mapped back onto the expected-points scale, so with all the weight on expected points the score equals it exactly. Fixtures, form and start probability are already inside expected points; these sliders add extra emphasis on top.",
-    reset: "Expected points only",
+    heading: "Weights",
+    note: "Score = (model × weight + ownership × weight + past points × weight) × minutes multiplier. Each metric is mapped onto 0-100 across the whole pool; only the ratio of the weights matters, not their size. Fixtures are not a separate slider: the difficulty model already feeds the model signal, and which weeks count comes from the matchweek picker above.",
+    reset: "Default weights",
     invert: "Favour low-ownership players",
     invertNote: "When on, ownership flips: players the crowd has not bought rise instead.",
-    empty: "All weights are zero: using expected points only.",
     signals: {
-      xp: {
-        label: "Expected points (xP)",
-        note: "The model's own estimate: fixture, minutes, goal/assist rate, clean sheet, cards and bonus together.",
-      },
-      fixture: {
-        label: "Fixture ease",
-        note: "The inverse of weighted difficulty over the selected weeks. Favours players from teams with easy fixtures.",
-      },
-      form: {
-        label: "Form (recent weeks)",
-        note: "The game's own form figure: average points over the recent weeks.",
-      },
-      points: {
-        label: "Total points (season)",
-        note: "The game's season total. It separates players poorly early in the season.",
-      },
-      start: {
-        label: "Start probability",
-        note: "Recent starts and minutes, plus predicted lineups and the injury list where available.",
+      model: {
+        label: "Model: expected points if he plays",
+        note: "How many points to expect from the selected weeks if the player is on the pitch for 90 minutes. Fixture difficulty, home or away, position and the player own goal, assist, card and bonus rates are all inside it.",
       },
       sel: {
         label: "Ownership",
-        note: "How many managers own the player. Turn it up to follow the crowd; tick the box below to go against it.",
+        note: "How many managers own the player, on a log scale. The crowd knowledge, and an indirect signal that he plays.",
       },
+      points: {
+        label: "Past points",
+        note: "The game season total per 90 minutes, shrunk when the minutes are few. It partly overlaps with the model rates, hence the zero default.",
+      },
+    },
+    minutes: {
+      label: "Weight of start probability",
+      note: "The score is scaled by a minutes multiplier. 1 = full effect (a player who will not play drops to 0.15 of his score), 0 = minutes ignored. The probability comes from recent starts, minutes, predicted lineups and the injury list.",
     },
   },
   picks: {
     heading: "Who to buy? Expected points ranking",
-    note: "For every player the expected value of the TFF scoring table: minutes points, goals and assists (the player's season rate × the team's expected goals), clean sheet (Poisson on the opponent's expected goals), goals conceded, saves, cards and bonus. Goal, assist, save, card and bonus counts come from the game's own official data, pulled towards the positional average when minutes are few. Start probability comes from recent starts, minutes and predicted lineups where available. Price does not enter the score; the budget is a hard limit in the squad builder. Injured and suspended players are left out, doubtful ones flagged. Not a precise forecast, an expectation on one scale.",
+    note: "The ranking is a weighted average of three signals, scaled by a minutes multiplier. The model signal is the expected value of the TFF scoring table over the fixtures worked out in the step above: minutes points, goals and assists (the player's season rate × the team's expected goals), clean sheet (Poisson), goals conceded, saves, cards and bonus. The counts come from the game's official data, pulled towards the positional average when minutes are few. Price does not enter the ranking, the budget is a hard limit in the squad builder. Injured and suspended players are left out, doubtful ones flagged. Not a precise forecast, an expectation on one scale.",
     positionLabel: "Position",
     all: "All",
     floor: "Price floor",
@@ -668,9 +650,9 @@ const en: Strings = {
       player: "Player",
       price: "Price",
       xp: "xP",
-      xpTitle: "Pure expected points per matchweek, independent of the weights",
+      xpTitle: "Expected points per matchweek: start probability included, independent of the weights",
       score: "Score",
-      scoreTitle: "Ranking score at your weights, on the expected-points scale",
+      scoreTitle: "Weighted signal total × minutes multiplier (0-100)",
       start: "Start",
       ppm: "PPM",
       ppmTitle: "The game's own figure: points per match",
@@ -721,7 +703,7 @@ const en: Strings = {
     heading: "Squad of the week: XI + 4 subs + captain",
     headingShort: "Squad of the week",
     note: (budget: string, perClub: number, formation: string) =>
-      `${budget} budget, at most ${perClub} players per club, a ${formation} squad; the XI needs 1 keeper, at least 3 defenders and 1 forward (3-5-2, 3-4-3, 4-4-2, 4-3-3, 4-5-1, 5-4-1, 5-3-2, 5-2-3). Objective: expected points of the XI + the captain's once more + a small share of the bench. The money goes to the XI, the bench is filled from the cheapest. Transfers are unlimited, so the squad can be rebuilt every week.`,
+      `${budget} budget, at most ${perClub} players per club, a ${formation} squad; the XI needs 1 keeper, at least 3 defenders and 1 forward (3-5-2, 3-4-3, 4-4-2, 4-3-3, 4-5-1, 5-4-1, 5-3-2, 5-2-3). Objective: the XI score + the captain's score once more + a small share of the bench; the score comes from the weights above. The money goes to the XI, the bench is filled from the cheapest. Transfers are unlimited, so the squad can be rebuilt every week.`,
     noPrices:
       "No price data: player prices come from the game's API, which needs a login. Sign in once with `node scripts/chrome-login.mjs`, then run `node scripts/fetch-game.mjs`; until then only the expected-points ranking works.",
     errors: {

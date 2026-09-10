@@ -6,7 +6,7 @@ Ne yapıyor:
 
 - **Hafta seçimi** — planlanan hafta (varsayılan sıradaki), kaç hafta ileriye bakılacağı ve sonraki haftaların ağırlığı. Transfer sınırsız olduğu için varsayılan ufuk 1 hafta.
 - **Haftanın kadrosu** — 100 M TL, kulüp başına 3, 2-5-5-3 ve ilk 11 diziliş kurallarıyla (1 KL, en az 3 DF, en az 1 FV) beklenen puanı en yükseğe çıkaran ilk 11 + 4 yedek + kaptan/yardımcı; sahada diziliş olarak; kilitle/çıkar, kulüp dışla, alternatifleri listele. Fiyatlar oyunun kendi verisinden.
-- **Ayarlanabilir seçim ağırlıkları** — beklenen puan, fikstür kolaylığı, form, sezon puanı, ilk 11 olasılığı ve seçilme oranı. Seçilme oranı tersine çevrilebilir (differential). Hem öneri listesini hem haftanın kadrosunu birlikte belirler.
+- **Ayarlanabilir seçim ağırlıkları** — model (oynarsa beklenen puan), seçilme oranı ve geçmiş puan ağırlıklı olarak toplanır, sonuç ilk 11 olasılığının çarpanıyla ölçeklenir. Seçilme oranı tersine çevrilebilir (differential). Hem öneri listesini hem haftanın kadrosunu birlikte belirler.
 - **Beklenen puan sıralaması (xP)** — TFF puan tablosunun her kalemi için beklenen değer: dakika, gol/asist (oyuncunun resmî sezon oranı × takımın beklenen golü), gol yememe (Poisson), yenilen gol, kurtarış, kart, bonus; başlama olasılığı son maçlardan.
 - **Hafta programı** — 9 maç, saatler (seçili dilimde), skorlar, son kadro kaydı saati.
 - **Fikstür zorluğu** — karma güç (Opta, kadro değeri, geçen sezon, bu sezonun tablosu) ile rakip bazlı / göreli 1-5 zorluk; takım paneli, tüm takımlar tablosu, puan durumu.

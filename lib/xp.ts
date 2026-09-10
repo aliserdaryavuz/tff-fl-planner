@@ -239,15 +239,32 @@ export type WeekXp = {
   weight: number;
   fixture: { opp: string; ha: HomeAway } | null;
   xp: XpBreakdown | null;
+  /** Aynı maç, oyuncunun 90 dakika oynadığı varsayımıyla. */
+  xpPerStart: XpBreakdown | null;
 };
 
 export type PlayerXp = {
   /** Haftaların ağırlıklı ortalaması: "hafta başına beklenen puan". */
   xp: number;
+  /**
+   * Aynı hesap ama oyuncu kesin oynuyor sayılarak. Sıralamada model sinyali
+   * budur: "oynarsa ne kadar iyi". Oynama olasılığı skora tek bir yerde,
+   * süre çarpanı olarak girer (bkz. lib/picks.ts); yoksa dakika iki kez
+   * sayılırdı.
+   */
+  xpPerStart: number;
   weeks: WeekXp[];
   minutes: MinutesModel;
   rates: Rates;
   summary: RecentSummary;
+};
+
+/** Kesin oynayan oyuncu: 90 dakika, 60+ dakika garanti. */
+export const FULL_MINUTES: MinutesModel = {
+  pStart: 1,
+  pPlay: 1,
+  p60: 1,
+  expectedMinutes: 90,
 };
 
 /**
@@ -266,6 +283,7 @@ export function playerExpectedPoints(
   const rates = shrunkRates(player.pos, summary, player);
   const weeks: WeekXp[] = [];
   let sum = 0;
+  let sumPerStart = 0;
   let wsum = 0;
   weekWeights.forEach((weight, i) => {
     if (weight <= 0) return;
@@ -275,9 +293,20 @@ export function playerExpectedPoints(
     const xp = fixture
       ? expectedPointsForFixture(player, fixture, ctx, minutes, rates)
       : null;
-    weeks.push({ md, weight, fixture, xp });
+    const xpPerStart = fixture
+      ? expectedPointsForFixture(player, fixture, ctx, FULL_MINUTES, rates)
+      : null;
+    weeks.push({ md, weight, fixture, xp, xpPerStart });
     sum += weight * (xp?.total ?? 0);
+    sumPerStart += weight * (xpPerStart?.total ?? 0);
     wsum += weight;
   });
-  return { xp: wsum > 0 ? sum / wsum : 0, weeks, minutes, rates, summary };
+  return {
+    xp: wsum > 0 ? sum / wsum : 0,
+    xpPerStart: wsum > 0 ? sumPerStart / wsum : 0,
+    weeks,
+    minutes,
+    rates,
+    summary,
+  };
 }
