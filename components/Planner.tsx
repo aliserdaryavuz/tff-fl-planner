@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { GameweekBar } from "@/components/GameweekBar";
 import { ModelPanel, type ParamValue } from "@/components/ModelPanel";
 import { PickList } from "@/components/PickList";
+import { PickWeightsPanel } from "@/components/PickWeightsPanel";
 import { SquadBuilder } from "@/components/SquadBuilder";
 import { Standings } from "@/components/Standings";
 import { TeamPanel } from "@/components/TeamPanel";
@@ -12,7 +13,7 @@ import { useDebouncedValue } from "@/components/useDebouncedValue";
 import { WeekSchedule } from "@/components/WeekSchedule";
 import { MATCHDAYS } from "@/lib/data";
 import { computeAll, DEFAULT_PARAMS, type ModelKey, windowMask } from "@/lib/models";
-import { rankPicks, weekDecayWeights } from "@/lib/picks";
+import { type PickWeights, rankPicks, weekDecayWeights } from "@/lib/picks";
 import type { PlannerState } from "@/lib/url-state";
 
 /** Durumun sahibi Shell; burada sadece okunur ve güncellenir. */
@@ -23,7 +24,7 @@ export function Planner({
   state: PlannerState;
   onChange: React.Dispatch<React.SetStateAction<PlannerState>>;
 }) {
-  const { team, model, params, gw, horizon, weekDecay, benchWeight } = state;
+  const { team, model, params, gw, horizon, weekDecay, benchWeight, picks, selInvert } = state;
 
   const weeks = useMemo(() => windowMask(gw, horizon), [gw, horizon]);
   const weekWeights = useMemo(() => weekDecayWeights(gw, horizon, weekDecay), [gw, horizon, weekDecay]);
@@ -38,11 +39,13 @@ export function Planner({
   const deferredResults = useDebouncedValue(results);
   const deferredWeekWeights = useDebouncedValue(weekWeights);
   const deferredHa = useDebouncedValue(params[model].ha);
+  const deferredPicks = useDebouncedValue(picks);
   const pending =
     deferredStrength !== strength ||
     deferredResults !== results ||
     deferredWeekWeights !== weekWeights ||
-    deferredHa !== params[model].ha;
+    deferredHa !== params[model].ha ||
+    deferredPicks !== picks;
 
   const pickRows = useMemo(
     () =>
@@ -50,8 +53,10 @@ export function Planner({
         results: deferredResults,
         ctx: { strength: deferredStrength, homeAdvantage: deferredHa },
         weekWeights: deferredWeekWeights,
+        weights: deferredPicks,
+        selInvert,
       }),
-    [deferredResults, deferredStrength, deferredHa, deferredWeekWeights],
+    [deferredResults, deferredStrength, deferredHa, deferredWeekWeights, deferredPicks, selInvert],
   );
 
   const setTeam = (id: string) => setState((s) => ({ ...s, team: id }));
@@ -68,6 +73,8 @@ export function Planner({
   const setHorizon = (h: number) => setState((s) => ({ ...s, horizon: h }));
   const setDecay = (d: number) => setState((s) => ({ ...s, weekDecay: d }));
   const setBenchWeight = (b: number) => setState((s) => ({ ...s, benchWeight: b }));
+  const setPicks = (next: PickWeights) => setState((s) => ({ ...s, picks: next }));
+  const setSelInvert = (v: boolean) => setState((s) => ({ ...s, selInvert: v }));
 
   return (
     <div className="grid gap-8">
@@ -79,6 +86,13 @@ export function Planner({
         onGwChange={setGw}
         onHorizonChange={setHorizon}
         onDecayChange={setDecay}
+      />
+
+      <PickWeightsPanel
+        weights={picks}
+        selInvert={selInvert}
+        onChange={setPicks}
+        onInvertChange={setSelInvert}
       />
 
       <SquadBuilder

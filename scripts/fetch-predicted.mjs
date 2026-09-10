@@ -52,7 +52,10 @@ for (const [id, [fotmobId, slug]] of Object.entries(FOTMOB)) {
   seen.add(next.id);
   const page = matchPage(next.pageUrl, { cache: false });
   const L = page?.lineup;
-  if (!L || !["predicted", "confirmed"].includes(L.lineupType)) {
+  // FotMob üç tip veriyor: maç saatine yakın "confirmed" (resmî kadro),
+  // öncesinde "predicted" (Enetpulse tahmini) ya da "lastStarting11"
+  // (takımın son çıktığı 11). Sonuncusu zayıf bir sinyal ama yine de bilgi.
+  if (!L || !["predicted", "confirmed", "lastStarting11"].includes(L.lineupType)) {
     log(`  ${id}: ${next.home} - ${next.away}: kadro yok (${L?.lineupType ?? "-"})`);
     continue;
   }

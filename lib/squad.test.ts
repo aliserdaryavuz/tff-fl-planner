@@ -8,6 +8,8 @@ import { buildSquad, FORMATION, MAX_PER_CLUB, priceUnit, type Squad } from "@/li
 const row = (name: string, team: string, pos: Position, price: number, score: number): PickRow => ({
   player: { name, team, pos, price, sel: null, status: null, pts: 0, mins: 0 },
   score,
+  xp: score,
+  signals: { xp: 0, fixture: 0, form: 0, points: 0, start: 0, sel: 0 },
   detail: {
     xp: score,
     weeks: [],

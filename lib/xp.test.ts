@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { players as gamePlayers, type Player } from "@/lib/fantasy";
-import type { RecentSummary } from "@/lib/lineups";
+import { type RecentSummary, startProbability, UNKNOWN_START } from "@/lib/lineups";
 import { computeAll, DEFAULT_PARAMS } from "@/lib/models";
 import {
   expectedConcededSteps,
@@ -100,17 +100,27 @@ describe("shrunkRates", () => {
 });
 
 describe("minutesModel", () => {
-  it("verisi olmayan: başlama 0,15, yedekten girme 0,3", () => {
-    const m = minutesModel(player(), undefined, emptySummary);
-    expect(m.pStart).toBeCloseTo(0.15, 10);
-    expect(m.pPlay).toBeCloseTo(0.15 + 0.85 * 0.3, 10);
-    expect(m.expectedMinutes).toBeCloseTo(0.15 * 84 + 0.85 * 0.3 * 15, 10);
+  it("verisi olmayan: dakika beklentisi başlama olasılığından türer", () => {
+    const p = player();
+    const m = minutesModel(p, undefined, emptySummary);
+    // Başlama olasılığı lib/lineups.ts'ten; burada onunla tutarlılık aranıyor.
+    const base = startProbability(p, undefined);
+    expect(m.pStart).toBeCloseTo(base, 10);
+    expect(m.pPlay).toBeCloseTo(base + (1 - base) * 0.3, 10);
+    expect(m.expectedMinutes).toBeCloseTo(base * 84 + (1 - base) * 0.3 * 15, 10);
   });
 
-  it("sakat: hiç oynamaz", () => {
+  it("tahmini 11'de olmayan bilinmeyen oyuncu taban olasılığın altına iner", () => {
+    // Takımın "son çıkan 11"i veride var; bu ada rastlanmıyor.
+    expect(startProbability(player(), undefined)).toBeLessThan(UNKNOWN_START);
+  });
+
+  it("sakat: hiç oynamaz, yedekten de giremez", () => {
     const m = minutesModel(player({ status: "I" }), undefined, emptySummary);
     expect(m.pStart).toBe(0);
     expect(m.p60).toBe(0);
+    expect(m.pPlay).toBe(0);
+    expect(m.expectedMinutes).toBe(0);
   });
 });
 

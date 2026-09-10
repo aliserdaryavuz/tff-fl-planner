@@ -44,7 +44,7 @@ Next.js App Router + TypeScript + Tailwind + vitest; Vercel. Veri derleme zaman�
 | Elo | clubelo.com / elofootball.com | — | 09.09.2026'da erişilemedi; alan isteğe bağlı, kaynak açılınca doldurulur |
 | Sakat/cezalı | FotMob kadro sayfaları | `fetch-squads.mjs` | Oyunun API'sinde sakatlık yok; oyun listesi korunur, yalnız `fotmobId` + `status` eklenir |
 | Son maçlar: ilk 11, dakika, gol, asist, kart, yenilen gol, bonus | FotMob maç sayfaları | `fetch-lineups.mjs` | 6 maça kadar (dostluk hariç); bonus iki takımın TFF puanıyla hesaplanır |
-| Tahmini / resmî 11, maç öncesi sakat listesi | FotMob oynanmamış maç sayfası (`lineupType` predicted/confirmed) | `fetch-predicted.mjs` | Maç günü yeniden koş |
+| Tahmini / resmî 11, maç öncesi sakat listesi | FotMob oynanmamış maç sayfası | `fetch-predicted.mjs` | Üç tip: `confirmed` (resmî kadro), `predicted` (Enetpulse tahmini), `lastStarting11` (son çıkan 11; zayıf sinyal, taban 0,60). Maç günü yeniden koş |
 | Armalar | images.fotmob.com | `fetch-logos.mjs` | Oyunun kendi logoları da `teams[].logoUrl` alanında |
 | Doğrulama | tff.org `Default.aspx?pageID=198&hafta=N` | `verify-fixtures.mjs` | Yazmaz; tarih/saat/skor farklarını listeler |
 
@@ -80,6 +80,16 @@ Her oyuncu × maç için TFF puan tablosunun beklenen değeri:
 - Ufuk: seçili haftadan `horizon` hafta, ağırlık `decay^(k)`; xP = ağırlıklı ortalama (hafta başına puan). Varsayılan ufuk 1.
 
 Kalibre edilmemiş bir beklenti; arayüzde böyle söyleniyor. Gerçek fantasy puanı/90 (son maçlardan, TFF tablosuyla) ayrıca gösterilir.
+
+### 4.2b Sıralama ağırlıkları (`lib/picks.ts`)
+
+Kullanıcı altı ölçütün ağırlığını ayarlayabilir: beklenen puan (xP), fikstür kolaylığı, form (oyunun son haftalar ortalaması), sezon toplam puanı, ilk 11 olasılığı, seçilme oranı. Her ölçüt **seçilebilir tüm oyuncu havuzunda** 0-100'e yayılır (mevki ve fiyat filtresi puanlamadan sonra uygulanır; yoksa filtre normalleştirme havuzunu daraltıp sırayı kaydırır), ağırlıklı ortalaması alınır ve sonuç yeniden xP aralığına eşlenir:
+
+```
+skor = xpMin + (blend / 100) × (xpMax − xpMin)
+```
+
+Böylece tüm ağırlık xP'deyken skor birebir xP'ye eşit olur; kadro kurucunun toleransı ve ölçek bağımlı etiketleri anlamlı kalır. `selInvert` seçilme oranını ters çevirir (differential). Fikstür, form ve ilk 11 zaten xP'nin içinde; kaydıraklar o ölçüte *fazladan* ağırlık verir ve arayüzde böyle yazar. Kadro kurucu `score` üzerinden çalışır, saf xP toplamı ayrıca gösterilir.
 
 ### 4.3 Kadro kurucu (`lib/squad.ts`, `lib/formations.ts`)
 

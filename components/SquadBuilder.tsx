@@ -299,6 +299,11 @@ export function SquadBuilder({
     return acc;
   }, {});
 
+  // Skor ağırlıklara göre değişiyor; saf beklenen puan ayrıca gösterilsin.
+  const xpOf = (p: (typeof squad.xi)[number]) => byKey.get(playerKey(p))?.xp ?? 0;
+  const xiXp =
+    squad.xi.reduce((s, p) => s + xpOf(p), 0) + (squad.captain ? xpOf(squad.captain) : 0);
+
   return (
     <section aria-labelledby="squad-heading">
       {heading}
@@ -331,7 +336,7 @@ export function SquadBuilder({
 
       <p className="mb-1.5 text-[13px] text-muted">
         {t.squad.spent(f.money(squad.price), f.money(BUDGET - squad.price))} {t.squad.xiSpend} {f.money(squad.xiPrice)},{" "}
-        {t.squad.benchSpend} {f.money(squad.price - squad.xiPrice)}.
+        {t.squad.benchSpend} {f.money(squad.price - squad.xiPrice)}. {t.squad.xiXp(f.n1(xiXp))}
       </p>
 
       <div className="mt-2 flex flex-wrap items-center gap-2">

@@ -56,8 +56,11 @@ export const hasLineupData = Object.keys(lineups).length > 0;
 /** Sıradaki hafta için tahmini ilk 11, kaynak başına bir kayıt. */
 export type PredictedSource = {
   source: string;
-  /** "predicted": tahmin; "confirmed": maç saatine yakın resmî kadro. */
-  kind: "predicted" | "confirmed";
+  /**
+   * "confirmed": maç saatine yakın resmî kadro; "predicted": tahmin;
+   * "lastStarting11": takımın son çıktığı 11 (zayıf sinyal).
+   */
+  kind: "predicted" | "confirmed" | "lastStarting11";
   match: string;
   /** Oyun dosyasındaki adlarla. */
   starters: string[];
@@ -94,6 +97,9 @@ export const predictedMeta: PredictedMeta = rawPredicted.meta as PredictedMeta;
 export type Predicted = {
   sources: number;
   listed: number;
+  /** "Son çıkan 11" tipi zayıf kaynaklar, ayrı sayılır. */
+  weakSources: number;
+  weakListed: number;
   confirmed: "start" | "out" | null;
   unavailable: boolean;
 };
@@ -101,6 +107,8 @@ export type Predicted = {
 export const NO_PREDICTION: Predicted = {
   sources: 0,
   listed: 0,
+  weakSources: 0,
+  weakListed: 0,
   confirmed: null,
   unavailable: false,
 };
@@ -123,6 +131,8 @@ export function predictedFor(player: Player): Predicted {
   const mine = lastToken(player.name);
   let sources = 0;
   let listed = 0;
+  let weakSources = 0;
+  let weakListed = 0;
   let confirmed: Predicted["confirmed"] = null;
   for (const s of team.sources) {
     if (s.starters.length < 9) continue;
@@ -131,13 +141,21 @@ export function predictedFor(player: Player): Predicted {
       confirmed = inXi ? "start" : "out";
       continue;
     }
+    // Aynı soyadlı eşleşmeyen bir ad varsa bu kaynak bu oyuncu için sayılmaz.
     if (!inXi && s.unmatched.some((n) => lastToken(n) === mine)) continue;
-    sources++;
-    if (inXi) listed++;
+    if (s.kind === "lastStarting11") {
+      weakSources++;
+      if (inXi) weakListed++;
+    } else {
+      sources++;
+      if (inXi) listed++;
+    }
   }
   return {
     sources,
     listed,
+    weakSources,
+    weakListed,
     confirmed,
     unavailable: team.unavailable.includes(player.name),
   };
@@ -158,6 +176,9 @@ export function lineupOf(player: Player): LineupInfo | undefined {
 const PREDICTED_START_FLOOR = 0.75;
 /** Tahmin var ama oyuncu yok: geçmişin bu kadarı kalır. */
 const PREDICTED_OUT_FACTOR = 0.35;
+/** "Son çıkan 11" zayıf kaynak: daha alçak taban, daha yumuşak ceza. */
+const WEAK_START_FLOOR = 0.6;
+const WEAK_OUT_FACTOR = 0.6;
 
 /**
  * Son maç verisi olmayan oyuncu için oyunun resmî dakikasından kaba bir
@@ -232,13 +253,15 @@ export function startProbability(
   }
 
   // Sıradaki maçın tahmini 11'leri geçmişin üstüne biner. Her kaynak için:
-  // 11'deyse taban 0,75 + geçmişin dörtte biri, değilse geçmişin %35'i;
-  // kaynaklar eşit ağırlıkla ortalanır.
+  // 11'deyse taban + geçmişin payı, değilse geçmişin bir kısmı; kaynaklar eşit
+  // ağırlıkla ortalanır. "Son çıkan 11" tipi kaynak daha yumuşak uygulanır:
+  // zaten geçmiş maçlardan türetilmiş, iki kez sayılmasın.
+  const blend = (floor: number, outFactor: number, share: number) =>
+    share * (floor + (1 - floor) * p) + (1 - share) * p * outFactor;
   if (predicted.sources > 0) {
-    const inXi = PREDICTED_START_FLOOR + (1 - PREDICTED_START_FLOOR) * p;
-    const outXi = p * PREDICTED_OUT_FACTOR;
-    const share = predicted.listed / predicted.sources;
-    p = share * inXi + (1 - share) * outXi;
+    p = blend(PREDICTED_START_FLOOR, PREDICTED_OUT_FACTOR, predicted.listed / predicted.sources);
+  } else if (predicted.weakSources > 0) {
+    p = blend(WEAK_START_FLOOR, WEAK_OUT_FACTOR, predicted.weakListed / predicted.weakSources);
   }
 
   if (player.status === "D") p *= 0.6;

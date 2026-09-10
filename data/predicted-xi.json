@@ -1,9 +1,509 @@
 {
  "meta": {
   "source": "FotMob (fotmob.com)",
-  "fetched": null,
-  "matchday": 0,
-  "previews": 0
+  "fetched": "2026-09-10",
+  "matchday": 5,
+  "previews": 9
  },
- "teams": {}
+ "teams": {
+  "Galatasaray": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Galatasaray - Kocaelispor",
+     "starters": [
+      "Uğurcan",
+      "Sallai",
+      "Sánchez",
+      "Eren",
+      "Torreira",
+      "Sara",
+      "Sané",
+      "Batrakov",
+      "Yunus"
+     ],
+     "unmatched": [
+      "Ismail Jakobs",
+      "Barış Alper Yılmaz"
+     ]
+    }
+   ],
+   "unavailable": [
+    "Günay",
+    "Singo",
+    "Lemina",
+    "Osimhen"
+   ]
+  },
+  "Kocaelispor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Galatasaray - Kocaelispor",
+     "starters": [
+      "Serhat",
+      "Dijksteel",
+      "Zoukrou",
+      "Maglica",
+      "Haïdara",
+      "Show",
+      "Agyei",
+      "Uğur",
+      "Berkan",
+      "Sousa",
+      "Aye"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Petkovic",
+    "Jovanovic"
+   ]
+  },
+  "Gaziantep": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Gaziantep FK - Fenerbahçe",
+     "starters": [
+      "Tobiasz",
+      "Pérez",
+      "Arda",
+      "Abena",
+      "Kerim",
+      "Meleke",
+      "Sorescu",
+      "Kozlowski",
+      "Gidado",
+      "Maxim",
+      "Halil"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Ali",
+    "Sangaré",
+    "Fuat"
+   ]
+  },
+  "Fenerbahce": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Gaziantep FK - Fenerbahçe",
+     "starters": [
+      "Ederson",
+      "Semedo",
+      "Škriniar",
+      "Ake",
+      "Brown",
+      "Kanté",
+      "Guendouzi",
+      "Oğuz",
+      "Greenwood",
+      "Muriqi"
+     ],
+     "unmatched": [
+      "İrfan Kahveci"
+     ]
+    }
+   ],
+   "unavailable": [
+    "Mert Hakan",
+    "Asensio",
+    "Oosterwolde"
+   ]
+  },
+  "Besiktas": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Beşiktaş - Erzurumspor FK",
+     "starters": [
+      "Nübel",
+      "Amir",
+      "Agbadou",
+      "Emirhan",
+      "Rıdvan",
+      "Salih",
+      "Cerny",
+      "Olaitan",
+      "Orkun",
+      "Trossard",
+      "Vlahović"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Rıdvan"
+   ]
+  },
+  "Erzurumspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Beşiktaş - Erzurumspor FK",
+     "starters": [
+      "Ertuğrul",
+      "Gerxhaliu",
+      "Mujakic",
+      "Orhan",
+      "Giorbelidze",
+      "Owusu",
+      "Baiye",
+      "Rodríguez",
+      "Eren"
+     ],
+     "unmatched": [
+      "Mustafa Yumlu",
+      "Mustafa Fettahoğlu"
+     ]
+    }
+   ],
+   "unavailable": [
+    "Owusu"
+   ]
+  },
+  "Konyaspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Konyaspor - Trabzonspor",
+     "starters": [
+      "Bahadır",
+      "Andzouana",
+      "Baniya",
+      "Adil",
+      "Masuaku",
+      "Melih",
+      "Jevtovic",
+      "Colley",
+      "Gonçalves",
+      "Muleka",
+      "Enis"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": []
+  },
+  "Trabzonspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Konyaspor - Trabzonspor",
+     "starters": [
+      "Onana",
+      "Pina",
+      "Nwaiwu",
+      "Savic",
+      "Mustafa",
+      "Muçi",
+      "Fabinho",
+      "Ozan",
+      "Salah",
+      "Onuachu",
+      "Aral"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Onuachu",
+    "Saviolo",
+    "Malinovskyi",
+    "Okay",
+    "Folcarelli",
+    "Batahov"
+   ]
+  },
+  "Amedspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Amed Sportif - Başakşehir",
+     "starters": [
+      "Lafont",
+      "Cissé",
+      "Bates",
+      "Dellova",
+      "Krasniqi",
+      "Rayan",
+      "Gökhan",
+      "Umut",
+      "Dia Saba",
+      "Diagne",
+      "Ballet"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Sor",
+    "Dilhan"
+   ]
+  },
+  "Basaksehir": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Amed Sportif - Başakşehir",
+     "starters": [
+      "Deniz",
+      "Ömer Ali",
+      "Emin",
+      "Opoku",
+      "Operi",
+      "Kaluzinski",
+      "Olsen",
+      "Kemen",
+      "Fayzullayev"
+     ],
+     "unmatched": [
+      "Umut Günes",
+      "Eldor Shomurodov"
+     ]
+    }
+   ],
+   "unavailable": [
+    "Visca"
+   ]
+  },
+  "Samsunspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Samsunspor - Çorum FK",
+     "starters": [
+      "Okan",
+      "Mendes",
+      "Yunus",
+      "Guarino",
+      "Tómasson",
+      "Yalçın",
+      "Celil",
+      "Samed",
+      "Emre",
+      "Jarju",
+      "Sekongo"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Watt",
+    "Sousa",
+    "Fatih",
+    "Marius",
+    "Elayis",
+    "Coulibaly",
+    "Assoumou"
+   ]
+  },
+  "Corum": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Samsunspor - Çorum FK",
+     "starters": [
+      "Felipe",
+      "Gökhan",
+      "Serdar (2)",
+      "Smolcic",
+      "Borza",
+      "Ramadani",
+      "Cengiz",
+      "Diomandé",
+      "Fredy",
+      "Kyziridis",
+      "Ramirez"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": []
+  },
+  "Alanyaspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Alanyaspor - Göztepe",
+     "starters": [
+      "Victor",
+      "Lima",
+      "Aliti",
+      "Fatih",
+      "Hadërgjonaj",
+      "Makouta",
+      "Baran",
+      "Ruan",
+      "Fernandes",
+      "Hagi",
+      "Arda"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Maestro"
+   ]
+  },
+  "Goztepe": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Alanyaspor - Göztepe",
+     "starters": [
+      "Luka",
+      "Taha",
+      "Ege",
+      "Bokele",
+      "Rhaldney",
+      "Miroshi",
+      "Akonnor",
+      "Juan",
+      "Janderson"
+     ],
+     "unmatched": [
+      "Arda Kurtulan",
+      "André"
+     ]
+    }
+   ],
+   "unavailable": [
+    "Ogün",
+    "Gökdeniz",
+    "Godói",
+    "Furkan",
+    "Sundberg",
+    "Sabra"
+   ]
+  },
+  "Eyupspor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Eyüpspor - Rizespor",
+     "starters": [
+      "Moldovan",
+      "Talha",
+      "El Yamiq",
+      "Jules",
+      "Giordano",
+      "Massanga",
+      "Boutobba",
+      "Costa",
+      "Charles",
+      "Michalak",
+      "Ahmed"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Sabiri",
+    "Taşkın"
+   ]
+  },
+  "Rizespor": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Eyüpspor - Rizespor",
+     "starters": [
+      "Fofana",
+      "Mithat",
+      "Mocsi",
+      "Sagnan",
+      "Ariss",
+      "Taylan",
+      "Ahmed",
+      "Laçi",
+      "Olawoyin",
+      "Emrecan",
+      "Ali Sowe"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Alikulov"
+   ]
+  },
+  "Genclerbirligi": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Gençlerbirliği - Kasımpaşa",
+     "starters": [
+      "Pereira",
+      "Goutas",
+      "Thalisson",
+      "Fıratcan",
+      "Diabate",
+      "Traoré",
+      "Oğulcan",
+      "Tongya",
+      "Gouveia",
+      "Koïta"
+     ],
+     "unmatched": [
+      "İrfan Eğribayat"
+     ]
+    }
+   ],
+   "unavailable": [
+    "Rodrigues"
+   ]
+  },
+  "Kasimpasa": {
+   "sources": [
+    {
+     "source": "FotMob",
+     "kind": "lastStarting11",
+     "match": "Gençlerbirliği - Kasımpaşa",
+     "starters": [
+      "Gianniotis",
+      "Winck",
+      "Arous",
+      "Ilie",
+      "Ayberk",
+      "Kerem",
+      "Rafferty",
+      "Baldursson",
+      "Benedyczak",
+      "Güven",
+      "Ali"
+     ],
+     "unmatched": []
+    }
+   ],
+   "unavailable": [
+    "Diarra",
+    "Haris",
+    "Ouanes",
+    "Kamil"
+   ]
+  }
+ }
 }

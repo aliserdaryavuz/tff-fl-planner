@@ -32,6 +32,8 @@ describe("decodeState", () => {
       horizon: 4,
       weekDecay: 0.65,
       benchWeight: 0.25,
+      picks: { xp: 100, fixture: 40, form: 25, points: 0, start: 15, sel: 0 },
+      selInvert: true,
     };
     expect(decode(encodeState(state))).toEqual(state);
   });
@@ -61,5 +63,21 @@ describe("decodeState", () => {
     const s = decode("m=rel&gamma=1.5");
     expect(s.params.rel.gamma).toBe(1.5);
     expect(s.params.abs).toEqual(DEFAULT_STATE.params.abs);
+  });
+
+  it("oyuncu ağırlıkları okunur; bilinmeyen ad ve aralık dışı değer elenir", () => {
+    expect(decode("pw=xp:100,form:40").picks).toEqual({
+      xp: 100,
+      fixture: 0,
+      form: 40,
+      points: 0,
+      start: 0,
+      sel: 0,
+    });
+    expect(decode("pw=xp:900,bilinmeyen:50").picks.xp).toBe(100);
+    // Tanınır çift yoksa varsayılan korunur.
+    expect(decode("pw=abc").picks).toEqual(DEFAULT_STATE.picks);
+    expect(decode("si=1").selInvert).toBe(true);
+    expect(decode("").selInvert).toBe(false);
   });
 });

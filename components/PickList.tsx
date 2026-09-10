@@ -16,7 +16,7 @@ import {
   predictedMeta,
   predictedXi,
 } from "@/lib/lineups";
-import { officialPerMatch, type PickRow } from "@/lib/picks";
+import { officialPerMatch, PICK_SIGNALS, type PickRow } from "@/lib/picks";
 
 type PosFilter = Position | "ALL";
 
@@ -132,11 +132,11 @@ function PickHeader() {
       <span>{t.picks.columns.rank}</span>
       <span>{t.picks.columns.player}</span>
       <span className="text-right">{t.picks.columns.price}</span>
-      <span className="text-right" title={t.picks.columns.ppmTitle}>
-        {t.picks.columns.ppm}
-      </span>
       <span className="text-right" title={t.picks.columns.xpTitle}>
         {t.picks.columns.xp}
+      </span>
+      <span className="text-right" title={t.picks.columns.scoreTitle}>
+        {t.picks.columns.score}
       </span>
     </div>
   );
@@ -179,6 +179,17 @@ export function breakdownTitle(row: PickRow, t: ReturnType<typeof useI18n>["t"],
     lines.push(b.lambda(f.n2(first.lambdaFor), f.n2(first.lambdaAgainst), f.num(100 * first.pCleanSheet, 0)));
   }
   return lines.join("\n");
+}
+
+/** Her ölçütün oyuncu havuzundaki 0-100 karşılığı; skor sütununun ipucu. */
+function signalTitle(
+  row: PickRow,
+  t: ReturnType<typeof useI18n>["t"],
+  f: ReturnType<typeof useI18n>["f"],
+): string {
+  return PICK_SIGNALS.map(
+    (key) => `${t.pickWeights.signals[key].label}: ${f.num(row.signals[key], 0)}/100`,
+  ).join("\n");
 }
 
 /** Tek oyuncu satırı; `compact` görselde ikinci satırı tek satıra indirir. */
@@ -231,16 +242,20 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
             f.n1(row.player.form ?? 0),
             f.pct(row.player.sel ?? 0, 1),
           ),
+          ppm != null ? `${t.picks.columns.ppm}: ${f.n1(ppm)}` : null,
           s.matches ? t.picks.per90Title(s.fantasyPoints, s.minutes, s.matches) : null,
           row.player.news ? t.picks.news(row.player.news) : null,
         ]
           .filter(Boolean)
           .join("\n")}
       >
-        {ppm != null ? f.n1(ppm) : "–"}
+        {f.n1(row.xp)}
       </div>
 
-      <div className="text-right font-cond text-[17px] font-bold text-accent tabular-nums">
+      <div
+        className="text-right font-cond text-[17px] font-bold text-accent tabular-nums"
+        title={signalTitle(row, t, f)}
+      >
         {f.n1(row.score)}
       </div>
     </div>

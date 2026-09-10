@@ -8,7 +8,15 @@ import {
   type ModelParams,
 } from "@/lib/models";
 import { clamp } from "@/lib/num";
-import { DEFAULT_HORIZON, DEFAULT_WEEK_DECAY, MAX_HORIZON } from "@/lib/picks";
+import {
+  DEFAULT_HORIZON,
+  DEFAULT_PICK_WEIGHTS,
+  DEFAULT_WEEK_DECAY,
+  MAX_HORIZON,
+  PICK_SIGNALS,
+  type PickSignal,
+  type PickWeights,
+} from "@/lib/picks";
 import { DEFAULT_BENCH_WEIGHT } from "@/lib/squad";
 import { SOURCES, type SourceKey, type SourceWeights } from "@/lib/strength";
 import { DEFAULT_TZ, isTimeZone, type TimeZone } from "@/lib/time";
@@ -28,6 +36,10 @@ export type PlannerState = {
   weekDecay: number;
   /** Yedeklerin hedefteki ağırlığı, 0-0,5. */
   benchWeight: number;
+  /** Oyuncu sıralamasındaki sinyal ağırlıkları. */
+  picks: PickWeights;
+  /** Seçilme oranını ters çevir: az seçilenler öne. */
+  selInvert: boolean;
 };
 
 export const DEFAULT_STATE: PlannerState = {
@@ -40,6 +52,8 @@ export const DEFAULT_STATE: PlannerState = {
   horizon: DEFAULT_HORIZON,
   weekDecay: DEFAULT_WEEK_DECAY,
   benchWeight: DEFAULT_BENCH_WEIGHT,
+  picks: DEFAULT_PICK_WEIGHTS,
+  selInvert: false,
 };
 
 function parseNumber(raw: string | null, def: number, lo: number, hi: number): number {
@@ -72,6 +86,25 @@ function parseWeights(raw: string): SourceWeights {
   return out;
 }
 
+/** "xp:100,form:40" -> ağırlıklar. Tanınmayan ad ve aralık dışı değer elenir. */
+function parsePickWeights(raw: string | null, base: PickWeights): PickWeights {
+  if (raw == null) return base;
+  const known = new Set<string>(PICK_SIGNALS);
+  const out = Object.fromEntries(PICK_SIGNALS.map((key) => [key, 0])) as PickWeights;
+  let seen = false;
+  for (const part of raw.split(",")) {
+    const [key, value] = part.split(":");
+    const n = Number(value);
+    if (known.has(key) && Number.isFinite(n)) {
+      out[key as PickSignal] = clamp(Math.round(n), 0, WEIGHT_MAX);
+      seen = true;
+    }
+  }
+  // Boş "pw=" ağırlıkların hepsini sıfırlamak demek; hiç anlaşılır çift yoksa
+  // (ör. "pw=abc") varsayılana dönülür.
+  return seen || raw === "" ? out : base;
+}
+
 /** Durumu query string'e çevirir. Yalnızca seçili modelin parametreleri yazılır. */
 export function encodeState(state: PlannerState): string {
   const q = new URLSearchParams();
@@ -93,6 +126,13 @@ export function encodeState(state: PlannerState): string {
   q.set("h", String(state.horizon));
   q.set("wd", String(state.weekDecay));
   q.set("bw", String(state.benchWeight));
+  q.set(
+    "pw",
+    PICK_SIGNALS.filter((key) => (state.picks[key] ?? 0) > 0)
+      .map((key) => `${key}:${state.picks[key]}`)
+      .join(","),
+  );
+  if (state.selInvert) q.set("si", "1");
   return q.toString();
 }
 
@@ -119,6 +159,8 @@ export function decodeState(
     horizon: Math.round(parseNumber(q.get("h"), base.horizon, 1, MAX_HORIZON)),
     weekDecay: parseNumber(q.get("wd"), base.weekDecay, 0, 1),
     benchWeight: parseNumber(q.get("bw"), base.benchWeight, 0, 0.5),
+    picks: parsePickWeights(q.get("pw"), base.picks),
+    selInvert: q.get("si") === "1" ? true : base.selInvert,
   };
 
   const values: ParamValues = {
