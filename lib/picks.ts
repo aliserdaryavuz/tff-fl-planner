@@ -26,6 +26,13 @@ export type PickRow = {
   per90: number | null;
 };
 
+/** Oyunun kendi maç başına puanı; yoksa toplam/dakikadan kaba karşılık. */
+export function officialPerMatch(player: PickRow["player"]): number | null {
+  if (player.ppm != null && player.ppm > 0) return player.ppm;
+  if (player.mins > 0) return (90 * player.pts) / player.mins;
+  return null;
+}
+
 export type PickInput = {
   results: Record<string, TeamResult>;
   ctx: XpContext;

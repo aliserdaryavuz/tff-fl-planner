@@ -22,6 +22,25 @@ export type Player = {
   /** FotMob oyuncu id'si (kadro ve maç verisi eşlemesi). */
   fotmobId?: number | null;
   gameId?: number | string | null;
+  /**
+   * Oyunun resmî sezon toplamları (scripts/fetch-game.mjs). Oyunun hiç
+   * doldurmadığı alanlar dosyaya yazılmaz, bu yüzden hepsi isteğe bağlı.
+   */
+  goals?: number;
+  assists?: number;
+  cleanSheets?: number;
+  conceded?: number;
+  saves?: number;
+  yellow?: number;
+  red?: number;
+  bonus?: number;
+  /** Son maçlardaki ortalama puan (oyunun "form"u) ve maç başına puan. */
+  form?: number;
+  ppm?: number;
+  /** Oyunun oyuncu haberi (sakatlık/durum notu). */
+  news?: string | null;
+  /** Kulüpten ayrılmak üzere. */
+  leaving?: boolean | null;
 };
 
 export type FantasyMeta = {

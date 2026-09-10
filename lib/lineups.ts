@@ -1,5 +1,6 @@
 import raw from "@/data/lineups.json";
 import rawPredicted from "@/data/predicted-xi.json";
+import { meta } from "@/lib/data";
 import type { Player } from "@/lib/fantasy";
 import { matchPoints } from "@/lib/scoring.mjs";
 
@@ -158,6 +159,38 @@ const PREDICTED_START_FLOOR = 0.75;
 /** Tahmin var ama oyuncu yok: geçmişin bu kadarı kalır. */
 const PREDICTED_OUT_FACTOR = 0.35;
 
+/**
+ * Son maç verisi olmayan oyuncu için oyunun resmî dakikasından kaba bir
+ * başlama payı: oynanan hafta sayısı × 90'a oranı. FotMob verisi kadar iyi
+ * değil (hangi maçta başladığı bilinmiyor) ama "hiç veri yok" varsayımından
+ * çok daha doğru: 4 haftada 360 dakika oynayan biri kesinlikle ilk 11'dedir.
+ */
+function officialStartShare(player: Player): number | null {
+  const done = meta.currentGameweek ?? 0;
+  if (done <= 0 || !player.mins) return null;
+  return Math.min(1, player.mins / (90 * done));
+}
+
+/**
+ * Oyuncunun maç kadrosunda olma olasılığı. Başlama olasılığından ayrı: sakat
+ * ya da cezalı biri yedek olarak da giremez, dolayısıyla süre puanı da alamaz.
+ * Sakat/cezalı 0; maç öncesi listede "yok" görünen 0,15; gerisi 1.
+ */
+export function availability(
+  player: Player,
+  info: LineupInfo | undefined = lineupOf(player),
+  predicted: Predicted = predictedFor(player),
+): number {
+  if (player.status === "I" || player.status === "S") return 0;
+  if (predicted.confirmed === "start") return 1;
+  if (predicted.unavailable) return 0.15;
+  if (info?.unavailable) {
+    const until = info.unavailable.until;
+    if (!until || Date.parse(until) > Date.now()) return 0.15;
+  }
+  return 1;
+}
+
 export function startProbability(
   player: Player,
   info: LineupInfo | undefined = lineupOf(player),
@@ -171,7 +204,9 @@ export function startProbability(
   // Maç öncesi sakat/cezalı listesi (en güncel bilgi).
   if (predicted.unavailable) return 0.05;
 
-  let p = UNKNOWN_START;
+  // Taban: resmî dakika payı varsa ondan, yoksa "bilinmiyor".
+  const share = officialStartShare(player);
+  let p = share == null ? UNKNOWN_START : 0.85 * share + 0.15 * UNKNOWN_START;
   if (info) {
     // Kulübün listesinde sakat/cezalı: dönüş tarihi geçmemişse oynamaz.
     if (info.unavailable) {

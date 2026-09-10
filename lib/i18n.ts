@@ -237,7 +237,7 @@ const tr = {
   },
   picks: {
     heading: "Kim alınmalı? Beklenen puan sıralaması",
-    note: "Her oyuncu için TFF puan tablosunun beklenen değeri: dakika puanı, gol ve asist (oyuncunun son maçlardaki oranı × takımın beklenen golü), gol yememe (rakibin beklenen golüne göre Poisson), yenilen gol, kurtarış, kart ve bonus. Başlama olasılığı son maçlardaki ilk 11 ve dakikalardan; verisi olmayan düşük sayılır. Fiyat puana girmez; bütçe kadro kurucuda sert kısıt. Sakat ve cezalılar listeye girmez, şüpheliler işaretli. Bu bir kesin tahmin değil, aynı ölçekte bir beklenti.",
+    note: "Her oyuncu için TFF puan tablosunun beklenen değeri: dakika puanı, gol ve asist (oyuncunun sezon oranı × takımın beklenen golü), gol yememe (rakibin beklenen golüne göre Poisson), yenilen gol, kurtarış, kart ve bonus. Gol, asist, kurtarış, kart ve bonus sayıları oyunun kendi resmî verisinden; az dakikada mevki ortalamasına çekilir. Başlama olasılığı son maçlardaki ilk 11, dakikalar ve varsa tahmini kadrolardan. Fiyat puana girmez; bütçe kadro kurucuda sert kısıt. Sakat ve cezalılar listeye girmez, şüpheliler işaretli. Bu bir kesin tahmin değil, aynı ölçekte bir beklenti.",
     positionLabel: "Mevki",
     all: "Tümü",
     floor: "Alt fiyat sınırı",
@@ -249,9 +249,14 @@ const tr = {
       xp: "xP",
       xpTitle: "Beklenen puan (hafta başına)",
       start: "Başlar",
+      ppm: "PM",
+      ppmTitle: "Oyunun kendi verisi: maç başına puan",
       per90: "p/90",
       per90Title: "Son maçlardan gerçek fantasy puanı / 90 dk (az dakikada düzeltmeli)",
     },
+    official: (pts: number, mins: number, form: string, sel: string) =>
+      `Oyun verisi: ${pts} puan, ${mins} dakika, form ${form}, seçilme ${sel}`,
+    news: (text: string) => `Oyun notu: ${text}`,
     difficultyTitle: "Seçili haftalarda maç başına zorluk",
     empty: "Bu filtrelerle oyuncu kalmadı; fiyat sınırını yükselt.",
     start: (pct: string) => `${pct} başlar`,
@@ -295,7 +300,7 @@ const tr = {
     note: (budget: string, perClub: number, formation: string) =>
       `${budget} bütçe, kulüp başına en fazla ${perClub} oyuncu, ${formation} kadro; ilk 11'de 1 kaleci, en az 3 defans ve 1 forvet (3-5-2, 3-4-3, 4-4-2, 4-3-3, 4-5-1, 5-4-1, 5-3-2, 5-2-3). Hedef: ilk 11'in beklenen puanı + kaptanın puanı bir daha + yedeklerin küçük bir payı. Para ilk 11'e gider, yedekler en ucuzdan seçilir. Transfer sınırsız olduğu için her hafta sıfırdan kurulabilir.`,
     noPrices:
-      "Fiyat verisi yok: TFF Fantezi Lig oyuncu fiyatları giriş gerektiren bir API'den geliyor. Kök dizine .env.local dosyasıyla TFF_EMAIL ve TFF_PASSWORD koyup `node scripts/fetch-players.mjs --dump` çalıştırınca liste ve fiyatlar dolar; o zamana kadar yalnız beklenen puan sıralaması çalışır.",
+      "Fiyat verisi yok: oyuncu fiyatları oyunun giriş gerektiren API'sinden geliyor. `node scripts/chrome-login.mjs` ile bir kez giriş yapıp `node scripts/fetch-game.mjs` çalıştırınca liste ve fiyatlar dolar; o zamana kadar yalnız beklenen puan sıralaması çalışır.",
     errors: {
       "no-prices": "Fiyat verisi yok.",
       "locked-position": "Kilitli oyuncular ilk 11 mevki sınırını aşıyor (1 kaleci, en fazla 5 defans, 5 orta saha, 3 forvet).",
@@ -582,7 +587,7 @@ const en: Strings = {
   },
   picks: {
     heading: "Who to buy? Expected points ranking",
-    note: "For every player the expected value of the TFF scoring table: minutes points, goals and assists (the player's recent rate × the team's expected goals), clean sheet (Poisson on the opponent's expected goals), goals conceded, saves, cards and bonus. Start probability comes from recent starts and minutes; players without data are treated as unlikely. Price does not enter the score; the budget is a hard limit in the squad builder. Injured and suspended players are left out, doubtful ones flagged. Not a precise forecast, an expectation on one scale.",
+    note: "For every player the expected value of the TFF scoring table: minutes points, goals and assists (the player's season rate × the team's expected goals), clean sheet (Poisson on the opponent's expected goals), goals conceded, saves, cards and bonus. Goal, assist, save, card and bonus counts come from the game's own official data, pulled towards the positional average when minutes are few. Start probability comes from recent starts, minutes and predicted lineups where available. Price does not enter the score; the budget is a hard limit in the squad builder. Injured and suspended players are left out, doubtful ones flagged. Not a precise forecast, an expectation on one scale.",
     positionLabel: "Position",
     all: "All",
     floor: "Price floor",
@@ -594,9 +599,14 @@ const en: Strings = {
       xp: "xP",
       xpTitle: "Expected points per matchweek",
       start: "Start",
+      ppm: "PPM",
+      ppmTitle: "The game's own figure: points per match",
       per90: "pts/90",
       per90Title: "Actual fantasy points per 90 from recent matches (shrunk for few minutes)",
     },
+    official: (pts: number, mins: number, form: string, sel: string) =>
+      `Game data: ${pts} points, ${mins} minutes, form ${form}, selected by ${sel}`,
+    news: (text: string) => `Game note: ${text}`,
     difficultyTitle: "Difficulty per match over the selected weeks",
     empty: "No players left under these filters; raise the price ceiling.",
     start: (pct: string) => `${pct} to start`,
@@ -640,7 +650,7 @@ const en: Strings = {
     note: (budget: string, perClub: number, formation: string) =>
       `${budget} budget, at most ${perClub} players per club, a ${formation} squad; the XI needs 1 keeper, at least 3 defenders and 1 forward (3-5-2, 3-4-3, 4-4-2, 4-3-3, 4-5-1, 5-4-1, 5-3-2, 5-2-3). Objective: expected points of the XI + the captain's once more + a small share of the bench. The money goes to the XI, the bench is filled from the cheapest. Transfers are unlimited, so the squad can be rebuilt every week.`,
     noPrices:
-      "No price data: TFF Fantezi Lig player prices come from an API that needs a login. Put TFF_EMAIL and TFF_PASSWORD in a .env.local file at the root and run `node scripts/fetch-players.mjs --dump`; until then only the expected-points ranking works.",
+      "No price data: player prices come from the game's API, which needs a login. Sign in once with `node scripts/chrome-login.mjs`, then run `node scripts/fetch-game.mjs`; until then only the expected-points ranking works.",
     errors: {
       "no-prices": "No price data.",
       "locked-position": "Pinned players exceed the XI position limits (1 keeper, at most 5 defenders, 5 midfielders, 3 forwards).",

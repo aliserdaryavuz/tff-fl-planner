@@ -35,22 +35,30 @@ Next.js App Router + TypeScript + Tailwind + vitest; Vercel. Veri derleme zaman�
 
 | Veri | Kaynak | Betik | Not |
 |---|---|---|---|
-| Fikstür, saat, skor, TFF kulüp/maç id | tff.org `Default.aspx?pageID=198&hafta=N` (windows-1254) | `fetch-fixtures.mjs` | Saatler yalnız yakın haftalarda açıklanmış (`tsi: null`); skorlar buradan, puan durumu uygulamada hesaplanır |
+| Fikstür, hafta takvimi, son kadro kaydı, skorlar | Oyunun API'si `projection/stats/fixtures` | `fetch-game.mjs` | 34 hafta × 9 maç, UTC başlama anı, `status` (FT/NS), resmî deadline |
+| Kulüpler | Oyunun API'si `projection/stats/club-stats` | `fetch-game.mjs` | 18 kulüp; `clubId` → kendi id'lerimize ada göre eşlenir |
+| Oyuncular: fiyat, seçilme, puan, form, dakika, gol, asist, gol yememe, yenilen, kurtarış, kart, bonus | Oyunun API'si `projection/stats/player-stats` | `fetch-game.mjs` | 527 oyuncu; fiyat 4-12 M TL, 0,5 adımlı |
 | Geçen sezon sırası | Wikipedia 2025–26 Süper Lig / 1. Lig | `scripts/lib/teams.mjs` | Yükselenler 16-18 |
 | Opta gücü | theanalyst.com power rankings paketi (index.js, ~17 MB) | `update-opta.mjs` | Aynı adlı kadın/altyapı kayıtları: puanı yüksek olan A takımı |
-| Kadro değeri | transfermarkt.com.tr TR1 sayfası (curl çalışıyor) | `update-values.mjs` | milyon € |
+| Kadro değeri | transfermarkt.com.tr TR1 sayfası | `update-values.mjs` | milyon € |
 | Elo | clubelo.com / elofootball.com | — | 09.09.2026'da erişilemedi; alan isteğe bağlı, kaynak açılınca doldurulur |
-| Oyuncu havuzu | FotMob kadro sayfaları (`__NEXT_DATA__`, headless Chrome) | `fetch-squads.mjs` | 540 oyuncu, mevki FotMob rolü, sakatlık; fiyat `null` |
-| Fiyat, seçilme, oyun puanı | tfffantezilig.com — `api.tfffantezilig.com` üzerinden, giriş gerekli | `fetch-players.mjs` | Bkz. §3.1 |
+| Sakat/cezalı | FotMob kadro sayfaları | `fetch-squads.mjs` | Oyunun API'sinde sakatlık yok; oyun listesi korunur, yalnız `fotmobId` + `status` eklenir |
 | Son maçlar: ilk 11, dakika, gol, asist, kart, yenilen gol, bonus | FotMob maç sayfaları | `fetch-lineups.mjs` | 6 maça kadar (dostluk hariç); bonus iki takımın TFF puanıyla hesaplanır |
 | Tahmini / resmî 11, maç öncesi sakat listesi | FotMob oynanmamış maç sayfası (`lineupType` predicted/confirmed) | `fetch-predicted.mjs` | Maç günü yeniden koş |
-| Armalar | images.fotmob.com | `fetch-logos.mjs` | |
+| Armalar | images.fotmob.com | `fetch-logos.mjs` | Oyunun kendi logoları da `teams[].logoUrl` alanında |
+| Doğrulama | tff.org `Default.aspx?pageID=198&hafta=N` | `verify-fixtures.mjs` | Yazmaz; tarih/saat/skor farklarını listeler |
 
-### 3.1 Oyunun API'si
+### 3.1 Oyunun API'si ve giriş
 
-Site Next.js; tarayıcı `/api/backend/<yol>` ile çerezli proxy'den `api.tfffantezilig.com`'a gider. Girişsiz sondada `players`, `teams`, `matches`, `stats`, `fantasy-team`, `user/me`, `leagues` 401 (var, giriş ister), diğer yollar 403 (izin listesinde değil). Giriş: `POST /api/auth/login {email, password}` → `{ok:true,user}` + çerez. `fetch-players.mjs` giriş yapar, aday yolları dener, `--dump` ile ham yanıtları önbellek klasörüne yazar ve yanıt içinde ad/fiyat/mevki alanlı ilk diziyi oyun dosyasına çevirir. Yanıt biçimi henüz görülmediği için normalize kuralları ilk gerçek dökümle güncellenecek. Hesap bilgisi `.env.local` (gitignore).
+Site Next.js; tarayıcı `/api/backend/<yol>` ile çerezli proxy'den `api.tfffantezilig.com`'a gider. Kimlik doğrulama **Keycloak** (`auth.tfffantezilig.com`, realm `tff`): çerezler `kc_access_token`, `kc_refresh_token`, `auth_session_user` (site) ve `KEYCLOAK_IDENTITY`, `AUTH_SESSION_ID` (auth alt alanı). Giriş Google hesabıyla yapıldığı için **şifreyle programatik giriş yok**; `/api/auth/login` yalnız e-posta+şifreli hesaplar için.
 
-Fiyat gelince `data/fantasy-players.json` `pricesFrom: "game"` olur; `fetch-squads.mjs` bu listeyi korur, yalnız FotMob id ve sakatlık eşler. Fiyat adımı bilinmiyor; kadro kurucu 0,5 ve 0,1 adımlarını destekler.
+Çözüm (10.09.2026): projeye ayrılmış kalıcı bir Chrome profilinde (`%LOCALAPPDATA%\tff-fl-planner\chrome-profile`) bir kez Google ile giriş yapılır; betikler o tarayıcıya CDP ile bağlanıp istekleri **sayfa bağlamında** koşturur (`scripts/lib/chrome.mjs`), böylece çerezler tarayıcının kasasında kalır ve hiçbir token dosyaya yazılmaz.
+
+Denenip elenen yollar: kullanıcının kendi Chrome profilinin çerez veritabanını kopyalamak (Chrome 127+ **app-bound şifreleme**: kopyalanan profilden `v20` çerezler çözülemiyor, yalnız eski `v10` analytics çerezleri geliyor); Chrome açıkken çerez dosyasını okumak (dışlayıcı kilit). Chrome'un varsayılan profiliyle `--remote-debugging-port` bu sürümde çalışıyor ama tarayıcıyı kapatmak oturum çerezlerini düşürüyor — bu yüzden ayrı profil.
+
+Kullanılan uçlar (hepsi `GET /api/backend/…`): `users/me?league-id=1`, `projection/stats/fixtures?league-id=1`, `projection/stats/club-stats?league-id=1`, `projection/stats/player-stats?league-id=1`, `projection/chips`, `fantasy-team/teams/<id>?gameweek-id=<n>`, `fantasy-team/teams/<id>/chips?league-id=1`.
+
+Oyunun doldurmadığı alanlar sıfır geliyor (`starts`, `bps`, `xGTotal`, `xATotal`, `availabilityPercent`); `fetch-game.mjs` tamamen boş alanları dosyaya yazmaz.
 
 ---
 
@@ -65,8 +73,9 @@ UCL projesindeki karma güç: her kaynak 18 takım içinde 0-100'e yayılır, a�
 Her oyuncu × maç için TFF puan tablosunun beklenen değeri:
 
 - Beklenen gol: `λ_for = μ · e^(0,8·d/100)`, `λ_against = μ · e^(−0,8·d/100)`; `d` = benim güç − (rakip güç ± HA), `μ` lig ortalaması (bu sezon, 50 maç önceliğiyle 1,35'e çekilmiş).
-- Dakika: başlama olasılığı `lib/lineups.ts` (son maçlar, tahmini 11, sakat listesi; verisi olmayan 0,15); yedekten girme oranı ve ortalama dakikalar son maçlardan; `p60`.
-- Oranlar (gol/90, asist/90, sarı/90, kırmızı/90, bonus/90): gözlenen + mevki önceliği (4 maç değerinde), `PRIORS`.
+- Dakika: başlama olasılığı `lib/lineups.ts` (son maçlar, tahmini 11, sakat listesi; FotMob verisi yoksa oyunun resmî dakikası / oynanan hafta × 90); yedekten girme oranı ve ortalama dakikalar son maçlardan; `p60`.
+- Kadroda olma olasılığı (`availability`) başlamadan ayrı: sakat/cezalı 0 → süre puanı da alamaz; maç öncesi listede "yok" görünen 0,15.
+- Oranlar (gol/90, asist/90, kurtarış/90, sarı/90, kırmızı/90, bonus/90): oyunun **resmî sezon toplamları** + mevki önceliği (4 maç değerinde), `PRIORS`. Resmî dakika yoksa son maç verisine düşer.
 - Kalemler: süre `pPlay·1 + p60·1`; gol `g90·dk/90·(λ_for/μ)·golPuanı`; asist ×3; gol yememe `p60·e^(−λ_against)·csPuanı`; yenilen `−dk/90·E[floor(G/2)]` (Poisson); kurtarış (KL) `3·dk/90·(λ_against/μ)/3`; kart; bonus `bonus90·dk/90·√(λ_for/μ)`.
 - Ufuk: seçili haftadan `horizon` hafta, ağırlık `decay^(k)`; xP = ağırlıklı ortalama (hafta başına puan). Varsayılan ufuk 1.
 
@@ -100,14 +109,15 @@ Tasarım UCL projesiyle aynı: siyah zemin, kırmızı vurgu, Barlow / Barlow Co
 
 ## 6. Yayın
 
-GitHub `main` → Vercel (otomatik). Ortam değişkeni yok. Haftalık güncelleme: `fetch-fixtures` (skor + saat), `fetch-lineups`, maç günü `fetch-predicted <hafta>`, gerekirse `update-opta` / `update-values`; fiyat için `fetch-players`. Sonra `pnpm test && pnpm build` ve push.
+GitHub `main` → Vercel (otomatik). Ortam değişkeni yok. Haftalık güncelleme: `chrome-login` (oturum düştüyse), `fetch-game` (fiyat, skor, hafta), `fetch-squads`, `fetch-lineups`, maç günü `fetch-predicted <hafta>`, gerekirse `update-opta` / `update-values`. Sonra `pnpm test && pnpm build` ve push.
 
 ---
 
 ## 7. Bilinen eksikler / sonraki adımlar
 
-- Oyun fiyatları ve seçilme oranı (giriş gerekli; ilk dökümden sonra normalize kurallarını doğrula).
+- Oturum: Chrome penceresi kapanınca oyunun çerezleri düşüyor, `chrome-login.mjs` ile yeniden girmek gerekiyor. `kc_refresh_token` ile Keycloak'tan sessiz yenileme araştırılabilir.
 - Elo kaynağı erişilebilir olunca `elo` alanı ve `update-elo.mjs`.
-- Kurtarış sayıları FotMob maç sayfasında yok; kaleci kurtarışı mevki önceliği (3/90) × rakibin beklenen golü.
+- Oyunun `starts`, `bps`, `xG`, `xA` alanları boş; doldurulursa başlama olasılığı ve oranlar doğrudan resmî veriden gelir.
+- Kendi takımını (`fantasy-team/teams/<id>`) okuyup "mevcut kadrondan en iyi transfer" önerisi eklenebilir; uç nokta çalışıyor.
 - Menajer kartları (Tüm Takım Sahaya için yedek ağırlığını 0,5'e çek; Hücum için diziliş kısıtı kalkmıyor).
-- Ertelenen maçlar: fikstür haftada bir maç varsayar; erteleme olursa `fixturesOf`/`schedule` çift hafta desteği ister.
+- Ertelenen maçlar: veri artık oyunun hafta eşlemesini kullanıyor, ama `schedule` hâlâ takım başına haftada tek maç varsayar; çift maçlı hafta olursa güncellenmeli.

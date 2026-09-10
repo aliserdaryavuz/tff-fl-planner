@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Player } from "@/lib/fantasy";
+import { players as gamePlayers, type Player } from "@/lib/fantasy";
 import {
   fantasyPer90,
   hasLineupData,
@@ -96,15 +96,27 @@ describe("summarizeRecent ve fantasyPer90", () => {
 });
 
 describe("gerçek veri", () => {
-  it("son maç verisi yüklü, oyuncular oyun dosyasıyla eşleşiyor", () => {
+  it("son maç verisi yüklü ve oyun dosyasındaki adlarla eşleşiyor", () => {
     expect(hasLineupData).toBe(true);
     expect(Object.keys(lineups).length).toBeGreaterThan(300);
-    const osimhen = lineupOf(player({ name: "Victor Osimhen", team: "Galatasaray", pos: "FWD" }));
-    expect(osimhen).toBeDefined();
-    expect(osimhen!.recent.length).toBeGreaterThan(0);
-    for (const m of osimhen!.recent) {
-      expect(m.minutes).toBeGreaterThanOrEqual(0);
-      expect(m.minutes).toBeLessThanOrEqual(90);
+    // Oyun dosyasındaki oyuncuların çoğu FotMob verisiyle eşleşmeli.
+    const matched = gamePlayers.filter((p) => lineupOf(p)).length;
+    expect(matched / gamePlayers.length).toBeGreaterThan(0.6);
+    for (const info of Object.values(lineups)) {
+      for (const m of info.recent) {
+        expect(m.minutes).toBeGreaterThanOrEqual(0);
+        expect(m.minutes).toBeLessThanOrEqual(90);
+      }
     }
+  });
+
+  it("çok oynayan oyuncunun başlama olasılığı yüksek, hiç oynamayanınki düşük", () => {
+    const heavy = gamePlayers.filter((p) => p.mins >= 300);
+    const none = gamePlayers.filter((p) => p.mins === 0 && !lineupOf(p));
+    expect(heavy.length).toBeGreaterThan(10);
+    const avg = (list: typeof heavy) =>
+      list.reduce((s, p) => s + startProbability(p), 0) / list.length;
+    expect(avg(heavy)).toBeGreaterThan(0.7);
+    if (none.length) expect(avg(none)).toBeLessThan(0.3);
   });
 });

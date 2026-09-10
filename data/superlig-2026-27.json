@@ -3,11 +3,14 @@
   "season": "2026/27",
   "league": "Trendyol Süper Lig",
   "weeks": 34,
-  "source_fixtures": "TFF resmî fikstür sayfası (tff.org), 09.09.2026",
-  "generated": "2026-09-08",
+  "source_fixtures": "TFF Fantezi Lig resmî API (tfffantezilig.com), 10.09.2026",
+  "generated": "2026-09-10",
   "last_source": "Wikipedia, 2025–26 Süper Lig ve TFF 1. Lig nihai tabloları",
   "opta_source": "Opta Power Rankings (theanalyst.com), 09.09.2026",
-  "value_source": "Transfermarkt kadro değeri (transfermarkt.com.tr), 09.09.2026"
+  "value_source": "Transfermarkt kadro değeri (transfermarkt.com.tr), 09.09.2026",
+  "currentGameweek": 4,
+  "editableGameweek": 5,
+  "editableDeadline": "2026-09-11T16:00:00Z"
  },
  "teams": [
   {
@@ -18,7 +21,10 @@
    "last": 1,
    "opta": 87.6,
    "optaRank": 55,
-   "value": 411.6
+   "value": 411.6,
+   "clubId": 17,
+   "shortName": "GS",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/17_logo_3584c8a8.png"
   },
   {
    "id": "Fenerbahce",
@@ -28,7 +34,10 @@
    "last": 2,
    "opta": 87.4,
    "optaRank": 58,
-   "value": 282.7
+   "value": 282.7,
+   "clubId": 6,
+   "shortName": "FB",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/6_logo_90cff8b2.png"
   },
   {
    "id": "Trabzonspor",
@@ -38,7 +47,10 @@
    "last": 3,
    "opta": 81.4,
    "optaRank": 241,
-   "value": 185.8
+   "value": 185.8,
+   "clubId": 1,
+   "shortName": "TS",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/1_logo_93639880.png"
   },
   {
    "id": "Besiktas",
@@ -48,7 +60,10 @@
    "last": 4,
    "opta": 84.8,
    "optaRank": 101,
-   "value": 266.6
+   "value": 266.6,
+   "clubId": 9,
+   "shortName": "BJK",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/9_logo_f430fbaa.png"
   },
   {
    "id": "Basaksehir",
@@ -58,7 +73,10 @@
    "last": 5,
    "opta": 80.7,
    "optaRank": 278,
-   "value": 75.5
+   "value": 75.5,
+   "clubId": 13,
+   "shortName": "BFK",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/13_logo_a5d32ed2.png"
   },
   {
    "id": "Goztepe",
@@ -68,7 +86,10 @@
    "last": 6,
    "opta": 79.3,
    "optaRank": 366,
-   "value": 60.1
+   "value": 60.1,
+   "clubId": 10,
+   "shortName": "GÖZ",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/10_logo_0e9bc3c8.png"
   },
   {
    "id": "Samsunspor",
@@ -78,7 +99,10 @@
    "last": 7,
    "opta": 80.3,
    "optaRank": 299,
-   "value": 54.33
+   "value": 54.33,
+   "clubId": 15,
+   "shortName": "SAM",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/15_logo_dfdae9a1.png"
   },
   {
    "id": "Rizespor",
@@ -88,7 +112,10 @@
    "last": 8,
    "opta": 78,
    "optaRank": 455,
-   "value": 48
+   "value": 48,
+   "clubId": 12,
+   "shortName": "ÇRS",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/12_logo_89369772.png"
   },
   {
    "id": "Konyaspor",
@@ -98,7 +125,10 @@
    "last": 9,
    "opta": 76.9,
    "optaRank": 554,
-   "value": 38.3
+   "value": 38.3,
+   "clubId": 7,
+   "shortName": "KNY",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/7_logo_30da9ed5.png"
   },
   {
    "id": "Kocaelispor",
@@ -108,7 +138,10 @@
    "last": 10,
    "opta": 77.1,
    "optaRank": 544,
-   "value": 25.9
+   "value": 25.9,
+   "clubId": 4,
+   "shortName": "KS",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/4_logo_c9c2258c.png"
   },
   {
    "id": "Alanyaspor",
@@ -118,7 +151,10 @@
    "last": 11,
    "opta": 78.1,
    "optaRank": 435,
-   "value": 31.85
+   "value": 31.85,
+   "clubId": 14,
+   "shortName": "ALY",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/14_logo_8de773fe.png"
   },
   {
    "id": "Gaziantep",
@@ -128,7 +164,10 @@
    "last": 12,
    "opta": 76.7,
    "optaRank": 578,
-   "value": 29.8
+   "value": 29.8,
+   "clubId": 18,
+   "shortName": "GFK",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/18_logo_28312b7f.png"
   },
   {
    "id": "Kasimpasa",
@@ -138,7 +177,10 @@
    "last": 13,
    "opta": 77.1,
    "optaRank": 537,
-   "value": 36.3
+   "value": 36.3,
+   "clubId": 3,
+   "shortName": "KSP",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/3_logo_519e6d28.png"
   },
   {
    "id": "Genclerbirligi",
@@ -148,7 +190,10 @@
    "last": 14,
    "opta": 77.1,
    "optaRank": 542,
-   "value": 28.85
+   "value": 28.85,
+   "clubId": 11,
+   "shortName": "GB",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/11_logo_46ed9cbf.png"
   },
   {
    "id": "Eyupspor",
@@ -158,7 +203,10 @@
    "last": 15,
    "opta": 75.2,
    "optaRank": 695,
-   "value": 11.5
+   "value": 11.5,
+   "clubId": 16,
+   "shortName": "EYP",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/16_logo_af429ff4.png"
   },
   {
    "id": "Erzurumspor",
@@ -168,7 +216,10 @@
    "last": 16,
    "opta": 75.9,
    "optaRank": 647,
-   "value": 26.88
+   "value": 26.88,
+   "clubId": 2,
+   "shortName": "ERZ",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/2_logo_e5208394.png"
   },
   {
    "id": "Amedspor",
@@ -178,7 +229,10 @@
    "last": 17,
    "opta": 76.6,
    "optaRank": 581,
-   "value": 27.63
+   "value": 27.63,
+   "clubId": 5,
+   "shortName": "AMD",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/5_logo_f368f734.png"
   },
   {
    "id": "Corum",
@@ -188,7 +242,318 @@
    "last": 18,
    "opta": 76.2,
    "optaRank": 619,
-   "value": 67.25
+   "value": 67.25,
+   "clubId": 8,
+   "shortName": "ÇRM",
+   "logoUrl": "https://cdn.tfffantezilig.com/club-logos/8_logo_2124c22a.png"
+  }
+ ],
+ "gameweeks": [
+  {
+   "md": 1,
+   "deadline": "2026-08-14T17:30:00Z",
+   "start": "2026-08-07T18:30:00Z",
+   "end": "2026-08-17T20:30:00Z",
+   "finished": true,
+   "avgPoints": 47.3,
+   "highestPoints": 126
+  },
+  {
+   "md": 2,
+   "deadline": "2026-08-21T17:30:00Z",
+   "start": "2026-08-14T17:30:00Z",
+   "end": "2026-08-24T20:30:00Z",
+   "finished": true,
+   "avgPoints": 67.3,
+   "highestPoints": 166
+  },
+  {
+   "md": 3,
+   "deadline": "2026-08-28T17:30:00Z",
+   "start": "2026-08-21T17:30:00Z",
+   "end": "2026-08-31T20:30:00Z",
+   "finished": true,
+   "avgPoints": 59.3,
+   "highestPoints": 141
+  },
+  {
+   "md": 4,
+   "deadline": "2026-09-04T16:00:00Z",
+   "start": "2026-08-28T17:30:00Z",
+   "end": "2026-09-07T19:00:00Z",
+   "finished": true,
+   "avgPoints": 52.6,
+   "highestPoints": 137
+  },
+  {
+   "md": 5,
+   "deadline": "2026-09-11T16:00:00Z",
+   "start": "2026-09-04T16:00:00Z",
+   "end": "2026-09-14T19:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 6,
+   "deadline": "2026-09-18T16:00:00Z",
+   "start": "2026-09-11T16:00:00Z",
+   "end": "2026-09-20T19:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 7,
+   "deadline": "2026-10-11T07:00:00Z",
+   "start": "2026-09-20T07:00:00Z",
+   "end": "2026-10-11T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 8,
+   "deadline": "2026-10-18T07:00:00Z",
+   "start": "2026-10-11T07:00:00Z",
+   "end": "2026-10-18T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 9,
+   "deadline": "2026-10-25T07:00:00Z",
+   "start": "2026-10-18T07:00:00Z",
+   "end": "2026-10-25T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 10,
+   "deadline": "2026-11-01T07:00:00Z",
+   "start": "2026-10-25T07:00:00Z",
+   "end": "2026-11-01T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 11,
+   "deadline": "2026-11-08T07:00:00Z",
+   "start": "2026-11-01T07:00:00Z",
+   "end": "2026-11-08T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 12,
+   "deadline": "2026-11-22T07:00:00Z",
+   "start": "2026-11-08T07:00:00Z",
+   "end": "2026-11-22T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 13,
+   "deadline": "2026-11-29T07:00:00Z",
+   "start": "2026-11-22T07:00:00Z",
+   "end": "2026-11-29T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 14,
+   "deadline": "2026-12-06T07:00:00Z",
+   "start": "2026-11-29T07:00:00Z",
+   "end": "2026-12-06T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 15,
+   "deadline": "2026-12-13T07:00:00Z",
+   "start": "2026-12-06T07:00:00Z",
+   "end": "2026-12-13T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 16,
+   "deadline": "2026-12-20T07:00:00Z",
+   "start": "2026-12-13T07:00:00Z",
+   "end": "2026-12-20T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 17,
+   "deadline": "2027-01-17T07:00:00Z",
+   "start": "2026-12-20T07:00:00Z",
+   "end": "2027-01-17T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 18,
+   "deadline": "2027-01-24T07:00:00Z",
+   "start": "2027-01-17T07:00:00Z",
+   "end": "2027-01-24T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 19,
+   "deadline": "2027-01-31T07:00:00Z",
+   "start": "2027-01-24T07:00:00Z",
+   "end": "2027-01-31T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 20,
+   "deadline": "2027-02-07T07:00:00Z",
+   "start": "2027-01-31T07:00:00Z",
+   "end": "2027-02-07T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 21,
+   "deadline": "2027-02-14T07:00:00Z",
+   "start": "2027-02-07T07:00:00Z",
+   "end": "2027-02-14T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 22,
+   "deadline": "2027-02-21T07:00:00Z",
+   "start": "2027-02-14T07:00:00Z",
+   "end": "2027-02-21T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 23,
+   "deadline": "2027-02-28T07:00:00Z",
+   "start": "2027-02-21T07:00:00Z",
+   "end": "2027-02-28T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 24,
+   "deadline": "2027-03-07T07:00:00Z",
+   "start": "2027-02-28T07:00:00Z",
+   "end": "2027-03-07T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 25,
+   "deadline": "2027-03-14T07:00:00Z",
+   "start": "2027-03-07T07:00:00Z",
+   "end": "2027-03-14T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 26,
+   "deadline": "2027-03-21T07:00:00Z",
+   "start": "2027-03-14T07:00:00Z",
+   "end": "2027-03-21T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 27,
+   "deadline": "2027-04-04T07:00:00Z",
+   "start": "2027-03-21T07:00:00Z",
+   "end": "2027-04-04T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 28,
+   "deadline": "2027-04-11T07:00:00Z",
+   "start": "2027-04-04T07:00:00Z",
+   "end": "2027-04-11T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 29,
+   "deadline": "2027-04-18T07:00:00Z",
+   "start": "2027-04-11T07:00:00Z",
+   "end": "2027-04-18T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 30,
+   "deadline": "2027-04-25T07:00:00Z",
+   "start": "2027-04-18T07:00:00Z",
+   "end": "2027-04-25T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 31,
+   "deadline": "2027-05-02T07:00:00Z",
+   "start": "2027-04-25T07:00:00Z",
+   "end": "2027-05-02T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 32,
+   "deadline": "2027-05-09T07:00:00Z",
+   "start": "2027-05-02T07:00:00Z",
+   "end": "2027-05-09T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 33,
+   "deadline": "2027-05-16T07:00:00Z",
+   "start": "2027-05-09T07:00:00Z",
+   "end": "2027-05-16T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
+  },
+  {
+   "md": 34,
+   "deadline": "2027-05-23T07:00:00Z",
+   "start": "2027-05-16T07:00:00Z",
+   "end": "2027-05-23T10:00:00Z",
+   "finished": false,
+   "avgPoints": 0,
+   "highestPoints": 0
   }
  ],
  "fixtures": [
@@ -200,7 +565,8 @@
    "away": "Corum",
    "hg": 2,
    "ag": 2,
-   "tffMatchId": 317790
+   "status": "FT",
+   "gameId": 306
   },
   {
    "md": 1,
@@ -210,7 +576,8 @@
    "away": "Trabzonspor",
    "hg": 1,
    "ag": 1,
-   "tffMatchId": 317785
+   "status": "FT",
+   "gameId": 305
   },
   {
    "md": 1,
@@ -220,7 +587,8 @@
    "away": "Rizespor",
    "hg": 0,
    "ag": 1,
-   "tffMatchId": 317789
+   "status": "FT",
+   "gameId": 304
   },
   {
    "md": 1,
@@ -230,7 +598,8 @@
    "away": "Alanyaspor",
    "hg": 1,
    "ag": 1,
-   "tffMatchId": 317784
+   "status": "FT",
+   "gameId": 303
   },
   {
    "md": 1,
@@ -240,7 +609,8 @@
    "away": "Fenerbahce",
    "hg": 2,
    "ag": 1,
-   "tffMatchId": 317788
+   "status": "FT",
+   "gameId": 302
   },
   {
    "md": 1,
@@ -250,7 +620,8 @@
    "away": "Kocaelispor",
    "hg": 2,
    "ag": 0,
-   "tffMatchId": 317786
+   "status": "FT",
+   "gameId": 301
   },
   {
    "md": 1,
@@ -260,7 +631,8 @@
    "away": "Erzurumspor",
    "hg": 3,
    "ag": 0,
-   "tffMatchId": 317787
+   "status": "FT",
+   "gameId": 300
   },
   {
    "md": 1,
@@ -270,7 +642,8 @@
    "away": "Eyupspor",
    "hg": 1,
    "ag": 0,
-   "tffMatchId": 317791
+   "status": "FT",
+   "gameId": 299
   },
   {
    "md": 1,
@@ -280,7 +653,8 @@
    "away": "Goztepe",
    "hg": 3,
    "ag": 3,
-   "tffMatchId": 317792
+   "status": "FT",
+   "gameId": 298
   },
   {
    "md": 2,
@@ -290,7 +664,8 @@
    "away": "Galatasaray",
    "hg": 0,
    "ag": 4,
-   "tffMatchId": 317801
+   "status": "FT",
+   "gameId": 297
   },
   {
    "md": 2,
@@ -300,7 +675,8 @@
    "away": "Samsunspor",
    "hg": 0,
    "ag": 2,
-   "tffMatchId": 317796
+   "status": "FT",
+   "gameId": 296
   },
   {
    "md": 2,
@@ -310,7 +686,8 @@
    "away": "Kasimpasa",
    "hg": 0,
    "ag": 1,
-   "tffMatchId": 317798
+   "status": "FT",
+   "gameId": 295
   },
   {
    "md": 2,
@@ -320,7 +697,8 @@
    "away": "Konyaspor",
    "hg": 4,
    "ag": 2,
-   "tffMatchId": 317799
+   "status": "FT",
+   "gameId": 294
   },
   {
    "md": 2,
@@ -330,7 +708,8 @@
    "away": "Basaksehir",
    "hg": 2,
    "ag": 1,
-   "tffMatchId": 317793
+   "status": "FT",
+   "gameId": 293
   },
   {
    "md": 2,
@@ -340,17 +719,8 @@
    "away": "Gaziantep",
    "hg": 0,
    "ag": 1,
-   "tffMatchId": 317794
-  },
-  {
-   "md": 2,
-   "date": "2026-08-23",
-   "tsi": "21:30",
-   "home": "Alanyaspor",
-   "away": "Besiktas",
-   "hg": 1,
-   "ag": 0,
-   "tffMatchId": 317795
+   "status": "FT",
+   "gameId": 292
   },
   {
    "md": 2,
@@ -360,7 +730,19 @@
    "away": "Genclerbirligi",
    "hg": 0,
    "ag": 1,
-   "tffMatchId": 317797
+   "status": "FT",
+   "gameId": 290
+  },
+  {
+   "md": 2,
+   "date": "2026-08-23",
+   "tsi": "21:30",
+   "home": "Alanyaspor",
+   "away": "Besiktas",
+   "hg": 1,
+   "ag": 0,
+   "status": "FT",
+   "gameId": 291
   },
   {
    "md": 2,
@@ -370,7 +752,8 @@
    "away": "Amedspor",
    "hg": 2,
    "ag": 0,
-   "tffMatchId": 317800
+   "status": "FT",
+   "gameId": 289
   },
   {
    "md": 3,
@@ -380,7 +763,8 @@
    "away": "Erzurumspor",
    "hg": 1,
    "ag": 1,
-   "tffMatchId": 317806
+   "status": "FT",
+   "gameId": 288
   },
   {
    "md": 3,
@@ -390,7 +774,8 @@
    "away": "Kocaelispor",
    "hg": 1,
    "ag": 2,
-   "tffMatchId": 317807
+   "status": "FT",
+   "gameId": 287
   },
   {
    "md": 3,
@@ -400,17 +785,19 @@
    "away": "Rizespor",
    "hg": 1,
    "ag": 2,
-   "tffMatchId": 317802
+   "status": "FT",
+   "gameId": 286
   },
   {
    "md": 3,
    "date": "2026-08-29",
-   "tsi": "21:33",
+   "tsi": "21:30",
    "home": "Galatasaray",
    "away": "Goztepe",
    "hg": 3,
    "ag": 2,
-   "tffMatchId": 317808
+   "status": "FT",
+   "gameId": 285
   },
   {
    "md": 3,
@@ -420,7 +807,8 @@
    "away": "Alanyaspor",
    "hg": 2,
    "ag": 1,
-   "tffMatchId": 317803
+   "status": "FT",
+   "gameId": 284
   },
   {
    "md": 3,
@@ -430,7 +818,8 @@
    "away": "Kasimpasa",
    "hg": 1,
    "ag": 1,
-   "tffMatchId": 317804
+   "status": "FT",
+   "gameId": 283
   },
   {
    "md": 3,
@@ -440,7 +829,8 @@
    "away": "Fenerbahce",
    "hg": 0,
    "ag": 2,
-   "tffMatchId": 317810
+   "status": "FT",
+   "gameId": 282
   },
   {
    "md": 3,
@@ -450,7 +840,8 @@
    "away": "Trabzonspor",
    "hg": 2,
    "ag": 1,
-   "tffMatchId": 317805
+   "status": "FT",
+   "gameId": 281
   },
   {
    "md": 3,
@@ -460,7 +851,8 @@
    "away": "Corum",
    "hg": 6,
    "ag": 2,
-   "tffMatchId": 317809
+   "status": "FT",
+   "gameId": 280
   },
   {
    "md": 4,
@@ -470,7 +862,8 @@
    "away": "Galatasaray",
    "hg": 2,
    "ag": 3,
-   "tffMatchId": 317813
+   "status": "FT",
+   "gameId": 277
   },
   {
    "md": 4,
@@ -480,7 +873,8 @@
    "away": "Konyaspor",
    "hg": 1,
    "ag": 0,
-   "tffMatchId": 317819
+   "status": "FT",
+   "gameId": 271
   },
   {
    "md": 4,
@@ -490,17 +884,8 @@
    "away": "Besiktas",
    "hg": 1,
    "ag": 2,
-   "tffMatchId": 317817
-  },
-  {
-   "md": 4,
-   "date": "2026-09-06",
-   "tsi": "17:00",
-   "home": "Kasimpasa",
-   "away": "Amedspor",
-   "hg": 2,
-   "ag": 2,
-   "tffMatchId": 317812
+   "status": "FT",
+   "gameId": 273
   },
   {
    "md": 4,
@@ -510,7 +895,19 @@
    "away": "Eyupspor",
    "hg": 3,
    "ag": 0,
-   "tffMatchId": 317816
+   "status": "FT",
+   "gameId": 274
+  },
+  {
+   "md": 4,
+   "date": "2026-09-06",
+   "tsi": "17:00",
+   "home": "Kasimpasa",
+   "away": "Amedspor",
+   "hg": 2,
+   "ag": 2,
+   "status": "FT",
+   "gameId": 278
   },
   {
    "md": 4,
@@ -520,7 +917,8 @@
    "away": "Genclerbirligi",
    "hg": 5,
    "ag": 0,
-   "tffMatchId": 317811
+   "status": "FT",
+   "gameId": 279
   },
   {
    "md": 4,
@@ -530,7 +928,8 @@
    "away": "Samsunspor",
    "hg": 1,
    "ag": 0,
-   "tffMatchId": 317818
+   "status": "FT",
+   "gameId": 272
   },
   {
    "md": 4,
@@ -540,7 +939,8 @@
    "away": "Alanyaspor",
    "hg": 0,
    "ag": 1,
-   "tffMatchId": 317814
+   "status": "FT",
+   "gameId": 276
   },
   {
    "md": 4,
@@ -550,7 +950,8 @@
    "away": "Gaziantep",
    "hg": 2,
    "ag": 4,
-   "tffMatchId": 317815
+   "status": "FT",
+   "gameId": 275
   },
   {
    "md": 5,
@@ -560,7 +961,8 @@
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317827
+   "status": "SCHEDULED",
+   "gameId": 263
   },
   {
    "md": 5,
@@ -570,7 +972,8 @@
    "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317821
+   "status": "SCHEDULED",
+   "gameId": 269
   },
   {
    "md": 5,
@@ -580,7 +983,8 @@
    "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317828
+   "status": "SCHEDULED",
+   "gameId": 262
   },
   {
    "md": 5,
@@ -590,7 +994,8 @@
    "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317822
+   "status": "SCHEDULED",
+   "gameId": 268
   },
   {
    "md": 5,
@@ -600,7 +1005,8 @@
    "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317825
+   "status": "SCHEDULED",
+   "gameId": 265
   },
   {
    "md": 5,
@@ -610,7 +1016,8 @@
    "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317824
+   "status": "SCHEDULED",
+   "gameId": 266
   },
   {
    "md": 5,
@@ -620,7 +1027,8 @@
    "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317823
+   "status": "SCHEDULED",
+   "gameId": 267
   },
   {
    "md": 5,
@@ -630,7 +1038,8 @@
    "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317826
+   "status": "SCHEDULED",
+   "gameId": 264
   },
   {
    "md": 5,
@@ -640,7 +1049,8 @@
    "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317820
+   "status": "SCHEDULED",
+   "gameId": 270
   },
   {
    "md": 6,
@@ -650,17 +1060,8 @@
    "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317830
-  },
-  {
-   "md": 6,
-   "date": "2026-09-19",
-   "tsi": "17:00",
-   "home": "Corum",
-   "away": "Alanyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317834
+   "status": "SCHEDULED",
+   "gameId": 260
   },
   {
    "md": 6,
@@ -670,7 +1071,30 @@
    "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317836
+   "status": "SCHEDULED",
+   "gameId": 254
+  },
+  {
+   "md": 6,
+   "date": "2026-09-19",
+   "tsi": "17:00",
+   "home": "Corum",
+   "away": "Alanyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 256
+  },
+  {
+   "md": 6,
+   "date": "2026-09-19",
+   "tsi": "20:00",
+   "home": "Basaksehir",
+   "away": "Genclerbirligi",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 259
   },
   {
    "md": 6,
@@ -680,27 +1104,8 @@
    "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317829
-  },
-  {
-   "md": 6,
-   "date": "2026-09-19",
-   "tsi": "20:00",
-   "home": "Basaksehir",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317831
-  },
-  {
-   "md": 6,
-   "date": "2026-09-20",
-   "tsi": "17:00",
-   "home": "Fenerbahce",
-   "away": "Eyupspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317835
+   "status": "SCHEDULED",
+   "gameId": 261
   },
   {
    "md": 6,
@@ -710,7 +1115,19 @@
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317837
+   "status": "SCHEDULED",
+   "gameId": 253
+  },
+  {
+   "md": 6,
+   "date": "2026-09-20",
+   "tsi": "17:00",
+   "home": "Fenerbahce",
+   "away": "Eyupspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 255
   },
   {
    "md": 6,
@@ -720,7 +1137,8 @@
    "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317832
+   "status": "SCHEDULED",
+   "gameId": 258
   },
   {
    "md": 6,
@@ -730,2527 +1148,2780 @@
    "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317833
+   "status": "SCHEDULED",
+   "gameId": 257
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317838
+   "status": "SCHEDULED",
+   "gameId": 244
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317839
+   "status": "SCHEDULED",
+   "gameId": 245
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Erzurumspor",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317840
+   "status": "SCHEDULED",
+   "gameId": 246
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Konyaspor",
    "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317843
+   "status": "SCHEDULED",
+   "gameId": 247
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Kasimpasa",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317844
+   "status": "SCHEDULED",
+   "gameId": 248
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317845
+   "status": "SCHEDULED",
+   "gameId": 249
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Trabzonspor",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317846
+   "status": "SCHEDULED",
+   "gameId": 250
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Fenerbahce",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317841
+   "status": "SCHEDULED",
+   "gameId": 251
   },
   {
    "md": 7,
    "date": "2026-10-11",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Amedspor",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317842
+   "status": "SCHEDULED",
+   "gameId": 252
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Besiktas",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317847
+   "status": "SCHEDULED",
+   "gameId": 235
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317849
+   "status": "SCHEDULED",
+   "gameId": 236
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Fenerbahce",
    "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317853
+   "status": "SCHEDULED",
+   "gameId": 237
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317854
+   "status": "SCHEDULED",
+   "gameId": 238
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Samsunspor",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317848
+   "status": "SCHEDULED",
+   "gameId": 239
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Amedspor",
    "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317850
+   "status": "SCHEDULED",
+   "gameId": 240
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Galatasaray",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317851
+   "status": "SCHEDULED",
+   "gameId": 241
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Rizespor",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317852
+   "status": "SCHEDULED",
+   "gameId": 242
   },
   {
    "md": 8,
    "date": "2026-10-18",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Eyupspor",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317855
+   "status": "SCHEDULED",
+   "gameId": 243
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Erzurumspor",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317856
+   "status": "SCHEDULED",
+   "gameId": 226
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Kasimpasa",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317857
+   "status": "SCHEDULED",
+   "gameId": 227
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317858
+   "status": "SCHEDULED",
+   "gameId": 228
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Konyaspor",
    "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317861
+   "status": "SCHEDULED",
+   "gameId": 229
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Fenerbahce",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317862
+   "status": "SCHEDULED",
+   "gameId": 230
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Basaksehir",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317863
+   "status": "SCHEDULED",
+   "gameId": 231
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Amedspor",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317864
+   "status": "SCHEDULED",
+   "gameId": 232
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Trabzonspor",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317859
+   "status": "SCHEDULED",
+   "gameId": 233
   },
   {
    "md": 9,
    "date": "2026-10-25",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317860
+   "status": "SCHEDULED",
+   "gameId": 234
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317865
+   "status": "SCHEDULED",
+   "gameId": 217
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Samsunspor",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317867
+   "status": "SCHEDULED",
+   "gameId": 218
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Galatasaray",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317870
+   "status": "SCHEDULED",
+   "gameId": 219
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317871
+   "status": "SCHEDULED",
+   "gameId": 220
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Rizespor",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317872
+   "status": "SCHEDULED",
+   "gameId": 221
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Besiktas",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317866
+   "status": "SCHEDULED",
+   "gameId": 222
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Eyupspor",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317868
+   "status": "SCHEDULED",
+   "gameId": 223
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Alanyaspor",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317869
+   "status": "SCHEDULED",
+   "gameId": 224
   },
   {
    "md": 10,
    "date": "2026-11-01",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317873
+   "status": "SCHEDULED",
+   "gameId": 225
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Kasimpasa",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317874
+   "status": "SCHEDULED",
+   "gameId": 208
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317875
+   "status": "SCHEDULED",
+   "gameId": 209
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Trabzonspor",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317876
+   "status": "SCHEDULED",
+   "gameId": 210
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Amedspor",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317880
+   "status": "SCHEDULED",
+   "gameId": 211
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Genclerbirligi",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317881
+   "status": "SCHEDULED",
+   "gameId": 212
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Konyaspor",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317882
+   "status": "SCHEDULED",
+   "gameId": 213
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Erzurumspor",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317877
+   "status": "SCHEDULED",
+   "gameId": 214
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Basaksehir",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317878
+   "status": "SCHEDULED",
+   "gameId": 215
   },
   {
    "md": 11,
    "date": "2026-11-08",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Fenerbahce",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317879
+   "status": "SCHEDULED",
+   "gameId": 216
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Eyupspor",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317883
+   "status": "SCHEDULED",
+   "gameId": 199
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317885
+   "status": "SCHEDULED",
+   "gameId": 200
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Besiktas",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317888
+   "status": "SCHEDULED",
+   "gameId": 201
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Samsunspor",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317889
+   "status": "SCHEDULED",
+   "gameId": 202
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Fenerbahce",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317890
+   "status": "SCHEDULED",
+   "gameId": 203
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Alanyaspor",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317884
+   "status": "SCHEDULED",
+   "gameId": 204
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Rizespor",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317886
+   "status": "SCHEDULED",
+   "gameId": 205
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317887
+   "status": "SCHEDULED",
+   "gameId": 206
   },
   {
    "md": 12,
    "date": "2026-11-22",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317891
+   "status": "SCHEDULED",
+   "gameId": 207
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Amedspor",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317892
+   "status": "SCHEDULED",
+   "gameId": 190
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Basaksehir",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317893
+   "status": "SCHEDULED",
+   "gameId": 191
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Konyaspor",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317894
+   "status": "SCHEDULED",
+   "gameId": 192
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Erzurumspor",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317898
+   "status": "SCHEDULED",
+   "gameId": 193
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Galatasaray",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317899
+   "status": "SCHEDULED",
+   "gameId": 194
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Genclerbirligi",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317900
+   "status": "SCHEDULED",
+   "gameId": 195
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Kasimpasa",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317895
+   "status": "SCHEDULED",
+   "gameId": 196
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Trabzonspor",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317896
+   "status": "SCHEDULED",
+   "gameId": 197
   },
   {
    "md": 13,
    "date": "2026-11-29",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317897
+   "status": "SCHEDULED",
+   "gameId": 198
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317901
+   "status": "SCHEDULED",
+   "gameId": 181
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Fenerbahce",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317903
+   "status": "SCHEDULED",
+   "gameId": 182
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317906
+   "status": "SCHEDULED",
+   "gameId": 183
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Rizespor",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317907
+   "status": "SCHEDULED",
+   "gameId": 184
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Samsunspor",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317908
+   "status": "SCHEDULED",
+   "gameId": 185
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317902
+   "status": "SCHEDULED",
+   "gameId": 186
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Alanyaspor",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317904
+   "status": "SCHEDULED",
+   "gameId": 187
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Eyupspor",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317905
+   "status": "SCHEDULED",
+   "gameId": 188
   },
   {
    "md": 14,
    "date": "2026-12-06",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317909
+   "status": "SCHEDULED",
+   "gameId": 189
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Besiktas",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317910
+   "status": "SCHEDULED",
+   "gameId": 172
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Galatasaray",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317911
+   "status": "SCHEDULED",
+   "gameId": 173
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Samsunspor",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317912
+   "status": "SCHEDULED",
+   "gameId": 174
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Trabzonspor",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317916
+   "status": "SCHEDULED",
+   "gameId": 175
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Genclerbirligi",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317917
+   "status": "SCHEDULED",
+   "gameId": 176
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Rizespor",
    "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317913
+   "status": "SCHEDULED",
+   "gameId": 177
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Konyaspor",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317914
+   "status": "SCHEDULED",
+   "gameId": 178
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Amedspor",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317915
+   "status": "SCHEDULED",
+   "gameId": 179
   },
   {
    "md": 15,
    "date": "2026-12-13",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Kasimpasa",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317918
+   "status": "SCHEDULED",
+   "gameId": 180
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317919
+   "status": "SCHEDULED",
+   "gameId": 163
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Erzurumspor",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317921
+   "status": "SCHEDULED",
+   "gameId": 164
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Eyupspor",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317924
+   "status": "SCHEDULED",
+   "gameId": 165
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Alanyaspor",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317925
+   "status": "SCHEDULED",
+   "gameId": 166
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Rizespor",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317926
+   "status": "SCHEDULED",
+   "gameId": 167
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317927
+   "status": "SCHEDULED",
+   "gameId": 168
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Fenerbahce",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317920
+   "status": "SCHEDULED",
+   "gameId": 169
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317922
+   "status": "SCHEDULED",
+   "gameId": 170
   },
   {
    "md": 16,
    "date": "2026-12-20",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317923
+   "status": "SCHEDULED",
+   "gameId": 171
   },
   {
    "md": 17,
    "date": "2027-01-17",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Galatasaray",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317928
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Samsunspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317929
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Basaksehir",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317930
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Amedspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317934
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Kasimpasa",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317935
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317931
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Besiktas",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317932
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Konyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317933
-  },
-  {
-   "md": 17,
-   "date": "2027-01-17",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Erzurumspor",
    "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317936
+   "status": "SCHEDULED",
+   "gameId": 154
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Kasimpasa",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 155
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Amedspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 156
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Konyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 157
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Besiktas",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 158
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Genclerbirligi",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 159
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Basaksehir",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 160
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Samsunspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 161
+  },
+  {
+   "md": 17,
+   "date": "2027-01-17",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Galatasaray",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 162
   },
   {
    "md": 18,
    "date": "2027-01-24",
-   "tsi": null,
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Samsunspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 145
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Besiktas",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 146
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Galatasaray",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 147
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Konyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 148
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Genclerbirligi",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 149
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Amedspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 150
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Basaksehir",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 151
+  },
+  {
+   "md": 18,
+   "date": "2027-01-24",
+   "tsi": "11:00",
    "home": "Trabzonspor",
    "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317938
+   "status": "SCHEDULED",
+   "gameId": 152
   },
   {
    "md": 18,
    "date": "2027-01-24",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Basaksehir",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317939
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317941
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Alanyaspor",
    "away": "Gaziantep",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317937
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Amedspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317940
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Konyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317942
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Galatasaray",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317943
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Besiktas",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317944
-  },
-  {
-   "md": 18,
-   "date": "2027-01-24",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Samsunspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317945
+   "status": "SCHEDULED",
+   "gameId": 153
   },
   {
    "md": 19,
    "date": "2027-01-31",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Trabzonspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317946
-  },
-  {
-   "md": 19,
-   "date": "2027-01-31",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Eyupspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317947
-  },
-  {
-   "md": 19,
-   "date": "2027-01-31",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Alanyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317948
-  },
-  {
-   "md": 19,
-   "date": "2027-01-31",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Rizespor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317949
-  },
-  {
-   "md": 19,
-   "date": "2027-01-31",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Fenerbahce",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317952
-  },
-  {
-   "md": 19,
-   "date": "2027-01-31",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Galatasaray",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317954
+   "status": "SCHEDULED",
+   "gameId": 136
   },
   {
    "md": 19,
    "date": "2027-01-31",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Goztepe",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317950
+   "status": "SCHEDULED",
+   "gameId": 137
   },
   {
    "md": 19,
    "date": "2027-01-31",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Corum",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317951
+   "status": "SCHEDULED",
+   "gameId": 138
   },
   {
    "md": 19,
    "date": "2027-01-31",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Kocaelispor",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317953
+   "status": "SCHEDULED",
+   "gameId": 139
   },
   {
-   "md": 20,
-   "date": "2027-02-07",
-   "tsi": null,
-   "home": "Alanyaspor",
+   "md": 19,
+   "date": "2027-01-31",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Goztepe",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 140
+  },
+  {
+   "md": 19,
+   "date": "2027-01-31",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Rizespor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 141
+  },
+  {
+   "md": 19,
+   "date": "2027-01-31",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Alanyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 142
+  },
+  {
+   "md": 19,
+   "date": "2027-01-31",
+   "tsi": "11:00",
+   "home": "Gaziantep",
    "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317956
+   "status": "SCHEDULED",
+   "gameId": 143
   },
   {
-   "md": 20,
-   "date": "2027-02-07",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Amedspor",
+   "md": 19,
+   "date": "2027-01-31",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317958
+   "status": "SCHEDULED",
+   "gameId": 144
   },
   {
    "md": 20,
    "date": "2027-02-07",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Konyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317960
-  },
-  {
-   "md": 20,
-   "date": "2027-02-07",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Fenerbahce",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317963
+   "status": "SCHEDULED",
+   "gameId": 127
   },
   {
    "md": 20,
    "date": "2027-02-07",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317955
+   "status": "SCHEDULED",
+   "gameId": 128
   },
   {
    "md": 20,
    "date": "2027-02-07",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Basaksehir",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317957
+   "status": "SCHEDULED",
+   "gameId": 129
   },
   {
    "md": 20,
    "date": "2027-02-07",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Genclerbirligi",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317959
+   "status": "SCHEDULED",
+   "gameId": 130
   },
   {
    "md": 20,
    "date": "2027-02-07",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Galatasaray",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317961
+   "status": "SCHEDULED",
+   "gameId": 131
   },
   {
    "md": 20,
    "date": "2027-02-07",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Besiktas",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317962
+   "status": "SCHEDULED",
+   "gameId": 132
   },
   {
-   "md": 21,
-   "date": "2027-02-14",
-   "tsi": null,
-   "home": "Galatasaray",
+   "md": 20,
+   "date": "2027-02-07",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
    "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317966
+   "status": "SCHEDULED",
+   "gameId": 133
   },
   {
-   "md": 21,
-   "date": "2027-02-14",
-   "tsi": null,
+   "md": 20,
+   "date": "2027-02-07",
+   "tsi": "11:00",
    "home": "Alanyaspor",
-   "away": "Rizespor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317967
+   "status": "SCHEDULED",
+   "gameId": 134
+  },
+  {
+   "md": 20,
+   "date": "2027-02-07",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 135
   },
   {
    "md": 21,
    "date": "2027-02-14",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Goztepe",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317968
-  },
-  {
-   "md": 21,
-   "date": "2027-02-14",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Fenerbahce",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317970
-  },
-  {
-   "md": 21,
-   "date": "2027-02-14",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Kocaelispor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317971
-  },
-  {
-   "md": 21,
-   "date": "2027-02-14",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Konyaspor",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317972
+   "status": "SCHEDULED",
+   "gameId": 118
   },
   {
    "md": 21,
    "date": "2027-02-14",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Trabzonspor",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317964
+   "status": "SCHEDULED",
+   "gameId": 119
   },
   {
    "md": 21,
    "date": "2027-02-14",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Kasimpasa",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317965
+   "status": "SCHEDULED",
+   "gameId": 120
   },
   {
    "md": 21,
    "date": "2027-02-14",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Eyupspor",
    "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317969
+   "status": "SCHEDULED",
+   "gameId": 121
   },
   {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Gaziantep",
+   "md": 21,
+   "date": "2027-02-14",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317973
+   "status": "SCHEDULED",
+   "gameId": 122
   },
   {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Amedspor",
+   "md": 21,
+   "date": "2027-02-14",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317976
+   "status": "SCHEDULED",
+   "gameId": 123
   },
   {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Konyaspor",
+   "md": 21,
+   "date": "2027-02-14",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317978
+   "status": "SCHEDULED",
+   "gameId": 124
   },
   {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Galatasaray",
+   "md": 21,
+   "date": "2027-02-14",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317979
+   "status": "SCHEDULED",
+   "gameId": 125
   },
   {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Eyupspor",
+   "md": 21,
+   "date": "2027-02-14",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317974
+   "status": "SCHEDULED",
+   "gameId": 126
   },
   {
    "md": 22,
    "date": "2027-02-21",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Alanyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317975
-  },
-  {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317977
-  },
-  {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Besiktas",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317980
-  },
-  {
-   "md": 22,
-   "date": "2027-02-21",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Corum",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317981
+   "status": "SCHEDULED",
+   "gameId": 109
   },
   {
-   "md": 23,
-   "date": "2027-02-28",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Trabzonspor",
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317982
+   "status": "SCHEDULED",
+   "gameId": 110
   },
   {
-   "md": 23,
-   "date": "2027-02-28",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Kasimpasa",
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317983
+   "status": "SCHEDULED",
+   "gameId": 111
   },
   {
-   "md": 23,
-   "date": "2027-02-28",
-   "tsi": null,
-   "home": "Besiktas",
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Konyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 112
+  },
+  {
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Genclerbirligi",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 113
+  },
+  {
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Basaksehir",
    "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317985
+   "status": "SCHEDULED",
+   "gameId": 114
   },
   {
-   "md": 23,
-   "date": "2027-02-28",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Corum",
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317987
+   "status": "SCHEDULED",
+   "gameId": 115
   },
   {
-   "md": 23,
-   "date": "2027-02-28",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Kocaelispor",
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317989
+   "status": "SCHEDULED",
+   "gameId": 116
+  },
+  {
+   "md": 22,
+   "date": "2027-02-21",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 117
   },
   {
    "md": 23,
    "date": "2027-02-28",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Samsunspor",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317990
+   "status": "SCHEDULED",
+   "gameId": 100
   },
   {
    "md": 23,
    "date": "2027-02-28",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Basaksehir",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317984
+   "status": "SCHEDULED",
+   "gameId": 101
   },
   {
    "md": 23,
    "date": "2027-02-28",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Goztepe",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 317986
-  },
-  {
-   "md": 23,
-   "date": "2027-02-28",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Eyupspor",
    "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317988
+   "status": "SCHEDULED",
+   "gameId": 102
   },
   {
-   "md": 24,
-   "date": "2027-03-07",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Rizespor",
+   "md": 23,
+   "date": "2027-02-28",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317994
+   "status": "SCHEDULED",
+   "gameId": 103
   },
   {
-   "md": 24,
-   "date": "2027-03-07",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Konyaspor",
+   "md": 23,
+   "date": "2027-02-28",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317996
+   "status": "SCHEDULED",
+   "gameId": 104
   },
   {
-   "md": 24,
-   "date": "2027-03-07",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Besiktas",
+   "md": 23,
+   "date": "2027-02-28",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317998
+   "status": "SCHEDULED",
+   "gameId": 105
+  },
+  {
+   "md": 23,
+   "date": "2027-02-28",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Basaksehir",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 106
+  },
+  {
+   "md": 23,
+   "date": "2027-02-28",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Kasimpasa",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 107
+  },
+  {
+   "md": 23,
+   "date": "2027-02-28",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Trabzonspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 108
   },
   {
    "md": 24,
    "date": "2027-03-07",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Trabzonspor",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317999
+   "status": "SCHEDULED",
+   "gameId": 91
   },
   {
    "md": 24,
    "date": "2027-03-07",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Gaziantep",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317991
+   "status": "SCHEDULED",
+   "gameId": 92
   },
   {
    "md": 24,
    "date": "2027-03-07",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Eyupspor",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317992
+   "status": "SCHEDULED",
+   "gameId": 93
   },
   {
    "md": 24,
    "date": "2027-03-07",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Alanyaspor",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317993
+   "status": "SCHEDULED",
+   "gameId": 94
   },
   {
    "md": 24,
    "date": "2027-03-07",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Amedspor",
    "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317995
+   "status": "SCHEDULED",
+   "gameId": 95
   },
   {
    "md": 24,
    "date": "2027-03-07",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Galatasaray",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 317997
+   "status": "SCHEDULED",
+   "gameId": 96
   },
   {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Trabzonspor",
+   "md": 24,
+   "date": "2027-03-07",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318000
+   "status": "SCHEDULED",
+   "gameId": 97
   },
   {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Kasimpasa",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318001
-  },
-  {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Basaksehir",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318002
-  },
-  {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Amedspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318003
-  },
-  {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318004
-  },
-  {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Fenerbahce",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318006
-  },
-  {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Corum",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318005
-  },
-  {
-   "md": 25,
-   "date": "2027-03-14",
-   "tsi": null,
+   "md": 24,
+   "date": "2027-03-07",
+   "tsi": "11:00",
    "home": "Goztepe",
-   "away": "Kocaelispor",
+   "away": "Eyupspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318007
+   "status": "SCHEDULED",
+   "gameId": 98
+  },
+  {
+   "md": 24,
+   "date": "2027-03-07",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 99
   },
   {
    "md": 25,
    "date": "2027-03-14",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Eyupspor",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318008
+   "status": "SCHEDULED",
+   "gameId": 82
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Alanyaspor",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318011
+   "status": "SCHEDULED",
+   "gameId": 83
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Rizespor",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318012
+   "status": "SCHEDULED",
+   "gameId": 84
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Galatasaray",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318015
+   "status": "SCHEDULED",
+   "gameId": 85
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Besiktas",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318016
+   "status": "SCHEDULED",
+   "gameId": 86
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Gaziantep",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318009
+   "status": "SCHEDULED",
+   "gameId": 87
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Eyupspor",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318010
+   "status": "SCHEDULED",
+   "gameId": 88
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Goztepe",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318013
+   "status": "SCHEDULED",
+   "gameId": 89
   },
   {
-   "md": 26,
-   "date": "2027-03-21",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Konyaspor",
+   "md": 25,
+   "date": "2027-03-14",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318014
+   "status": "SCHEDULED",
+   "gameId": 90
   },
   {
    "md": 26,
    "date": "2027-03-21",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Amedspor",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318017
+   "status": "SCHEDULED",
+   "gameId": 73
   },
   {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Trabzonspor",
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318018
+   "status": "SCHEDULED",
+   "gameId": 74
   },
   {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Kasimpasa",
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318019
+   "status": "SCHEDULED",
+   "gameId": 75
   },
   {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Basaksehir",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318020
-  },
-  {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318022
-  },
-  {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Galatasaray",
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
    "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318023
+   "status": "SCHEDULED",
+   "gameId": 76
   },
   {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Amedspor",
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Goztepe",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318021
+   "status": "SCHEDULED",
+   "gameId": 77
   },
   {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Fenerbahce",
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Rizespor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318024
+   "status": "SCHEDULED",
+   "gameId": 78
   },
   {
-   "md": 27,
-   "date": "2027-04-04",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Kocaelispor",
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Alanyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318025
+   "status": "SCHEDULED",
+   "gameId": 79
+  },
+  {
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Eyupspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 80
+  },
+  {
+   "md": 26,
+   "date": "2027-03-21",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 81
   },
   {
    "md": 27,
    "date": "2027-04-04",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Corum",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318026
+   "status": "SCHEDULED",
+   "gameId": 64
   },
   {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Eyupspor",
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318028
+   "status": "SCHEDULED",
+   "gameId": 65
   },
   {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Alanyaspor",
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318029
+   "status": "SCHEDULED",
+   "gameId": 66
   },
   {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Goztepe",
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318031
+   "status": "SCHEDULED",
+   "gameId": 67
   },
   {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Corum",
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318032
+   "status": "SCHEDULED",
+   "gameId": 68
+  },
+  {
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Amedspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 69
+  },
+  {
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Basaksehir",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 70
+  },
+  {
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Kasimpasa",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 71
+  },
+  {
+   "md": 27,
+   "date": "2027-04-04",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Trabzonspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 72
   },
   {
    "md": 28,
    "date": "2027-04-11",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Konyaspor",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318035
+   "status": "SCHEDULED",
+   "gameId": 55
   },
   {
    "md": 28,
    "date": "2027-04-11",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Gaziantep",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318027
-  },
-  {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Rizespor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318030
-  },
-  {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Galatasaray",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318033
-  },
-  {
-   "md": 28,
-   "date": "2027-04-11",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Genclerbirligi",
    "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318034
+   "status": "SCHEDULED",
+   "gameId": 56
   },
   {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Kasimpasa",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318037
-  },
-  {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318040
-  },
-  {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Konyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318041
-  },
-  {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
-   "home": "Samsunspor",
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
+   "home": "Amedspor",
    "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318042
+   "status": "SCHEDULED",
+   "gameId": 57
   },
   {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
    "home": "Fenerbahce",
-   "away": "Kocaelispor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318043
+   "status": "SCHEDULED",
+   "gameId": 58
+  },
+  {
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Goztepe",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 59
+  },
+  {
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Rizespor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 60
+  },
+  {
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Alanyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 61
+  },
+  {
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Eyupspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 62
+  },
+  {
+   "md": 28,
+   "date": "2027-04-11",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 63
   },
   {
    "md": 29,
    "date": "2027-04-18",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Trabzonspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318036
-  },
-  {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Basaksehir",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318038
-  },
-  {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
-   "home": "Rizespor",
-   "away": "Amedspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318039
-  },
-  {
-   "md": 29,
-   "date": "2027-04-18",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Goztepe",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318044
+   "status": "SCHEDULED",
+   "gameId": 46
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Eyupspor",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318046
+   "status": "SCHEDULED",
+   "gameId": 47
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Alanyaspor",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318047
+   "status": "SCHEDULED",
+   "gameId": 48
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Goztepe",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318049
+   "status": "SCHEDULED",
+   "gameId": 49
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Corum",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318050
+   "status": "SCHEDULED",
+   "gameId": 50
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Besiktas",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Rizespor",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318052
+   "status": "SCHEDULED",
+   "gameId": 51
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Gaziantep",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318045
+   "status": "SCHEDULED",
+   "gameId": 52
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Kasimpasa",
-   "away": "Rizespor",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318048
+   "status": "SCHEDULED",
+   "gameId": 53
   },
   {
-   "md": 30,
-   "date": "2027-04-25",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Fenerbahce",
+   "md": 29,
+   "date": "2027-04-18",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318051
+   "status": "SCHEDULED",
+   "gameId": 54
   },
   {
    "md": 30,
    "date": "2027-04-25",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Genclerbirligi",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318053
+   "status": "SCHEDULED",
+   "gameId": 37
   },
   {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Basaksehir",
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318056
+   "status": "SCHEDULED",
+   "gameId": 38
   },
   {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Amedspor",
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318057
+   "status": "SCHEDULED",
+   "gameId": 39
   },
   {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
-   "home": "Gaziantep",
-   "away": "Konyaspor",
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318059
+   "status": "SCHEDULED",
+   "gameId": 40
+  },
+  {
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Goztepe",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 41
+  },
+  {
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Kasimpasa",
+   "away": "Rizespor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 42
+  },
+  {
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Alanyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 43
+  },
+  {
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Eyupspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 44
+  },
+  {
+   "md": 30,
+   "date": "2027-04-25",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 45
   },
   {
    "md": 31,
    "date": "2027-05-02",
-   "tsi": null,
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Erzurumspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 28
+  },
+  {
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
    "home": "Samsunspor",
    "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318061
+   "status": "SCHEDULED",
+   "gameId": 29
   },
   {
    "md": 31,
    "date": "2027-05-02",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Erzurumspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318062
-  },
-  {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Trabzonspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318054
-  },
-  {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Kasimpasa",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318055
-  },
-  {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318058
-  },
-  {
-   "md": 31,
-   "date": "2027-05-02",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Rizespor",
    "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318060
+   "status": "SCHEDULED",
+   "gameId": 30
   },
   {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Gaziantep",
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
+   "home": "Gaziantep",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318063
+   "status": "SCHEDULED",
+   "gameId": 31
   },
   {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Eyupspor",
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318064
+   "status": "SCHEDULED",
+   "gameId": 32
   },
   {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Alanyaspor",
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318065
+   "status": "SCHEDULED",
+   "gameId": 33
   },
   {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Rizespor",
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318066
+   "status": "SCHEDULED",
+   "gameId": 34
   },
   {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Goztepe",
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Kasimpasa",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318067
+   "status": "SCHEDULED",
+   "gameId": 35
   },
   {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Trabzonspor",
-   "away": "Fenerbahce",
+   "md": 31,
+   "date": "2027-05-02",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Trabzonspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318069
+   "status": "SCHEDULED",
+   "gameId": 36
   },
   {
    "md": 32,
    "date": "2027-05-09",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Corum",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318068
-  },
-  {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Kocaelispor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318070
-  },
-  {
-   "md": 32,
-   "date": "2027-05-09",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Kasimpasa",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318071
+   "status": "SCHEDULED",
+   "gameId": 19
   },
   {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
-   "home": "Kocaelispor",
-   "away": "Trabzonspor",
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318072
+   "status": "SCHEDULED",
+   "gameId": 20
   },
   {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
-   "home": "Fenerbahce",
-   "away": "Kasimpasa",
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Trabzonspor",
+   "away": "Fenerbahce",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318073
+   "status": "SCHEDULED",
+   "gameId": 21
   },
   {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
-   "home": "Alanyaspor",
-   "away": "Galatasaray",
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Corum",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318078
+   "status": "SCHEDULED",
+   "gameId": 22
+  },
+  {
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Goztepe",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 23
+  },
+  {
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Rizespor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 24
+  },
+  {
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Alanyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 25
+  },
+  {
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Eyupspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 26
+  },
+  {
+   "md": 32,
+   "date": "2027-05-09",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 27
   },
   {
    "md": 33,
    "date": "2027-05-16",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Gaziantep",
    "away": "Samsunspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318080
+   "status": "SCHEDULED",
+   "gameId": 10
   },
   {
    "md": 33,
    "date": "2027-05-16",
-   "tsi": null,
-   "home": "Erzurumspor",
-   "away": "Basaksehir",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318074
-  },
-  {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
-   "home": "Goztepe",
-   "away": "Amedspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318075
-  },
-  {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
-   "home": "Corum",
-   "away": "Genclerbirligi",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318076
-  },
-  {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
-   "home": "Eyupspor",
-   "away": "Konyaspor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318077
-  },
-  {
-   "md": 33,
-   "date": "2027-05-16",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Rizespor",
    "away": "Besiktas",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318079
+   "status": "SCHEDULED",
+   "gameId": 11
   },
   {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
-   "home": "Galatasaray",
-   "away": "Gaziantep",
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Alanyaspor",
+   "away": "Galatasaray",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318081
+   "status": "SCHEDULED",
+   "gameId": 12
   },
   {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
-   "home": "Samsunspor",
-   "away": "Eyupspor",
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Eyupspor",
+   "away": "Konyaspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318082
+   "status": "SCHEDULED",
+   "gameId": 13
   },
   {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
-   "home": "Basaksehir",
-   "away": "Alanyaspor",
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Corum",
+   "away": "Genclerbirligi",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318083
+   "status": "SCHEDULED",
+   "gameId": 14
   },
   {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
-   "home": "Besiktas",
-   "away": "Goztepe",
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Goztepe",
+   "away": "Amedspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318085
+   "status": "SCHEDULED",
+   "gameId": 15
   },
   {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
-   "home": "Konyaspor",
-   "away": "Corum",
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Erzurumspor",
+   "away": "Basaksehir",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318086
+   "status": "SCHEDULED",
+   "gameId": 16
+  },
+  {
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Fenerbahce",
+   "away": "Kasimpasa",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 17
+  },
+  {
+   "md": 33,
+   "date": "2027-05-16",
+   "tsi": "11:00",
+   "home": "Kocaelispor",
+   "away": "Trabzonspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 18
   },
   {
    "md": 34,
    "date": "2027-05-23",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Trabzonspor",
    "away": "Erzurumspor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318089
+   "status": "SCHEDULED",
+   "gameId": 1
   },
   {
    "md": 34,
    "date": "2027-05-23",
-   "tsi": null,
-   "home": "Genclerbirligi",
-   "away": "Rizespor",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318084
-  },
-  {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
-   "home": "Amedspor",
-   "away": "Fenerbahce",
-   "hg": null,
-   "ag": null,
-   "tffMatchId": 318087
-  },
-  {
-   "md": 34,
-   "date": "2027-05-23",
-   "tsi": null,
+   "tsi": "11:00",
    "home": "Kasimpasa",
    "away": "Kocaelispor",
    "hg": null,
    "ag": null,
-   "tffMatchId": 318088
+   "status": "SCHEDULED",
+   "gameId": 2
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Amedspor",
+   "away": "Fenerbahce",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 3
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Konyaspor",
+   "away": "Corum",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 4
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Besiktas",
+   "away": "Goztepe",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 5
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Genclerbirligi",
+   "away": "Rizespor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 6
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Basaksehir",
+   "away": "Alanyaspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 7
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Samsunspor",
+   "away": "Eyupspor",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 8
+  },
+  {
+   "md": 34,
+   "date": "2027-05-23",
+   "tsi": "11:00",
+   "home": "Galatasaray",
+   "away": "Gaziantep",
+   "hg": null,
+   "ag": null,
+   "status": "SCHEDULED",
+   "gameId": 9
   }
  ]
 }

@@ -1,6 +1,7 @@
 import { type HomeAway, leagueAvgGoals, schedule } from "@/lib/data";
 import type { Player, Position } from "@/lib/fantasy";
 import {
+  availability,
   type LineupInfo,
   lineupOf,
   type RecentSummary,
@@ -56,20 +57,31 @@ export type Rates = {
   minutes: number;
 };
 
-/** Gözlenen oranları mevki önceliğine doğru çeker (Bayes tarzı basit ağırlık). */
-export function shrunkRates(pos: Position, s: RecentSummary): Rates {
+/**
+ * Gözlenen oranları mevki önceliğine doğru çeker (Bayes tarzı basit ağırlık).
+ * Sayımlar öncelikle oyunun resmî sezon toplamlarından (`player`), yoksa son
+ * maç verisinden (`s`) gelir: resmî veri tüm sezonu kapsar ve olay ayrıştırma
+ * hatası taşımaz.
+ */
+export function shrunkRates(pos: Position, s: RecentSummary, player?: Player): Rates {
   const prior = PRIORS[pos];
   const priorMin = PRIOR_MATCHES * 90;
-  const n = s.minutes;
-  const rate = (count: number, p90: number) =>
-    (count + (p90 * priorMin) / 90) / ((n + priorMin) / 90);
+  // Resmî dakika varsa o esas; yoksa son maçlardaki dakika.
+  const official = player && player.mins > 0;
+  const n = official ? (player as Player).mins : s.minutes;
+  const count = (key: "goals" | "assists" | "yellow" | "red" | "bonus" | "saves") =>
+    official ? ((player as Player)[key] ?? 0) : (s[key as keyof RecentSummary] as number) ?? 0;
+  const rate = (c: number, p90: number) => (c + (p90 * priorMin) / 90) / ((n + priorMin) / 90);
   return {
-    g90: rate(s.goals, prior.g90),
-    a90: rate(s.assists, prior.a90),
-    y90: rate(s.yellow, prior.y90),
-    r90: rate(s.red, prior.r90),
-    bonus90: rate(s.bonus, prior.bonus90),
-    saves90: prior.saves90,
+    g90: rate(count("goals"), prior.g90),
+    a90: rate(count("assists"), prior.a90),
+    y90: rate(count("yellow"), prior.y90),
+    r90: rate(count("red"), prior.r90),
+    bonus90: rate(count("bonus"), prior.bonus90),
+    // Kurtarış yalnız resmî veride var; yoksa mevki önceliği.
+    saves90: pos === "GK" && official && (player as Player).saves != null
+      ? rate((player as Player).saves as number, prior.saves90)
+      : prior.saves90,
     minutes: n,
   };
 }
@@ -130,7 +142,9 @@ export function minutesModel(
   const pStart = startProbability(player, info);
   const benchMatches = summary.matches - summary.starts;
   const subRate = benchMatches > 0 ? summary.subIns / benchMatches : DEFAULT_SUB_RATE;
-  const pPlay = pStart + (1 - pStart) * subRate;
+  // Yedekten girme yolu ancak oyuncu kadrodaysa açık: sakat/cezalı 0 alır.
+  const pAvailable = availability(player, info);
+  const pPlay = pStart + Math.max(0, pAvailable - pStart) * subRate;
   const minStarted = summary.minutesWhenStarted ?? DEFAULT_MINUTES_STARTED;
   const minSub = summary.minutesWhenSub ?? DEFAULT_MINUTES_SUB;
   const over60 = summary.over60WhenStarted ?? DEFAULT_OVER60;
@@ -138,7 +152,7 @@ export function minutesModel(
     pStart,
     pPlay,
     p60: pStart * over60,
-    expectedMinutes: pStart * minStarted + (1 - pStart) * subRate * minSub,
+    expectedMinutes: pStart * minStarted + Math.max(0, pAvailable - pStart) * subRate * minSub,
   };
 }
 
@@ -249,7 +263,7 @@ export function playerExpectedPoints(
   const info = lineupOf(player);
   const summary = summarizeRecent(player, info);
   const minutes = minutesModel(player, info, summary);
-  const rates = shrunkRates(player.pos, summary);
+  const rates = shrunkRates(player.pos, summary, player);
   const weeks: WeekXp[] = [];
   let sum = 0;
   let wsum = 0;

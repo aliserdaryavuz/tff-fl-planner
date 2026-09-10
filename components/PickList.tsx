@@ -16,7 +16,7 @@ import {
   predictedMeta,
   predictedXi,
 } from "@/lib/lineups";
-import type { PickRow } from "@/lib/picks";
+import { officialPerMatch, type PickRow } from "@/lib/picks";
 
 type PosFilter = Position | "ALL";
 
@@ -132,8 +132,8 @@ function PickHeader() {
       <span>{t.picks.columns.rank}</span>
       <span>{t.picks.columns.player}</span>
       <span className="text-right">{t.picks.columns.price}</span>
-      <span className="text-right" title={t.picks.columns.per90Title}>
-        {t.picks.columns.per90}
+      <span className="text-right" title={t.picks.columns.ppmTitle}>
+        {t.picks.columns.ppm}
       </span>
       <span className="text-right" title={t.picks.columns.xpTitle}>
         {t.picks.columns.xp}
@@ -186,6 +186,7 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
   const { t, f } = useI18n();
   const band = bandOf(row.avgDifficulty);
   const s = row.detail.summary;
+  const ppm = officialPerMatch(row.player);
   return (
     <div
       className={`grid ${ROW_GRID} items-center gap-1.5 border-b border-line ${compact ? "py-1.5" : "py-2"}`}
@@ -223,9 +224,20 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
 
       <div
         className="text-right text-[13px] text-muted tabular-nums"
-        title={s.matches ? t.picks.per90Title(s.fantasyPoints, s.minutes, s.matches) : undefined}
+        title={[
+          t.picks.official(
+            row.player.pts,
+            row.player.mins,
+            f.n1(row.player.form ?? 0),
+            f.pct(row.player.sel ?? 0, 1),
+          ),
+          s.matches ? t.picks.per90Title(s.fantasyPoints, s.minutes, s.matches) : null,
+          row.player.news ? t.picks.news(row.player.news) : null,
+        ]
+          .filter(Boolean)
+          .join("\n")}
       >
-        {row.per90 != null ? f.n1(row.per90) : "–"}
+        {ppm != null ? f.n1(ppm) : "–"}
       </div>
 
       <div className="text-right font-cond text-[17px] font-bold text-accent tabular-nums">

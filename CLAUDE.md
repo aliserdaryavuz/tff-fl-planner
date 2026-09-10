@@ -16,10 +16,13 @@ Ayrıntılı tanım `PROJECT.md` içinde — yeni bir işe başlamadan önce onu
 
 ## Veri
 
-- Takımlar ve fikstür: `data/superlig-2026-27.json` (`scripts/fetch-fixtures.mjs`, tff.org). Elle veri uydurma, tahminî değer ekleme.
-- Oyuncular: `data/fantasy-players.json`. Şimdilik FotMob kadroları (`fetch-squads.mjs`), fiyat `null`; oyunun fiyatları giriş isteyen `fetch-players.mjs` ile gelir (`.env.local`: `TFF_EMAIL`, `TFF_PASSWORD`; repoya girmez).
+- Ana kaynak oyunun kendi API'si: `scripts/fetch-game.mjs` hem `data/superlig-2026-27.json` (takımlar, 306 maç, 34 hafta, son kadro kaydı saatleri, skorlar) hem `data/fantasy-players.json` (fiyat, seçilme oranı, sezon toplamları) yazar. Elle veri uydurma, tahminî değer ekleme.
+- API Keycloak ile korunuyor ve giriş **Google hesabıyla**; şifreyle programatik giriş yok. Çözüm: projeye ayrılmış kalıcı Chrome profilinde bir kez giriş (`node scripts/chrome-login.mjs`), betikler CDP ile o tarayıcıya bağlanır (`scripts/lib/chrome.mjs`). Token hiçbir dosyaya yazılmaz; kullanıcının günlük Chrome'una dokunma.
+- Oyunun doldurmadığı alanlar (starts, bps, xG) sıfır geliyor; `fetch-game.mjs` tamamen boş alanları dosyaya yazmaz. Sıfır dolu sütun veri sanılmasın.
+- Sakatlık bilgisi oyunun API'sinde yok: FotMob'dan gelir (`fetch-squads.mjs` oyun listesini korur, yalnız `fotmobId` ve `status` ekler).
 - Son maç verisi `data/lineups.json` (`fetch-lineups.mjs`, FotMob, headless Chrome), tahmini 11 `data/predicted-xi.json` (`fetch-predicted.mjs`).
 - Güç kaynakları: `update-opta.mjs` (Opta Power Rankings), `update-values.mjs` (Transfermarkt); geçen sezon sırası `scripts/lib/teams.mjs` içinde.
+- `verify-fixtures.mjs` tff.org ile karşılaştırır, hiçbir şey yazmaz.
 - Veri değişirse `data/validate.test.ts` geçmeli: 18 takım, 306 maç, her takım haftada bir maç, 17 ev + 17 deplasman.
 - Veritabanı yok, çalışma anında dış API yok; JSON güncellenip push edilir.
 
@@ -34,4 +37,6 @@ Ayrıntılı tanım `PROJECT.md` içinde — yeni bir işe başlamadan önce onu
 
 - Menajer kartlarını modele ekleme (arayüzde yalnız not).
 - Fiyat uydurup kadro kurucuyu "çalışır" gösterme; fiyat yoksa açıkça söyle.
+- Oyunun oturum token'ını dosyaya, ortam değişkenine ya da repoya yazma.
+- Kullanıcının günlük Chrome profilini kapatma/kopyalama; veri için ayrılmış profil var.
 - Analytics, çerez bandı, giriş ekranı, ödeme, veritabanı.

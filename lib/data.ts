@@ -7,9 +7,13 @@ export type Team = {
   name: string;
   /** 2025/26 bitiş sırası (1-18); yükselenler 1. Lig sırasıyla 16-18. */
   last: number;
+  /** Oyunun kulüp id'si (tfffantezilig.com). */
+  clubId?: number | null;
+  shortName?: string | null;
+  logoUrl?: string | null;
   /** tff.org kulüp id'si (Default.aspx?pageId=28&kulupID=) */
-  tffId: number | null;
-  tffName: string | null;
+  tffId?: number | null;
+  tffName?: string | null;
   /** Opta Power Rankings (0-100). */
   opta?: number;
   optaRank?: number;
@@ -24,14 +28,30 @@ export type Fixture = {
   md: number;
   /** "2026-08-14" */
   date: string;
-  /** Türkiye saati "21:30"; TFF henüz açıklamadıysa null. */
+  /** Türkiye saati "21:30"; saat açıklanmadıysa null. */
   tsi: string | null;
   home: string;
   away: string;
   /** Skor; oynanmadıysa null. */
   hg: number | null;
   ag: number | null;
-  tffMatchId: number | null;
+  /** Oyunun maç durumu, ör. "FT" (bitti), "NS" (başlamadı). */
+  status?: string | null;
+  /** Oyunun maç id'si. */
+  gameId?: number | null;
+};
+
+/** Oyunun hafta takvimi: son kadro kaydı ve hafta özeti. */
+export type Gameweek = {
+  md: number;
+  /** Son kadro kaydı, UTC ISO ("2026-09-11T16:00:00Z"). */
+  deadline: string | null;
+  start: string | null;
+  end: string | null;
+  finished: boolean;
+  /** Oyundaki ortalama ve en yüksek puan; hafta bitmediyse 0. */
+  avgPoints: number | null;
+  highestPoints: number | null;
 };
 
 export type Meta = {
@@ -41,6 +61,10 @@ export type Meta = {
   source_fixtures: string;
   last_source?: string;
   generated: string;
+  /** Oyunun bildirdiği güncel ve kadro kurulabilir hafta. */
+  currentGameweek?: number | null;
+  editableGameweek?: number | null;
+  editableDeadline?: string | null;
   opta_source?: string;
   value_source?: string;
   elo_source?: string;
@@ -64,8 +88,13 @@ export type TeamFixture = {
 export const teams: Team[] = raw.teams as Team[];
 export const fixtures: Fixture[] = raw.fixtures as Fixture[];
 export const meta: Meta = raw.meta as Meta;
+export const gameweeks: Gameweek[] = (raw.gameweeks ?? []) as Gameweek[];
 
 export const MATCHDAYS = 34;
+
+export const gameweekOf: Record<number, Gameweek> = Object.fromEntries(
+  gameweeks.map((g) => [g.md, g]),
+);
 
 export const teamIds: string[] = teams.map((t) => t.id);
 
@@ -94,12 +123,30 @@ export const schedule: Record<string, TeamFixture[]> = (() => {
 
 export const isPlayed = (f: Fixture) => f.hg != null && f.ag != null;
 
-/** Sıradaki hafta: oynanmamış maçı olan ilk hafta (sezon bittiyse 34). */
+/**
+ * Planlanacak hafta: oyunun bildirdiği "kadro kurulabilir" hafta; bilinmiyorsa
+ * oynanmamış maçı olan ilk hafta (sezon bittiyse 34).
+ */
 export function nextMatchday(): number {
+  const editable = meta.editableGameweek;
+  if (editable && editable >= 1 && editable <= MATCHDAYS) return editable;
   for (let md = 1; md <= MATCHDAYS; md++) {
     if (fixtures.some((f) => f.md === md && !isPlayed(f))) return md;
   }
   return MATCHDAYS;
+}
+
+/** Haftanın son kadro kaydı anı (ms). Oyun vermezse ilk maçtan 1 saat önce. */
+export function deadlineOf(md: number): number | null {
+  const iso = gameweekOf[md]?.deadline;
+  if (iso) {
+    const t = Date.parse(iso);
+    if (!Number.isNaN(t)) return t;
+  }
+  const first = fixturesOf(md).find((f) => f.tsi);
+  if (!first?.tsi) return null;
+  // tsi Türkiye saati (sabit UTC+3) -> UTC an; kural: ilk maçtan 1 saat önce.
+  return Date.parse(`${first.date}T${first.tsi}:00+03:00`) - 60 * 60 * 1000;
 }
 
 /** Haftanın maçları, başlama anına göre; saati olmayanlar sona. */

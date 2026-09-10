@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Player } from "@/lib/fantasy";
+import { players as gamePlayers, type Player } from "@/lib/fantasy";
 import type { RecentSummary } from "@/lib/lineups";
 import { computeAll, DEFAULT_PARAMS } from "@/lib/models";
 import {
@@ -155,8 +155,22 @@ describe("playerExpectedPoints — gerçek veri", () => {
   const { strength } = computeAll({ model: "abs", params: DEFAULT_PARAMS });
   const ctx = { strength, homeAdvantage: 6 };
 
+  /** Oyun dosyasındaki gerçek oyuncu: resmî istatistikleriyle birlikte. */
+  const real = (name: string) => {
+    const hit = gamePlayers.find((p) => p.name === name);
+    if (!hit) throw new Error(`oyun dosyasında yok: ${name}`);
+    return hit;
+  };
+
+  /** Sakat olmayan, düzenli oynayan bir oyuncu (ad sabitlemeden). */
+  const fitPlayer = (pos: Player["pos"] = "FWD") => {
+    const hit = gamePlayers.find((p) => p.pos === pos && !p.status && p.mins >= 270);
+    if (!hit) throw new Error(`uygun ${pos} bulunamadı`);
+    return hit;
+  };
+
   it("tek hafta: yalnız o haftanın maçı sayılır; ufuk açılınca ağırlıklı ortalama", () => {
-    const p = player({ name: "Victor Osimhen", team: "Galatasaray", pos: "FWD" });
+    const p = fitPlayer();
     const one = playerExpectedPoints(p, weekDecayWeights(5, 1, 0.5), ctx);
     expect(one.weeks).toHaveLength(1);
     expect(one.weeks[0].md).toBe(5);
@@ -169,19 +183,48 @@ describe("playerExpectedPoints — gerçek veri", () => {
     expect(three.xp).toBeCloseTo(manual, 10);
   });
 
-  it("sakat oyuncu 0'a yakın, düzenli başlayan forvet daha yüksek", () => {
+  it("sakat oyuncu 0'a yakın; sağlam, gol atan forvet çok daha yüksek", () => {
+    const weeks = weekDecayWeights(5, 1, 0.5);
     const injured = playerExpectedPoints(
       player({ name: "Zzz", team: "Galatasaray", pos: "FWD", status: "I" }),
-      weekDecayWeights(5, 1, 0.5),
-      ctx,
-    );
-    const osimhen = playerExpectedPoints(
-      player({ name: "Victor Osimhen", team: "Galatasaray", pos: "FWD" }),
-      weekDecayWeights(5, 1, 0.5),
+      weeks,
       ctx,
     );
     expect(injured.xp).toBeLessThan(1);
-    expect(osimhen.xp).toBeGreaterThan(injured.xp);
-    expect(osimhen.minutes.pStart).toBeGreaterThan(0.5);
+
+    // Sakat olmayan, çok oynayan ve gol atan bir forvet (ad sabitlemeden).
+    const fit = gamePlayers.find(
+      (p) => p.pos === "FWD" && !p.status && p.mins >= 270 && (p.goals ?? 0) >= 2,
+    );
+    expect(fit, "uygun forvet bulunamadı").toBeDefined();
+    const star = playerExpectedPoints(fit as Player, weeks, ctx);
+    expect(star.xp).toBeGreaterThan(injured.xp);
+    expect(star.minutes.pStart).toBeGreaterThan(0.5);
+    // Resmî sezon toplamları oranlara giriyor: golleri modelde görünmeli.
+    expect(star.rates.g90).toBeGreaterThan(PRIORS.FWD.g90);
+  });
+
+  it("oyunun sakat işaretlediği yıldız oyuncu modelde de oynamıyor sayılır", () => {
+    // Veri kaynağı FotMob; sakatlık bilgisi oyunun API'sinde yok.
+    const osimhen = real("Osimhen");
+    if (osimhen.status !== "I") return;
+    const xp = playerExpectedPoints(osimhen, weekDecayWeights(5, 1, 0.5), ctx);
+    expect(xp.minutes.pStart).toBe(0);
+    expect(xp.xp).toBe(0);
+  });
+
+  it("beklenen puan, oyunun maç başına puanıyla aynı yönde", () => {
+    const weeks = weekDecayWeights(5, 1, 0.5);
+    const sample = gamePlayers.filter((p) => p.mins >= 270 && (p.ppm ?? 0) > 0).slice(0, 120);
+    expect(sample.length).toBeGreaterThan(30);
+    const rows = sample.map((p) => ({
+      xp: playerExpectedPoints(p, weeks, ctx).xp,
+      ppm: p.ppm as number,
+    }));
+    // Kaba doğrulama: oyunun en iyi çeyreği, en kötü çeyrekten yüksek xP almalı.
+    const byPpm = [...rows].sort((a, b) => b.ppm - a.ppm);
+    const q = Math.floor(byPpm.length / 4);
+    const mean = (list: typeof rows) => list.reduce((s, r) => s + r.xp, 0) / list.length;
+    expect(mean(byPpm.slice(0, q))).toBeGreaterThan(mean(byPpm.slice(-q)));
   });
 });

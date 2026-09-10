@@ -4,7 +4,7 @@
 //
 // Oyun (tfffantezilig.com) oyuncu listesi giriş gerektirdiği için ilk oyuncu
 // havuzu buradan gelir: ad, mevki (FotMob rolü), sakatlık, FotMob id. Fiyat ve
-// seçilme oranı yok (null) — bunlar scripts/fetch-players.mjs ile oyundan
+// seçilme oranı yok (null) — bunlar scripts/fetch-game.mjs ile oyundan
 // gelir. Dosyada oyundan gelen fiyatlar varsa (meta.pricesFrom = "game") liste
 // korunur, yalnızca FotMob id eşlemesi ve sakatlık bilgisi tazelenir.
 
@@ -12,7 +12,13 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { FOTMOB, teamSquad } from "./lib/fotmob.mjs";
-import { matchFantasyName } from "./lib/names.mjs";
+import { matchFantasyName, matchShortName } from "./lib/names.mjs";
+
+/**
+ * Oyun dosyasındaki adlar kısa ("Osimhen", "Salah"); önce soyad odaklı
+ * eşleyici, tutmazsa tam ad eşleyicisi denenir.
+ */
+const matchPlayer = (name, pool) => matchShortName(name, pool) ?? matchFantasyName(name, pool);
 
 const FRESH = process.argv.includes("--fresh");
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -82,7 +88,7 @@ if (keepGame) {
   let matched = 0;
   const merged = existing.players.map((p) => {
     const pool = fotmobByTeam[p.team] ?? [];
-    const hit = matchFantasyName(p.name, pool);
+    const hit = matchPlayer(p.name, pool);
     if (!hit) return { ...p, fotmobId: p.fotmobId ?? null };
     matched++;
     return {

@@ -1,9 +1,9 @@
 "use client";
 
 import { useI18n } from "@/components/I18nProvider";
-import { fixturesOf, isPlayed, MATCHDAYS } from "@/lib/data";
+import { deadlineOf, fixturesOf, gameweekOf, isPlayed, MATCHDAYS } from "@/lib/data";
 import { MAX_HORIZON } from "@/lib/picks";
-import { kickoffInstant, localKickoff } from "@/lib/time";
+import { localKickoff } from "@/lib/time";
 
 /** Planlanan hafta, ufuk ve hafta ağırlığı: her şeyin ilk girdisi. */
 export function GameweekBar({
@@ -27,11 +27,9 @@ export function GameweekBar({
   const matches = fixturesOf(gw);
   const first = matches[0];
   const last = matches[matches.length - 1];
-  const played = matches.length > 0 && matches.every(isPlayed);
-  const timed = matches.filter((m) => m.tsi);
-  const deadline = timed.length
-    ? localKickoff(kickoffInstant(timed[0].date, timed[0].tsi as string) - 60 * 60_000, tz)
-    : null;
+  const played = gameweekOf[gw]?.finished ?? (matches.length > 0 && matches.every(isPlayed));
+  const deadlineAt = deadlineOf(gw);
+  const deadline = deadlineAt != null ? localKickoff(deadlineAt, tz) : null;
   const arrow =
     "flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-line bg-surface text-xl leading-none hover:bg-surface-2 disabled:opacity-40";
   const weightTotal = weekWeights.reduce((a, b) => a + b, 0);
@@ -63,7 +61,7 @@ export function GameweekBar({
         >
           {Array.from({ length: MATCHDAYS }, (_, i) => i + 1).map((md) => {
             const list = fixturesOf(md);
-            const done = list.length > 0 && list.every(isPlayed);
+            const done = gameweekOf[md]?.finished ?? (list.length > 0 && list.every(isPlayed));
             return (
               <option key={md} value={md}>
                 {t.gameweek.week(md)} · {list[0] ? f.shortDate(list[0].date) : ""}
