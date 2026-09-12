@@ -187,9 +187,12 @@ export async function connect({
         .filter((c) => c.domain.includes("tfffantezilig"))
         .map((c) => ({ name: c.name, domain: c.domain, httpOnly: c.httpOnly }));
     },
-    /** Giriş yapılmış mı: kullanıcı uç noktası 200 dönüyor mu. */
+    /**
+     * Giriş yapılmış mı: kullanıcı uç noktası 200 dönüyor mu. Yol
+     * `users/me?league-id=1` — `user/me` 404 verir (fetch-game.mjs ile aynı uç).
+     */
     async loggedIn() {
-      const r = await raw(`${SITE}/api/backend/user/me`);
+      const r = await raw(`${SITE}/api/backend/users/me?league-id=1`);
       return r.status === 200;
     },
     async close({ quit = false } = {}) {

@@ -7,7 +7,14 @@ export type Position = "GK" | "DEF" | "MID" | "FWD";
 export type PlayerStatus = "I" | "D" | "S";
 
 export type Player = {
+  /** Oyunun gösterdiği kısa ad ("Salah", "Arda (2)"); arayüzde bu görünür. */
   name: string;
+  /**
+   * Oyunun tam adı ("Arda Okan Kurtulan"). Kısa ad takım içinde tekrar
+   * edebildiği için FotMob eşlemesi bunu ve forma numarasını kullanır.
+   */
+  fullName?: string | null;
+  shirt?: number | null;
   /** data/superlig-2026-27.json'daki takım id'si. */
   team: string;
   pos: Position;

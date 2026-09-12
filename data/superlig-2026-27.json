@@ -3,14 +3,14 @@
   "season": "2026/27",
   "league": "Trendyol Süper Lig",
   "weeks": 34,
-  "source_fixtures": "TFF Fantezi Lig resmî API (tfffantezilig.com), 10.09.2026",
-  "generated": "2026-09-10",
+  "source_fixtures": "TFF Fantezi Lig resmî API (tfffantezilig.com), 12.09.2026",
+  "generated": "2026-09-12",
   "last_source": "Wikipedia, 2025–26 Süper Lig ve TFF 1. Lig nihai tabloları",
   "opta_source": "Opta Power Rankings (theanalyst.com), 09.09.2026",
   "value_source": "Transfermarkt kadro değeri (transfermarkt.com.tr), 09.09.2026",
-  "currentGameweek": 4,
-  "editableGameweek": 5,
-  "editableDeadline": "2026-09-11T16:00:00Z"
+  "currentGameweek": 5,
+  "editableGameweek": 6,
+  "editableDeadline": "2026-09-18T16:00:00Z"
  },
  "teams": [
   {
@@ -291,8 +291,8 @@
    "start": "2026-09-04T16:00:00Z",
    "end": "2026-09-14T19:00:00Z",
    "finished": false,
-   "avgPoints": 0,
-   "highestPoints": 0
+   "avgPoints": 11.3,
+   "highestPoints": 63
   },
   {
    "md": 6,
@@ -959,9 +959,9 @@
    "tsi": "20:00",
    "home": "Besiktas",
    "away": "Erzurumspor",
-   "hg": null,
-   "ag": null,
-   "status": "SCHEDULED",
+   "hg": 3,
+   "ag": 0,
+   "status": "FT",
    "gameId": 263
   },
   {

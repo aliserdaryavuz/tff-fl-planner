@@ -57,6 +57,7 @@ for (const [team, [id, slug]] of Object.entries(FOTMOB)) {
       members.push({
         fotmobId: m.id,
         name: m.name,
+        shirt: m.shirtNumber ?? null,
         pos,
         injured: Boolean(m.injured || m.injury),
         injury: m.injury?.expectedReturn ?? null,
@@ -88,7 +89,15 @@ if (keepGame) {
   let matched = 0;
   const merged = existing.players.map((p) => {
     const pool = fotmobByTeam[p.team] ?? [];
-    const hit = matchPlayer(p.name, pool);
+    // Sırayla: forma numarası (kulüp içinde tek ve kesin), oyunun tam adı
+    // ("Arda Okan Kurtulan"), görünen kısa ad ("Arda"). Kısa adlar aynı takımda
+    // tekrar ettiği için tek başına yetmiyor.
+    const byShirt =
+      p.shirt == null ? [] : pool.filter((m) => m.shirt != null && m.shirt === p.shirt);
+    const hit =
+      (byShirt.length === 1 ? byShirt[0] : null) ??
+      (p.fullName ? matchPlayer(p.fullName, pool) : null) ??
+      matchPlayer(p.name, pool);
     if (!hit) return { ...p, fotmobId: p.fotmobId ?? null };
     matched++;
     return {

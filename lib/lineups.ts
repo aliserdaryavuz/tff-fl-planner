@@ -1,6 +1,6 @@
 import raw from "@/data/lineups.json";
 import rawPredicted from "@/data/predicted-xi.json";
-import { meta } from "@/lib/data";
+import { meta, schedule } from "@/lib/data";
 import type { Player } from "@/lib/fantasy";
 import { matchPoints } from "@/lib/scoring.mjs";
 
@@ -125,7 +125,17 @@ const lastToken = (s: string) =>
     .split(/[\s-]+/)
     .pop() ?? "";
 
-export function predictedFor(player: Player): Predicted {
+/**
+ * Tahmin dosyası tek bir haftayı anlatır (`predictedMeta.matchday`). Başka bir
+ * hafta planlanıyorsa o haftanın 11'i hakkında hiçbir şey söylemez: eski
+ * haftanın listesi, adı eşleşmeyen oyuncuyu haksız yere "11'de değil" sayar.
+ */
+export function predictionApplies(md: number | null | undefined): boolean {
+  return md == null || predictedMeta.matchday === md;
+}
+
+export function predictedFor(player: Player, md?: number | null): Predicted {
+  if (!predictionApplies(md)) return NO_PREDICTION;
   const team = predictedXi[player.team];
   if (!team) return NO_PREDICTION;
   const mine = lastToken(player.name);
@@ -187,7 +197,11 @@ const WEAK_OUT_FACTOR = 0.6;
  * çok daha doğru: 4 haftada 360 dakika oynayan biri kesinlikle ilk 11'dedir.
  */
 function officialStartShare(player: Player): number | null {
-  const done = meta.currentGameweek ?? 0;
+  // Bölen, takımın fiilen oynadığı maç sayısı: hafta içi (oyunun "şu anki"
+  // haftası sürerken) henüz oynamamış takımın oyuncusu, olmayan bir maçta
+  // oynamamış sayılıp haksız yere düşük paya inmesin.
+  const played = schedule[player.team]?.filter((f) => f.gf != null).length ?? 0;
+  const done = played || (meta.currentGameweek ?? 0);
   if (done <= 0 || !player.mins) return null;
   return Math.min(1, player.mins / (90 * done));
 }

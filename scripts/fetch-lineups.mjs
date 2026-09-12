@@ -166,7 +166,12 @@ for (const [team, [fotmobId, slug]] of teams) {
     const byId = fp.fotmobId
       ? (pool.find((p) => p.id === fp.fotmobId) ?? unavailPool.find((p) => p.id === fp.fotmobId))
       : null;
-    const hit = byId ?? matchName(fp.name, pool) ?? matchName(fp.name, unavailPool);
+    // Oyunun kısa adı ("Arda") takım içinde tekrar edebiliyor; tam ad daha güvenli.
+    const hit =
+      byId ??
+      (fp.fullName ? (matchName(fp.fullName, pool) ?? matchName(fp.fullName, unavailPool)) : null) ??
+      matchName(fp.name, pool) ??
+      matchName(fp.name, unavailPool);
     if (!hit) continue;
     matchedIds.add(hit.id);
     const entry = perPlayer.get(hit.id);

@@ -19,7 +19,8 @@ Ayrıntılı tanım `PROJECT.md` içinde — yeni bir işe başlamadan önce onu
 - Ana kaynak oyunun kendi API'si: `scripts/fetch-game.mjs` hem `data/superlig-2026-27.json` (takımlar, 306 maç, 34 hafta, son kadro kaydı saatleri, skorlar) hem `data/fantasy-players.json` (fiyat, seçilme oranı, sezon toplamları) yazar. Elle veri uydurma, tahminî değer ekleme.
 - API Keycloak ile korunuyor ve giriş **Google hesabıyla**; şifreyle programatik giriş yok. Çözüm: projeye ayrılmış kalıcı Chrome profilinde bir kez giriş (`node scripts/chrome-login.mjs`), betikler CDP ile o tarayıcıya bağlanır (`scripts/lib/chrome.mjs`). Token hiçbir dosyaya yazılmaz; kullanıcının günlük Chrome'una dokunma.
 - Oyunun doldurmadığı alanlar (starts, bps, xG) sıfır geliyor; `fetch-game.mjs` tamamen boş alanları dosyaya yazmaz. Sıfır dolu sütun veri sanılmasın.
-- Sakatlık bilgisi oyunun API'sinde yok: FotMob'dan gelir (`fetch-squads.mjs` oyun listesini korur, yalnız `fotmobId` ve `status` ekler).
+- Sakatlık bilgisi oyunun API'sinde yok: FotMob'dan gelir (`fetch-squads.mjs` oyun listesini korur, yalnız `fotmobId` ve `status` ekler). Oyunun görünen adı kısa ve takım içinde tekrar edebiliyor ("Arda", "Arda (2)"); eşleme forma numarası ve `fullName` üzerinden yapılır, kısa ad son çare.
+- Tahmini 11 dosyası tek bir haftayı anlatır; `predictedFor(player, md)` başka hafta planlanırken onu yok sayar (eski liste, adı eşleşmeyeni haksız yere "11'de değil" sayıyordu).
 - Son maç verisi `data/lineups.json` (`fetch-lineups.mjs`, FotMob, headless Chrome), tahmini 11 `data/predicted-xi.json` (`fetch-predicted.mjs`).
 - Güç kaynakları: `update-opta.mjs` (Opta Power Rankings), `update-values.mjs` (Transfermarkt); geçen sezon sırası `scripts/lib/teams.mjs` içinde.
 - `verify-fixtures.mjs` tff.org ile karşılaştırır, hiçbir şey yazmaz.

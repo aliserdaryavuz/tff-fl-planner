@@ -4,6 +4,7 @@ import {
   availability,
   type LineupInfo,
   lineupOf,
+  predictedFor,
   type RecentSummary,
   startProbability,
   summarizeRecent,
@@ -138,12 +139,15 @@ export function minutesModel(
   player: Player,
   info: LineupInfo | undefined = lineupOf(player),
   summary: RecentSummary = summarizeRecent(player, info),
+  /** Planlanan hafta; tahmini 11 yalnız kendi haftasına uygulanır. */
+  md?: number | null,
 ): MinutesModel {
-  const pStart = startProbability(player, info);
+  const predicted = predictedFor(player, md);
+  const pStart = startProbability(player, info, predicted);
   const benchMatches = summary.matches - summary.starts;
   const subRate = benchMatches > 0 ? summary.subIns / benchMatches : DEFAULT_SUB_RATE;
   // Yedekten girme yolu ancak oyuncu kadrodaysa açık: sakat/cezalı 0 alır.
-  const pAvailable = availability(player, info);
+  const pAvailable = availability(player, info, predicted);
   const pPlay = pStart + Math.max(0, pAvailable - pStart) * subRate;
   const minStarted = summary.minutesWhenStarted ?? DEFAULT_MINUTES_STARTED;
   const minSub = summary.minutesWhenSub ?? DEFAULT_MINUTES_SUB;
@@ -279,7 +283,10 @@ export function playerExpectedPoints(
 ): PlayerXp {
   const info = lineupOf(player);
   const summary = summarizeRecent(player, info);
-  const minutes = minutesModel(player, info, summary);
+  // Tahmini 11 yalnız planlanan (ilk seçili) haftaya ait; ufuk açıkken sonraki
+  // haftalar için aynı olasılık kullanılır, başka haftanın tahmini uygulanmaz.
+  const planned = weekWeights.findIndex((w) => w > 0) + 1 || null;
+  const minutes = minutesModel(player, info, summary, planned);
   const rates = shrunkRates(player.pos, summary, player);
   const weeks: WeekXp[] = [];
   let sum = 0;

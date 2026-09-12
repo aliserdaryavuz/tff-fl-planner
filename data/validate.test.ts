@@ -7,6 +7,7 @@ import {
   isPlayed,
   leagueAvgGoals,
   MATCHDAYS,
+  meta,
   nextMatchday,
   schedule,
   teamIds,
@@ -65,12 +66,21 @@ describe("superlig-2026-27.json", () => {
     }
   });
 
-  it("oynanan haftalar baştan bitişik; sıradaki hafta ilk oynanmamış", () => {
-    const next = nextMatchday();
-    for (let md = 1; md < next; md++) {
+  it("oynanan haftalar baştan bitişik; planlanan hafta oynanan haftanın gerisinde değil", () => {
+    // Oyunun "şu anki" haftası oynanıyor olabilir (hafta içi): ondan öncekiler
+    // bitmiş olmalı, kendisi kısmen oynanmış olabilir.
+    const current = meta.currentGameweek ?? nextMatchday();
+    for (let md = 1; md < current; md++) {
       expect(fixturesOf(md).every(isPlayed), `${md}. hafta`).toBe(true);
     }
-    expect(fixturesOf(next).some((f) => !isPlayed(f))).toBe(true);
+    // Kadro kurulabilen hafta: süre sonu geçince oyun bir sonrakine geçer.
+    const next = nextMatchday();
+    expect(next).toBeGreaterThanOrEqual(current);
+    expect(next).toBeLessThanOrEqual(MATCHDAYS);
+    // Planlanan haftadan sonrasında hiç sonuç olmamalı.
+    for (let md = next + 1; md <= MATCHDAYS; md++) {
+      expect(fixturesOf(md).some(isPlayed), `${md}. hafta`).toBe(false);
+    }
   });
 
   it("puan durumu tutarlı", () => {

@@ -42,7 +42,7 @@ Next.js App Router + TypeScript + Tailwind + vitest; Vercel. Veri derleme zaman�
 | Opta gücü | theanalyst.com power rankings paketi (index.js, ~17 MB) | `update-opta.mjs` | Aynı adlı kadın/altyapı kayıtları: puanı yüksek olan A takımı |
 | Kadro değeri | transfermarkt.com.tr TR1 sayfası | `update-values.mjs` | milyon € |
 | Elo | clubelo.com / elofootball.com | — | 09.09.2026'da erişilemedi; alan isteğe bağlı, kaynak açılınca doldurulur |
-| Sakat/cezalı | FotMob kadro sayfaları | `fetch-squads.mjs` | Oyunun API'sinde sakatlık yok; oyun listesi korunur, yalnız `fotmobId` + `status` eklenir |
+| Sakat/cezalı | FotMob kadro sayfaları | `fetch-squads.mjs` | Oyunun API'sinde sakatlık yok; oyun listesi korunur, yalnız `fotmobId` + `status` eklenir. Eşleme sırası: forma numarası (kulüp içinde kesin), oyunun tam adı (`fullName`), görünen kısa ad |
 | Son maçlar: ilk 11, dakika, gol, asist, kart, yenilen gol, bonus | FotMob maç sayfaları | `fetch-lineups.mjs` | 6 maça kadar (dostluk hariç); bonus iki takımın TFF puanıyla hesaplanır |
 | Tahmini / resmî 11, maç öncesi sakat listesi | FotMob oynanmamış maç sayfası | `fetch-predicted.mjs` | Üç tip: `confirmed` (resmî kadro), `predicted` (Enetpulse tahmini), `lastStarting11` (son çıkan 11; zayıf sinyal, taban 0,60). Maç günü yeniden koş |
 | Armalar | images.fotmob.com | `fetch-logos.mjs` | Oyunun kendi logoları da `teams[].logoUrl` alanında |

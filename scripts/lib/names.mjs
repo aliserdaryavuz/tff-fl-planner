@@ -86,6 +86,30 @@ export function matchFantasyName(fantasyName, pool) {
       return n.length >= 4 && (full.startsWith(`${n} `) || full.endsWith(` ${n}`));
     }),
   );
+  if (hit) return hit;
+
+  // Oyunun kısalttığı adlar: "Barış A." (ad + soyadın baş harfi). Yukarıdaki
+  // "A. Soyad" kuralının tersi.
+  if (ft.length === 2 && ft[1].length === 1) {
+    hit = unique(
+      pool.filter((p) => {
+        const pt = tokens(p.name);
+        return pt.length >= 2 && pt[0] === ft[0] && pt[pt.length - 1].startsWith(ft[1]);
+      }),
+    );
+    if (hit) return hit;
+  }
+
+  // "Shomu" → "Eldor Shomurodov": oyun soyadı kesiyor. Yalnız tek kelimelik ve
+  // yeterince uzun adlarda, tek aday kalırsa: kısa önekler ("Ali", "Can")
+  // yanlış oyuncuya bağlanmasın.
+  if (ft.length === 1 && full.length >= 5) {
+    hit = unique(
+      pool.filter((p) => tokens(p.name).some((t) => t.length > full.length && t.startsWith(full))),
+    );
+    if (hit) return hit;
+  }
+
   return hit;
 }
 

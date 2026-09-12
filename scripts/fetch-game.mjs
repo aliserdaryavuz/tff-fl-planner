@@ -157,9 +157,15 @@ const fotmobByGameId = new Map(
   prevPlayers.filter((p) => p.gameId != null && p.fotmobId).map((p) => [String(p.gameId), p.fotmobId]),
 );
 
-/** Oyunun adı: maç adı (kısa) yoksa soyad, o da yoksa ad. */
+/** Oyunun adı: maç adı (kısa) yoksa soyad, o da yoksa ad. Arayüzde bu görünür. */
 const displayName = (p) =>
   (p.matchName || p.shortSurname || p.surname || p.shortName || p.name || "").trim();
+
+/**
+ * Oyuncunun tam adı (`name` + `surname`). Görünen ad kısa ve aynı takımda
+ * tekrar edebiliyor ("Arda", "Arda (2)"); FotMob eşlemesi bunu kullanır.
+ */
+const fullName = (p) => [p.name, p.surname].filter(Boolean).join(" ").trim();
 
 const POS = new Set(["GK", "DEF", "MID", "FWD"]);
 const skipped = { departed: 0, unknownClub: 0, unknownPos: 0 };
@@ -181,6 +187,8 @@ for (const p of players) {
   }
   outPlayers.push({
     name: displayName(p),
+    fullName: fullName(p) || null,
+    shirt: p.shirtNumber ?? null,
     team,
     pos: p.position,
     price: p.cost,
