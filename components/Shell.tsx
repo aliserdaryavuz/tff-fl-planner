@@ -1,20 +1,28 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/components/I18nProvider";
 import { LangSwitch } from "@/components/LangSwitch";
 import { Legend } from "@/components/Legend";
-import { Planner } from "@/components/Planner";
+import { BottomNav, Nav } from "@/components/Nav";
+import { PlannerProvider } from "@/components/PlannerContext";
 import { TimeZoneSelect, timeZoneLabel } from "@/components/TimeZoneSelect";
 import { meta } from "@/lib/data";
 import type { Lang } from "@/lib/i18n";
 import type { TimeZone } from "@/lib/time";
 import { decodeState, encodeState, type PlannerState } from "@/lib/url-state";
 
-/** Dil dahil tüm paylaşılabilir durumun sahibi. */
-export function Shell() {
+/**
+ * Dil dahil tüm paylaşılabilir durumun sahibi.
+ *
+ * Yerleşimde (`app/layout.tsx`) duruyor, sayfanın içinde değil: sayfalar ayrı
+ * adreslerde olduğu için Shell sayfada olsaydı her gezinmede yeniden kurulur ve
+ * durum sıfırlanırdı. Sayfalar durumu `PlannerContext`ten okuyor.
+ */
+export function Shell({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
 
   const [state, setState] = useState<PlannerState>(() =>
@@ -23,6 +31,7 @@ export function Shell() {
 
   // Adres çubuğu biraz gecikmeli eşitlenir: kaydırak sürüklerken her kareye
   // replaceState çağırmak boşuna iş; Safari çağrı sınırına da takılıyor.
+  // Yalnız sorgu yazılıyor, yol korunuyor — göreli adres geçerli yola çözülür.
   useEffect(() => {
     const id = setTimeout(() => {
       window.history.replaceState(null, "", `?${encodeState(state)}`);
@@ -39,19 +48,21 @@ export function Shell() {
 
   return (
     <I18nProvider lang={state.lang} tz={state.tz}>
-      <Body state={state} onChange={setState} onLangChange={setLang} onTzChange={setTz} />
+      <PlannerProvider state={state} onChange={setState}>
+        <Body onLangChange={setLang} onTzChange={setTz}>
+          {children}
+        </Body>
+      </PlannerProvider>
     </I18nProvider>
   );
 }
 
 function Body({
-  state,
-  onChange,
+  children,
   onLangChange,
   onTzChange,
 }: {
-  state: PlannerState;
-  onChange: React.Dispatch<React.SetStateAction<PlannerState>>;
+  children: React.ReactNode;
   onLangChange: (lang: Lang) => void;
   onTzChange: (tz: TimeZone) => void;
 }) {
@@ -63,34 +74,39 @@ function Body({
 
   return (
     <>
-      <header className="mb-6 border-b border-line pb-4">
+      <header className="mb-4 border-b border-line pb-3">
         <div className="flex items-start justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
+          {/* Site adı artık h1 değil: h1'i her rotada PageHead sahipleniyor,
+              böylece başlık listesi sayfanın kendi adıyla başlıyor. */}
+          <Link href="/" className="flex min-w-0 items-center gap-3 no-underline">
             <Image
               src="/logo.svg"
               alt=""
               width={56}
               height={56}
               priority
-              className="h-11 w-11 shrink-0 desk:h-14 desk:w-14"
+              className="h-10 w-10 shrink-0 desk:h-12 desk:w-12"
             />
-            <h1 className="m-0 min-w-0 font-cond text-[30px] leading-[1.05] font-bold tracking-wide desk:text-[42px]">
+            <span className="m-0 min-w-0 font-cond text-[26px] leading-[1.05] font-bold tracking-wide text-ink desk:text-[32px]">
               {t.header.title} <span className="whitespace-nowrap text-accent">{meta.season}</span>
-            </h1>
-          </div>
+            </span>
+          </Link>
           <div className="shrink-0">
             <LangSwitch onChange={onLangChange} />
           </div>
         </div>
-        <div className="mt-2.5 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+        <div className="mt-2 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
           <p className="m-0 text-[13px] text-muted">
             {t.header.tagline(meta.source_fixtures, timeZoneLabel(t.time.zones, tz))}
           </p>
           <TimeZoneSelect onChange={onTzChange} />
         </div>
+        <div className="mt-2">
+          <Nav />
+        </div>
       </header>
 
-      <Planner state={state} onChange={onChange} />
+      {children}
 
       <section className="mt-8">
         <h2 className="mb-2.5 font-cond text-xl font-semibold tracking-wide">{t.bands.heading}</h2>
@@ -112,6 +128,8 @@ function Body({
         </p>
         <p className="mt-1.5 border-t border-line pt-3 text-xs">{t.footer.disclaimer}</p>
       </footer>
+
+      <BottomNav />
     </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
+import { Suspense } from "react";
+import { Shell } from "@/components/Shell";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -60,7 +62,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="tr"
       className={`${barlow.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {/* Shell yerleşimde: sayfalar arası gezinmede yeniden kurulmuyor, durum
+            korunuyor. Adres çubuğundaki durumu okuduğu için Suspense içinde.
+            Telefonda alt sekme çubuğu sabit; alt boşluk footer'ı örtmesin diye. */}
+        <div className="mx-auto max-w-[1040px] px-3.5 pt-3.5 pb-[calc(3.5rem+env(safe-area-inset-bottom))] sm:pb-10">
+          <Suspense fallback={<p className="text-[13px] text-muted">…</p>}>
+            <Shell>{children}</Shell>
+          </Suspense>
+        </div>
+      </body>
     </html>
   );
 }

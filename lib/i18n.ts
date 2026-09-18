@@ -29,6 +29,31 @@ const tr = {
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 takım, 34 hafta. Saatler: ${tz}. Fikstür: ${fixtures}.`,
   },
+  nav: {
+    label: "Bölümler",
+    model: "Model",
+    teams: "Takımlar",
+    players: "Oyuncular",
+    squad: "Kadro",
+  },
+  pages: {
+    model: {
+      title: "Model ve haftalar",
+      lead: "Önce hangi haftaya bakıyoruz, sonra fikstür zorluğunu hangi güç kaynaklarıyla ölçüyoruz. Bu iki ayar diğer sayfalardaki bütün sayıları belirliyor.",
+    },
+    teams: {
+      title: "Takımlar ve fikstür",
+      lead: "Seçili haftalarda hangi takımın işi kolay, hangisinin zor. Aşağıda haftanın maçları ve puan durumu.",
+    },
+    players: {
+      title: "Oyuncu sıralaması",
+      lead: "Beklenen puan, seçilme oranı ve geçmiş puan; ağırlıkları kendin veriyorsun. Sakat ve cezalılar listeye girmiyor.",
+    },
+    squad: {
+      title: "Haftanın kadrosu",
+      lead: "Bu sıralamadan kurulan 15 kişilik kadro: ilk 11, yedekler ve kaptan. Bütçe ve kulüp sınırı sert kısıt.",
+    },
+  },
   export: {
     button: "Görsel kaydet",
     busy: "Hazırlanıyor…",
@@ -406,6 +431,31 @@ const en: Strings = {
     title: "TFF FL Planner",
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 teams, 34 matchweeks. Times: ${tz}. Fixtures: ${fixtures}.`,
+  },
+  nav: {
+    label: "Sections",
+    model: "Model",
+    teams: "Teams",
+    players: "Players",
+    squad: "Squad",
+  },
+  pages: {
+    model: {
+      title: "Model and matchweeks",
+      lead: "First which week we are looking at, then which strength sources measure fixture difficulty. These two settings drive every number on the other pages.",
+    },
+    teams: {
+      title: "Teams and fixtures",
+      lead: "Who has the easy run in the selected weeks and who does not. Below, the week's matches and the table.",
+    },
+    players: {
+      title: "Player ranking",
+      lead: "Expected points, ownership and points so far, weighted the way you choose. Injured and suspended players are left out.",
+    },
+    squad: {
+      title: "Squad of the week",
+      lead: "The 15 built from this ranking: starting XI, bench and captain. Budget and the per-club limit are hard constraints.",
+    },
   },
   export: {
     button: "Save image",

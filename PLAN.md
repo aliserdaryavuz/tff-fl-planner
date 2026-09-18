@@ -442,12 +442,41 @@ Tek sayfa uzadı (ekran görüntüsünde masaüstünde ~4200 px). Bölme hem oku
 boyutu için. Bu faz her bileşene dokunuyor, o yüzden Faz 4'ten **önce**: sonraki özellikler
 doğru yere insin.
 
-- [ ] **3.1 Çok sayfa + gezinme.** (L)
-  `/` model ve önizleme · `/teams` · `/players` · `/squad` · `/results` · `/methodology`.
-  Durum `PlannerContext` ile taşınır (Shell yerleşimde kalır, gezinmede durum korunur).
-  `PageHead` (her sayfada tek h1), `ContextBar` (o sayfadaki sayıları belirleyen ayarlar çip
-  olarak), telefonda alt sekme çubuğu.
-  UCL karşılığı: `components/{Nav,PageHead,ContextBar,PlannerContext,sections}.tsx`.
+- [x] **3.1 Çok sayfa + gezinme.** (L) — 18.09, **dört rota** teslim edildi.
+  Tek `app/page.tsx` yerine `/` (model ve haftalar) · `/teams` · `/players` · `/squad`.
+  Build dördünü de statik üretiyor.
+
+  **Çekirdek değişiklik:** `Shell` sayfadan **yerleşime** taşındı (`app/layout.tsx`,
+  `{children}` sararak). Sayfada kalsaydı her gezinmede yeniden kurulur ve durum sıfırlanırdı.
+  Sayfalar durumu prop zinciriyle değil `PlannerContext`ten okuyor. `components/Planner.tsx`
+  (eski tek sayfa birleştiricisi) kaldırıldı; bölümleri sayfalara dağıldı.
+
+  **UCL'den taşınan performans dersi:** ağır oyuncu sıralaması bilerek bağlam dosyasının
+  *dışında* (`components/usePickRows.ts`). Bağlamı durumu okuyan her bileşen import ediyor;
+  sıralama orada olsaydı hepsi oyuncu ve maç JSON'larını zincirle çekerdi. UCL'de tam olarak
+  bu yaşanmış (FR-PERF-01), yeniden keşfedilmedi.
+
+  **Üç bilinçli kapsam kararı:**
+
+  - *`/results` ve `/methodology` yapılmadı.* İçerikleri 2.1 (sonuç verisi) ve 4.4 (yöntem
+    sayfası) kalemlerine ait ve planın kendi sırası ikisini de 3.1'den **sonra** koyuyor. Boş
+    bir sekme koymak ölü bağlantı olurdu. Daraltma değil, sıraya uyma.
+  - *`ContextBar` yapılmadı.* Ayar çipleri rol tabanlı yazı ölçeğine ve yuvarlaklık
+    belirteçlerine dayanıyor; ikisi de **3.2'nin işi**. Şimdi yazmak, yarım bir belirteç
+    sistemi uydurup 3.2'yi ona taşımak olurdu.
+  - *Tasarım belirteci eklenmedi.* Gezinme, TFF'nin bugünkü söz dağarcığıyla yazıldı
+    (`border-line`, `bg-surface`, px punto). UCL'nin `--tabbar-h`, `--z-nav`, `scroll-fade`
+    gibi değişkenleri burada yok; kopyalasaydım sessizce yanlış çizerdi.
+
+  **Başlık düzeni:** site adı artık `h1` değil, üst çubukta ana sayfa bağlantısı. `h1`'i her
+  rotada `PageHead` sahipleniyor, böylece başlık listesi sayfanın kendi adıyla başlıyor.
+  Telefonda dört bölüm alt çubuğa sığdığı için UCL'deki "daha fazla" listesine gerek kalmadı.
+
+  **Doğrulanan ve doğrulanmayan.** Doğrulandı: dört rota statik üretiliyor, typecheck, lint ve
+  143 test geçiyor. **Doğrulanmadı:** gezinmede durumun korunduğu *ölçülmedi*. Yapısal olarak
+  böyle — yerleşim alt ağacı rota değişiminde bağlı kalıyor, Shell de orada — ama tarayıcıda
+  sınanmadı. Otomatik sınamak bugün ucuz değil: vitest `environment: "node"` ve React test
+  kütüphanesi bağımlılıklarda yok. İlk elle bakışta doğrulanacak.
 
 - [ ] **3.2 Tasarım belirteçleri ve açık tema.** (M)
   Bugün paletler `globals.css` içinde koyu-tek; yazı boyutları px. UCL'de rol tabanlı yazı
