@@ -376,11 +376,48 @@ bağımsız, bu yüzden önce bunlar.
   Not: `playerOfTheMatch` 1.1'deki bonus çözümünü de doğrular.
   UCL karşılığı: `lib/results.ts`, `app/results/page.tsx`, `components/Results.tsx`.
 
-- [ ] **2.2 Fiyat ve seçilme günlüğü.** (S)
+- [x] **2.2 Fiyat ve seçilme günlüğü.** (S) — 18.09 tamamlandı, **ilk kayıt alındı.**
   Oyun yalnız anlık değeri veriyor. "Bu hafta kim zamlandı, kim düşüyor" ancak kendi
   tuttuğumuz seriyle yanıtlanır ve **geriye dönük toplanamaz** — ne kadar geç başlarsak
-  o kadar veri kaybı. Bu yüzden Faz 2'nin başında.
-  UCL karşılığı: `lib/history.ts`, `scripts/log-snapshot.mjs`.
+  o kadar veri kaybı. Bu yüzden Faz 2'nin başındaydı.
+
+  İlk anlık görüntü: **528 oyuncu, gün 2026-09-18**. Bu günün fiyatları artık kalıcı.
+  Yazan `scripts/log-snapshot.mjs` + `scripts/lib/history-log.mjs` (saf mantık), okuyan
+  `lib/history.ts`. Biçim: gün listesi bir kez, seriler indeksle bakar ve **yalnız değer
+  değiştiğinde** satır eklenir — çoğu fiyat haftalarca sabit kaldığı için dosya küçük kalıyor.
+
+  **UCL'den taşınan üç koruma** (üçü de orada hatadan sonra eklenmiş; yeniden keşfetmek
+  yerine taşındı):
+
+  - *Gözlem günü.* Kaydedilen gün, oyuncu dosyasının kendi tarihi (`meta.fetched`), saatin
+    günü değil. Oyun çekimi başarısız olup dosya eski kalırsa bayat değerler bugünün
+    gözlemi diye yazılamıyor.
+  - *Gün sırası.* Yalnız son günden sonrası eklenir ya da son gün yeniden yazılır; geçmiş
+    güne yazma reddedilir ve **girdi hiç değiştirilmez**. Sırası bozuk ya da tekrarlı gün
+    listesi de reddediliyor.
+  - *Sezon penceresi.* Sezon öncesi günler, sınırdaki değer taşınarak düşüyor.
+
+  **TFF'ye özgü üç fark:**
+
+  - Tarih alanı `meta.fetched` (UCL'de `updated`); `FantasyMeta` tipine eklendi.
+  - Kalıcı kimlik `gameId`. Anahtar `takım|ad` ve TFF'de kısa adlar takım içinde tekrar
+    ediyor ("Arda", "Arda (2)"), yani ad değişirse seri öksüz kalırdı; `gameId` kaymayı
+    görünür kılıyor ve seri yeni anahtara taşınıyor. Hedef anahtar doluysa taşınmıyor,
+    bildiriliyor — üzerine yazmak veri kaybı olurdu.
+  - **`net` serisi yok.** UCL'de transfer giriş/çıkış farkı tutuluyor; TFF oyunu bu veriyi
+    vermiyor, o yüzden seri açılmadı. Olmayan veriden seri üretilmiyor.
+
+  **Bilerek taşınmayan:** `mdPoints` / `dayAfterMatchday` / `coveredMatchdays`. UCL'nin kendi
+  yorumu `mds` alanını ilk yazımda yanlış okuduğunu ve kullanıcı uyarısıyla düzeltildiğini
+  kaydediyor. Bilinen bir tuzağa körlemesine girmek yerine hafta bazlı puan türetimi kendi
+  yerinde, **Faz 4.3'te** yapılacak ve TFF verisiyle ayrıca doğrulanacak.
+
+  **Bugün arayüzde değişim gösterilmiyor ve gösterilmemeli:** tek gün kaydıyla `historySpan`
+  sıfır. İlk karşılaştırma ikinci kayıt alındığında mümkün olacak. Test bunu koruyor
+  (`lib/history.test.ts`), mantık ayrıca 14 testle sınanıyor (`lib/history-log.test.ts`).
+
+  **Günlük çalıştırma şart:** `node scripts/log-snapshot.mjs`. Aynı gün birden çok kez
+  çalışması zararsız (son gün yeniden yazılır). 5.2'de otomatikleşecek.
 
 - [ ] **2.3 Kaynak tazeliği.** (S)
   Her veri grubunun son güncellenme tarihi ve beklenen aralığı; dipnotta "Elo 6 gündür

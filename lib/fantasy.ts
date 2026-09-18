@@ -52,6 +52,12 @@ export type Player = {
 
 export type FantasyMeta = {
   source: string;
+  /**
+   * Dosyanın gözlem günü (yyyy-aa-gg). Günlük fiyat kaydı bunu kullanıyor:
+   * çekim başarısız olup dosya eski kalırsa, eski değerler bugünün gözlemi
+   * diye kaydedilmemeli (`scripts/log-snapshot.mjs`).
+   */
+  fetched?: string;
   gameweek: number | null;
   players: number;
   /** "game": fiyatlar oyundan; "none": yalnız FotMob kadrosu, fiyat yok. */
