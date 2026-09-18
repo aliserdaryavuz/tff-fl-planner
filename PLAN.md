@@ -118,7 +118,7 @@ bağımsız, bu yüzden önce bunlar.
   | Orta saha birebir | — | 97 / 150 |
   | Forvet birebir | — | 50 / 52 |
 
-  **Açık kalan iki şey, ikisi de bilinçli bırakıldı.**
+  **Açık kalan iki şey, ikisi de bilinçli bırakıldı.** (İkincisi 18.09'da kapandı — bkz. altı.)
 
   - *Serbest çözüm defans ve kalecide tabloya oturmuyor* (gol yememe ~2,7, olması gereken 4;
     bonus ~1,4, olması gereken 1). Ama o çözüm daha düşük RMSE'ye rağmen birebir tutmayı
@@ -129,6 +129,29 @@ bağımsız, bu yüzden önce bunlar.
     bizim elimizde yalnız sezon toplamı var. 5 maçta ikişer kurtarış yapan kaleciye maç
     başına 0, sezon toplamıyla 3 puan yazılıyor. Maç bazlı kurtarış FotMob maç sayfalarında
     var; 1.3 ile gelecek ve o zaman yeniden ölçülecek.
+
+    **18.09 — ÇÖZÜLDÜ: 5/21 → 22/22, RMSE 0,00.** Maç bazlı kurtarış `solve-scoring.mjs`'e
+    bağlandı (`saveSteps` artık sezon toplamından değil, maç maç `floor(saves/3)` toplanarak
+    geliyor) ve pencere `--matches 9`'a çıkarıldı. Kalecinin **her katsayısı** tabloya birebir
+    oturdu: sahaya çıkma 1,00 · 60 dk üstü 1,00 · gol yememe 4,00 · yenilen gol −1,00 ·
+    **kurtarış 1,00** · bonus 1,00. Kaleci puan tablosu artık varsayım değil, kanıtlanmış.
+
+    *Bu arada kendi ara iddiamı düzeltiyorum.* Pencere genişlemeden önce "tıkanma kurtarışın
+    temsilinde değil, örneklem boyutundaydı" diye yazmıştım — ölçmeden. Karşı-olgusal sınama
+    (betiğin kopyası, n=22 ama kurtarış yine sezon toplamı) tersini gösterdi:
+
+    | n=22 kaleci | birebir | RMSE |
+    | --- | --- | --- |
+    | kurtarış sezon toplamı | 6/22 | 1,07 |
+    | kurtarış maç bazlı | **22/22** | **0,00** |
+
+    Yani örneklemi 21'den 22'ye çıkarmak 5/21'i 6/22 yaptı — neredeyse hiçbir şey. Düzelten
+    tamamen **temsil**di. Sezon toplamı kullanılırken sahaya çıkma katsayısı 0,21 (olması
+    gereken 1) çıkıyordu: kurtarış hatası diğer sütunlara yayılıyormuş.
+
+    Saha oyuncularında kurtarış değişikliği hiçbir şeyi oynatmadı, ki beklenen buydu: saha
+    oyuncusunun kurtarışı sıfır. Oradaki iyileşme yalnız daha çok veriden geldi —
+    DEF 81/100 → 93/113, MID 87/140 → 98/161, FWD 46/49 → 51/54.
   Bugün `lib/scoring.mjs` TFF'nin kural sayfasından elle yazıldı. Oyunun beslemesi her
   oyuncunun sezon dökümünü (`goals, assists, cleanSheets, conceded, saves, yellow, red,
   bonus, minutes`) ve `totalPoints`'ini veriyor — yani tablo **geri çıkarılabilir**.
@@ -185,7 +208,118 @@ bağımsız, bu yüzden önce bunlar.
   oynamak "kadroda ve formda" bilgisi taşıyor. Filtre kara liste (Avrupa, kupa, hazırlık);
   beyaz liste olsaydı FotMob lig adını değiştirdiğinde veri sessizce boşalırdı.
 
-- [ ] **1.3 Maç bazlı oyuncu istatistiği (xG/xA).** (M)
+- [x] **1.3 Maç bazlı oyuncu istatistiği (xG/xA + kurtarış).** (M) — 18.09 tamamlandı.
+  Arayüz metinleri de modelle hizalandı (`lib/i18n.ts`, iki dilde): sıralama notu artık gol/asist
+  oranının ham sayımla beklenen üretimin harmanı olduğunu söylüyor ("sezon oranı" yazıyordu),
+  kural metni ise kurtarışın her maçın kendi içinde sayıldığını — gol yememe ve yenilen golde
+  olduğu gibi. Menajer kartları için "modelde yok" cümlesine dokunulmadı: Faz 4.0 gelene kadar
+  o cümle doğru.
+  1.1'den gelen ek gerekçe: **kurtarış maç başına üçer üçer puanlanıyor ama elimizde yalnız
+  sezon toplamı var.** 5 maçta ikişer kurtarış yapan kaleciye kural 0, bizim hesabımız 3 puan
+  yazıyor. Kaleci yeniden kurma başarısının 5/21'de kalmasının bilinen sebebi bu. Maç bazlı
+  kurtarış FotMob maç sayfalarında kalecilerin **%100'ünde** var (92/92 kayıt).
+
+  **Kararlar (18.09).**
+  - *Ayrı dosya ve ikinci geçiş yok.* İstatistikler `fetch-lineups.mjs`'e katıldı, çünkü o
+    zaten aynı maç sayfalarını açıyor. UCL'de ayrı `data/player-stats.json` var; burada tek
+    kaynak ve tek çekim daha basit.
+  - *Eksik şut grubu "sıfır şut" demek, eksik veri değil.* Ölçüldü: "Total shots" alanı
+    olmayan 720 kaydın **hiçbiri gol atmamış**, alanı olan 684 kaydın **hiçbirinde şut 0
+    değil**. Yani grup ancak oyuncu şut attıysa yazılıyor; 0 varsaymak doğru ve gerçek
+    kapsam %100. Alan bazlı ham kapsam yanıltıcı görünüyordu (xG %49, xA %67).
+  - Saklananlar: `xg`, `xgnp` (penaltısız; 684 kaydın yalnız 14'ünde farklı), `xa`, `shots`,
+    `chances`, `saves`.
+
+  **Ölçüm ve bulunan hata (18.09).** Maç bazlı kurtarış verisi ilk kez ölçülebildi: tam maç
+  oynayan kalecilerde 87 maçta 272 kurtarış, yani **saves90 = 3,13** (elle yazılmış 3,0'a
+  yakın — prior sorun değilmiş). Asıl hata başka yerdeydi: `lib/xp.ts` beklenen kurtarışı
+  **doğrudan 3'e bölüyordu**, oysa puan maç içinde üçer üçer işliyor.
+
+  | E[floor(S/3)], λ = 3,13 | değer |
+  | --- | --- |
+  | ampirik (87 maç) | **0,690** |
+  | Poisson yaklaşımı | 0,707 |
+  | eski kod (λ/3) | **1,042** |
+
+  Eski hâli kaleci kurtarış puanını **%51 fazla** yazıyordu. Düzeltildi: `conceded` teriminin
+  zaten kullandığı eşik fonksiyonu (`expectedConcededSteps` → adı artık `expectedSteps`, çünkü
+  iki terim de onu kullanıyor) kurtarışa da uygulandı. Kurtarış dağılımı Poisson'dan yayvan
+  (varyans/ortalama 1,75) ama eşik beklentisi yine de ampirikten %2,5 sapıyor; bölme ise %51.
+  Test bu hatayı sabitliyor (`easy.saves < λ/3`).
+
+  **Etkisi ölçüldü:** her kaleci hafta başına ~0,25-0,33 puan kaybediyor, ama sıralama neredeyse
+  hiç değişmiyor (ilk 10'da yalnız komşu 3 yer değişti: Nübel iki basamak yukarı, Muhammed ile
+  Onana birer basamak aşağı). Yani sayı yanlıştı ve düzeltildi; beslediği karar büyük ölçüde
+  aynı kalıyor. Kaleci karşılaştırmalarının çoğu gol yememe ve süre puanına dayanıyor.
+
+  **xG harmanı: ölçüldü, uydurulmadı.** Başta "5 hafta yetmez, ağırlık ölçülemez" diye
+  yazmıştım; yanlışmış. Soru örneklem dışı sorulabiliyor: her maç yalnız kendinden önceki
+  maçlardan kurulan oranla tahmin edilir, skor Poisson log-olabilirliği (687 maç, 70 gol,
+  44 asist).
+
+  | ağırlık w (`w·xG + (1−w)·gol`) | gol LL | asist LL |
+  | --- | --- | --- |
+  | 0,00 — yalnız ham sayım | −227,8 | −179,8 |
+  | 0,50 | −219,1 | −166,5 |
+  | 0,75 | −216,9 | −163,2 |
+  | 1,00 — yalnız beklenen | **−216,0** | **−161,2** |
+
+  **Kontrol şart oldu.** Oyuncu başına 1-2 maçlık geçmişte ham gol neredeyse hep 0; sürekli bir
+  sayı olan xG, oyuncu hakkında hiçbir şey bilmese bile kazanırdı. Permütasyon: her oyuncunun
+  xG geçmişi başkasınınkiyle değiştirildi (25 tekrar).
+
+  | | gerçek kazanç | başkasının verisiyle |
+  | --- | --- | --- |
+  | gol / xG | +11,73 | **−23,24** (hep negatif) |
+  | asist / xA | +18,65 | **+7,63** |
+
+  Sonuç iki ayrı hikâye. xG'de fayda tamamen oyuncuya özgü — yabancı bir xG ham golden daha
+  kötü. xA'da ise görünen kazancın yaklaşık %40'ı yalnız pürüzsüzlükten geliyor; üstünde kalan
+  ~+11 gerçek. İkisinde de 25 permütasyonun hiçbiri gerçek kazanca ulaşmadı.
+
+  **Uygulanan:** `XG_WEIGHT = 0,7` (`lib/xp.ts`). Tepe 1,0'da ama eğri 0,75'ten sonra
+  düzleşiyor; 70 gollük örneklemde ham golü tümden atmamak için 0,7. Kesin en iyi nokta bu
+  veriyle ayırt edilemez, öyle de yazıldı. Harman yalnız beklenen üretim penceresi ≥ 180 dk
+  ise uygulanıyor: resmî sayımlar sezonun tamamını, xG son maçları kapsıyor — kısa pencereden
+  çıkan oranı sezon oranıyla harmanlamak yanıltıcı olurdu. **Bilinen sınır:** ölçüm aynı
+  pencerede yapıldı, uygulama iki farklı pencereyi harmanlıyor. Bugün bu fark önemsiz — sezonun
+  5. haftasındayız, yani sezon penceresi zaten FotMob penceresi kadar (örnek: Orban'da resmî 343
+  dakikaya karşı 341). **Sezon ilerledikçe büyüyecek**; resmî toplamlar 34 haftaya çıkarken
+  `--matches 6` sabit kalırsa harman giderek farklı iki dönemi karıştırır. Takip edilecek:
+  `fetch-lineups.mjs --matches` sezonla birlikte artmalı.
+
+  **Etkisi ölçüldü (80 hücum oyuncusu, 79'una harman uygulandı).** Yön doğru: xG'si gollerinden
+  fazla olanlar yükseliyor (Henrique 0 gol / 1,12 xG: g90 0,181 → 0,282), golleri xG'sinden
+  fazla olanlar iniyor (Orban 6 gol / 4,70 xG: 0,947 → 0,832; Salah 4 gol / 2,12 xG: 0,541 →
+  0,393). Yani harman, az maçta şansla gol atmış oyuncuyu ödüllendirmeyi bırakıyor — zaten
+  ölçümün vaat ettiği davranış buydu.
+
+  **Yanlış çıkan bir varsayım ve asıl sebep.** Yeniden çekimden sonra `solve-scoring.mjs`'in
+  örneklemi daraldı (DEF 108→100, MID 150→140, FWD 52→49, GK 21→19). Betik, FotMob dakikasıyla
+  oyunun dakikası 20'den fazla ayrışan oyuncuyu eliyor. "Oyunun beslemesi 12.09'da dondu, FotMob
+  artık daha çok maç görüyor" diye açıklamıştım — **ölçünce tersi çıktı**: işaretli fark
+  (FotMob − oyun) ortalama −2,8 dk, elenen 70 oyuncuda −16,8 dk, ve elenenlerin yalnız
+  27'sinde FotMob daha fazla görüyor.
+
+  Sapmalara bakınca gerçek sebep iki ayrı şey:
+
+  - **Tam −90'lık küme** (Nübel, Agbadou, Djaló, Taylan / Beşiktaş; Škriniar, Tarık /
+    Fenerbahçe): FotMob bu oyuncuların bir tam lig maçını hiç görmüyor. Aynı takımda birden
+    çok oyuncuda çıkması, bunun oyuncu değil **takım düzeyinde eksik maç** olduğunu gösteriyor.
+    Sebep `--matches 6`: **Avrupa'da oynayan takımların son 6 fikstürüne Avrupa maçları
+    giriyor**, geriye 5 yerine 4 lig maçı kalıyor.
+  - **Tam +91'lik küme** (Ilie, Güven / Kasımpaşa; Masuaku / Konyaspor): bu sefer oyunun
+    donmuş toplamı 5. haftayı görmüyor. İlk varsayımım yalnız bu küçük küme için doğruymuş.
+
+  Düzeltme: pencere `--matches 9`'a çıkarıldı (betiğin varsayılanı da), böylece Avrupa'da
+  oynayan takımlara da yeterli lig maçı düşüyor. **Sonuç doğrulandı:** elenen oyuncu 70 → 28,
+  −90'lık küme tamamen kayboldu. Kalan 28'in 27'sinde FotMob artık *daha fazla* dakika görüyor
+  ve neredeyse hepsi Kasımpaşa/Konyaspor — yani geriye yalnız ikinci sebep kaldı, oyunun donmuş
+  beslemesi. İki sebep ayrı ayrı doğrulanmış oldu. Örneklem her mevkide büyüdü
+  (GK 19→22, DEF 100→113, MID 140→161, FWD 49→54).
+
+  Geriye tek tek bir uyumsuzluk kalıyor: Ümit (Beşiktaş), oyunda 270 dk, FotMob'da 0 — bu bir
+  pencere sorunu değil, ad eşleme sorunu. Sezon ilerledikçe pencere yine büyümeli.
   FotMob maç sayfalarında saha oyuncusu için `Expected goals (xG)`, `xGOT`, `xA`,
   `Total shots`, `Chances created`, `Recoveries`; kaleci için `Saves`, `xGOT faced`,
   `Goals prevented` var. **Sayfalar zaten indiriliyor** (`fetch-lineups.mjs`, 47 maç

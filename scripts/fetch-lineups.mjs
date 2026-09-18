@@ -2,12 +2,12 @@
 // takımın yediği gol, sakat/cezalı listesi) FotMob sayfalarından toplar ve
 // data/lineups.json'a yazar.
 //
-//   node scripts/fetch-lineups.mjs [--matches 6] [--teams Galatasaray,Fenerbahce] [--fresh]
+//   node scripts/fetch-lineups.mjs [--matches 9] [--teams Galatasaray,Fenerbahce] [--fresh]
 //
 // FotMob'un API'si tarayıcı dışından kapalı; sayfalar Next.js uygulaması ve
 // tüm veri sayfanın içindeki __NEXT_DATA__ JSON'unda. Her sayfa headless Chrome
 // ile açılır (CHROME ortam değişkeniyle yol değiştirilebilir). ~18 fikstür
-// sayfası + ~60-100 maç sayfası, 8-15 dakika. Bitmiş maç sayfaları önbelleğe
+// sayfası + ~120-160 maç sayfası, 10-20 dakika. Bitmiş maç sayfaları önbelleğe
 // alınır; --fresh yeniden indirir.
 //
 // Oyuncular oyun dosyasındaki (data/fantasy-players.json) adlarla eşlenir;
@@ -30,7 +30,11 @@ const opt = (name, def) => {
   const i = args.indexOf(`--${name}`);
   return i >= 0 ? args[i + 1] : def;
 };
-const MATCHES = Number(opt("matches", 6));
+// Pencere lig maçı sayısına göre değil, FİKSTÜR sayısına göre kesiliyor: Avrupa'da
+// oynayan takımların son maçlarına Avrupa maçları da giriyor. 6'da Beşiktaş ve
+// Fenerbahçe oyuncuları bir lig maçı eksik kalıyordu (ölçüldü: tam -90 dakikalık
+// sapma kümesi, PLAN.md 1.3). 9 hepsine yetiyor. Sezon ilerledikçe artmalı.
+const MATCHES = Number(opt("matches", 9));
 const ONLY = opt("teams", "")
   .split(",")
   .map((s) => s.trim())
@@ -67,7 +71,7 @@ function countEvents(events = []) {
  * düşen goller ayrıca sayılıyor (`concededOn`): yenilen gol cezası yalnız
  * oyuncu sahadayken yenilen gole işliyor (lib/scoring.mjs).
  */
-function sideAppearances(side, conceded, against = []) {
+function sideAppearances(side, conceded, against = [], stats = {}) {
   const rows = [];
   const add = (p, started, minutes, from, to) => {
     rows.push({
@@ -78,6 +82,16 @@ function sideAppearances(side, conceded, against = []) {
       minutes,
       rating: p.performance?.rating ?? null,
       ...countEvents(p.performance?.events),
+      // Maç istatistiği: beklenen gol/asist ve kurtarış. FotMob şut grubunu
+      // yalnız şut atan oyuncu için yazıyor — ölçüldü: alanı olmayan 720 kaydın
+      // hiçbiri gol atmamış, alanı olan 684 kaydın hiçbirinde şut 0 değil. Yani
+      // yokluk "sıfır şut" demek, eksik veri değil; 0 varsaymak doğru.
+      xg: 0,
+      xa: 0,
+      shots: 0,
+      chances: 0,
+      saves: 0,
+      ...(stats[p.id] ?? {}),
       conceded,
       concededOn: against.filter((min) => min > from && min <= to).length,
       // Gol yememe tam maç istiyor; eşik lib/scoring.mjs'ten.
@@ -128,8 +142,9 @@ for (const [team, [fotmobId, slug]] of teams) {
     // Golü atan taraf `home`; bize karşı olanlar rakibin attıkları.
     const minutesOf = (scoredByHome) =>
       (page.goals ?? []).filter((g) => g.home === scoredByHome).map((g) => g.min);
-    const ours = sideAppearances(side, conceded, minutesOf(!isHome));
-    const theirs = other ? sideAppearances(other, otherConceded, minutesOf(isHome)) : [];
+    const stats = page.stats ?? {};
+    const ours = sideAppearances(side, conceded, minutesOf(!isHome), stats);
+    const theirs = other ? sideAppearances(other, otherConceded, minutesOf(isHome), stats) : [];
     const everyone = [...ours, ...theirs];
     const points = everyone.map((a) =>
       matchPoints(a.pos, {
@@ -138,6 +153,9 @@ for (const [team, [fotmobId, slug]] of teams) {
         assists: a.assists,
         conceded: a.conceded ?? undefined,
         concededOn: a.concededOn ?? undefined,
+        // Kaleci kurtarışı maç içinde üçer üçer puanlanıyor; bonus dağılımı da
+        // bu puana göre yapıldığı için burada sayılmalı (PLAN.md 1.1).
+        saves: a.saves,
         penSaved: a.penSaved,
         penMissed: a.penMissed,
         yellow: a.yellow,

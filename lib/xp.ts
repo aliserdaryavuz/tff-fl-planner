@@ -29,7 +29,9 @@ export const PRIORS: Record<
   Position,
   { g90: number; a90: number; y90: number; r90: number; bonus90: number; saves90: number }
 > = {
-  GK: { g90: 0, a90: 0.005, y90: 0.08, r90: 0.005, bonus90: 0.35, saves90: 3.0 },
+  // saves90 ölçüldü (data/lineups.json, tam maç oynayan kaleciler): 87 maçta
+  // 272 kurtarış = 3,13. Elle yazılmış 3,0'a yakın çıktı, yani prior sorun değildi.
+  GK: { g90: 0, a90: 0.005, y90: 0.08, r90: 0.005, bonus90: 0.35, saves90: 3.13 },
   DEF: { g90: 0.05, a90: 0.06, y90: 0.22, r90: 0.012, bonus90: 0.3, saves90: 0 },
   MID: { g90: 0.13, a90: 0.14, y90: 0.2, r90: 0.01, bonus90: 0.35, saves90: 0 },
   FWD: { g90: 0.35, a90: 0.14, y90: 0.16, r90: 0.008, bonus90: 0.45, saves90: 0 },
@@ -37,6 +39,25 @@ export const PRIORS: Record<
 
 /** Öncelik bu kadar maç değerinde sayılır: 4 maç = 360 dk. */
 export const PRIOR_MATCHES = 4;
+
+/**
+ * Beklenen üretimin (xG/xA) ham sayıma karşı ağırlığı. Ölçüldü — bkz. PLAN.md 1.3:
+ * örneklem dışı Poisson log-olabilirliğinde geçmiş xG, geçmiş golden daha iyi
+ * öngörüyor (+11,7; asistte +18,7). Permütasyon kontrolü sinyalin oyuncuya özgü
+ * olduğunu doğruladı: başkasının xG'si ham golü yenemiyor (-23,2).
+ *
+ * Eğri 1,0'da tepe yapıyor ama 0,75'ten sonra düzleşiyor. 0,7 seçildi: kazancın
+ * neredeyse tamamı alınıyor, 70 gollük örneklemde ham golü tümden atma riski
+ * alınmıyor. Kesin en iyi nokta bu veriyle ayırt edilemez.
+ */
+export const XG_WEIGHT = 0.7;
+
+/**
+ * Harman için beklenen üretim penceresinde en az bu kadar dakika istenir.
+ * Resmî sayımlar sezonun tamamını, xG yalnız son maçları kapsıyor; kısa bir
+ * pencereden çıkan oranı sezon oranıyla harmanlamak yanıltıcı olur.
+ */
+const XG_MIN_MINUTES = 180;
 
 // Oyuncunun kendi geçmişi yoksa lig ortalaması kullanılıyor. Bu dört sayı
 // eskiden burada sabitti (84 / 15 / 0,85 / 0,30) ve ölçümden sapmıştı; artık
@@ -71,9 +92,17 @@ export function shrunkRates(pos: Position, s: RecentSummary, player?: Player): R
   const count = (key: "goals" | "assists" | "yellow" | "red" | "bonus" | "saves") =>
     official ? ((player as Player)[key] ?? 0) : (s[key as keyof RecentSummary] as number) ?? 0;
   const rate = (c: number, p90: number) => (c + (p90 * priorMin) / 90) / ((n + priorMin) / 90);
+  // Beklenen üretim oranı: sayımla aynı büzülme, ama kendi penceresinin dakikası.
+  const xRate = (expected: number, p90: number) =>
+    s.minutes >= XG_MIN_MINUTES
+      ? (expected + (p90 * priorMin) / 90) / ((s.minutes + priorMin) / 90)
+      : null;
+  // xG verisi yoksa (eski dosya, kısa pencere) ham sayım aynen kalır.
+  const blend = (raw: number, expected: number | null) =>
+    expected === null ? raw : (1 - XG_WEIGHT) * raw + XG_WEIGHT * expected;
   return {
-    g90: rate(count("goals"), prior.g90),
-    a90: rate(count("assists"), prior.a90),
+    g90: blend(rate(count("goals"), prior.g90), xRate(s.xg, prior.g90)),
+    a90: blend(rate(count("assists"), prior.a90), xRate(s.xa, prior.a90)),
     y90: rate(count("yellow"), prior.y90),
     r90: rate(count("red"), prior.r90),
     bonus90: rate(count("bonus"), prior.bonus90),
@@ -118,8 +147,14 @@ export function poisson(lambda: number): number[] {
   return out;
 }
 
-/** E[floor(G / per)] for G ~ Poisson(λ). */
-export function expectedConcededSteps(lambda: number, per: number): number {
+/**
+ * E[floor(X / per)] for X ~ Poisson(λ).
+ *
+ * İki eşikli puan terimi de bunu istiyor: yenilen gol (ikişer) ve kaleci
+ * kurtarışı (üçer). Sayımın maç içinde yapıldığına dikkat — beklentiyi alıp
+ * `per`'e bölmek bambaşka (ve daha büyük) bir sayı verir.
+ */
+export function expectedSteps(lambda: number, per: number): number {
   const probs = poisson(lambda);
   return probs.reduce((sum, p, g) => sum + p * Math.floor(g / per), 0);
 }
@@ -133,7 +168,8 @@ export type MinutesModel = {
   /**
    * Tam 90 dakika oynama olasılığı. Gol yememe puanı bunu istiyor, `p60`'ı
    * değil: oyunun sayımı gol yememe için tam maç arıyor. Yedekten girenin
-   * 90'a ulaşma olasılığı sıfır sayılıyor (369 girişin hiçbiri ulaşmadı).
+   * 90'a ulaşma olasılığı sıfır sayılıyor (394 girişin hiçbiri ulaşmadı — zaten
+   * yapısal olarak imkânsız: yedeğin dakikası 90 eksi giriş dakikası).
    */
   p90: number;
   expectedMinutes: number;
@@ -220,12 +256,15 @@ export function expectedPointsForFixture(
   const cleanSheet = minutes.p90 * pCleanSheet * SCORING.cleanSheet[pos];
   const conceded =
     pos === "GK" || pos === "DEF"
-      ? share * expectedConcededSteps(against, SCORING.concededPer) * SCORING.concededPenalty
+      ? share * expectedSteps(against, SCORING.concededPer) * SCORING.concededPenalty
       : 0;
+  // Kurtarış da maç içinde üçer üçer sayılıyor, o yüzden beklenen kurtarışı 3'e
+  // bölmek yanlıştı: E[floor(S/3)] gerekiyor. data/lineups.json'da 87 tam maçta
+  // ölçüldü — ampirik 0,690, Poisson yaklaşımı 0,707, bölme ise 1,042. Yani eski
+  // hâli kaleci kurtarış puanını %51 fazla yazıyordu. (Dağılım Poisson'dan
+  // yayvan: varyans/ortalama 1,75. Buna rağmen eşik beklentisi %2,5 içinde.)
   const saves =
-    pos === "GK"
-      ? (rates.saves90 * share * (against / mu)) / SCORING.savesPerPoint
-      : 0;
+    pos === "GK" ? share * expectedSteps(rates.saves90 * (against / mu), SCORING.savesPerPoint) : 0;
   const cards = share * (rates.y90 * SCORING.yellow + rates.r90 * SCORING.red);
   const bonus = rates.bonus90 * share * Math.sqrt(attack);
 

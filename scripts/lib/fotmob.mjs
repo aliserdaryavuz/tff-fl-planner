@@ -104,10 +104,35 @@ export function matchPage(pageUrl, opts) {
     .filter((e) => /^goal$/i.test(e.type ?? "") && typeof e.time === "number")
     .map((e) => ({ min: e.time, home: e.isHome === true }));
 
+  // Oyuncu başına maç istatistiği. Gerçekleşen gol/asist gürültülü (bir maçta
+  // gol atmak 4-6 puan, atmamak 2); beklenen gol ve asist aynı şeyin daha az
+  // gürültülü ölçümü. Kurtarış da burada maç maç: oyunun sezon toplamı, maç
+  // başına üçer üçer işleyen kuralı yeniden kurmaya yetmiyordu (PLAN.md 1.1).
+  const stats = {};
+  for (const [id, p] of Object.entries(pp.content?.playerStats ?? {})) {
+    const flat = {};
+    for (const group of p.stats ?? []) {
+      for (const [label, entry] of Object.entries(group.stats ?? {})) {
+        const v = entry?.stat?.value;
+        if (typeof v === "number") flat[label] = v;
+      }
+    }
+    if (!Object.keys(flat).length) continue;
+    stats[id] = {
+      xg: flat["Expected goals (xG)"] ?? 0,
+      xgnp: flat["xG Non-penalty"] ?? null,
+      xa: flat["Expected assists (xA)"] ?? 0,
+      shots: flat["Total shots"] ?? 0,
+      chances: flat["Chances created"] ?? 0,
+      saves: flat["Saves"] ?? 0,
+    };
+  }
+
   return {
     date: (pp.general?.matchTimeUTCDate ?? "").slice(0, 10),
     competition: pp.general?.leagueName ?? "",
     lineup: pp.content?.lineup ?? null,
+    stats,
     goals,
     conceded:
       typeof home === "number" && typeof away === "number"

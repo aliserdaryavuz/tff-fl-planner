@@ -4,7 +4,7 @@ import { type RecentSummary, startProbability, UNKNOWN_START } from "@/lib/lineu
 import { MINUTES } from "@/lib/minutes";
 import { computeAll, DEFAULT_PARAMS } from "@/lib/models";
 import {
-  expectedConcededSteps,
+  expectedSteps,
   expectedGoals,
   expectedPointsForFixture,
   GOAL_K,
@@ -13,6 +13,7 @@ import {
   poisson,
   PRIORS,
   shrunkRates,
+  XG_WEIGHT,
 } from "@/lib/xp";
 import { weekDecayWeights } from "@/lib/picks";
 
@@ -44,6 +45,9 @@ const emptySummary: RecentSummary = {
   penMissed: 0,
   penSaved: 0,
   bonus: 0,
+  xg: 0,
+  xa: 0,
+  saves: 0,
   fantasyPoints: 0,
 };
 
@@ -78,12 +82,12 @@ describe("poisson", () => {
   });
 
   it("E[floor(G/2)]: λ = 0'da 0; λ arttıkça artar", () => {
-    expect(expectedConcededSteps(0, 2)).toBeCloseTo(0, 10);
+    expect(expectedSteps(0, 2)).toBeCloseTo(0, 10);
     // λ=2: P(2)+P(3) ×1 + P(4)+P(5) ×2 ...
     const p = poisson(2);
     const manual = p.reduce((s, q, g) => s + q * Math.floor(g / 2), 0);
-    expect(expectedConcededSteps(2, 2)).toBeCloseTo(manual, 10);
-    expect(expectedConcededSteps(3, 2)).toBeGreaterThan(expectedConcededSteps(1, 2));
+    expect(expectedSteps(2, 2)).toBeCloseTo(manual, 10);
+    expect(expectedSteps(3, 2)).toBeGreaterThan(expectedSteps(1, 2));
   });
 });
 
@@ -94,9 +98,22 @@ describe("shrunkRates", () => {
     expect(r.a90).toBeCloseTo(PRIORS.FWD.a90, 10);
   });
 
-  it("360 dakikada 4 gol: gözlenen 1,0 ile öncelik 0,35'in ortası", () => {
-    const r = shrunkRates("FWD", { ...emptySummary, minutes: 360, goals: 4 });
+  it("xG sayımla aynıysa harman hiçbir şeyi değiştirmez: 1,0 ile öncelik 0,35'in ortası", () => {
+    const r = shrunkRates("FWD", { ...emptySummary, minutes: 360, goals: 4, xg: 4 });
     expect(r.g90).toBeCloseTo((1.0 + 0.35) / 2, 10);
+  });
+
+  it("4 gol ama xG 0: harman oranı aşağı çeker", () => {
+    const r = shrunkRates("FWD", { ...emptySummary, minutes: 360, goals: 4, xg: 0 });
+    const raw = (1.0 + 0.35) / 2;
+    const expectedRate = (0 + (0.35 * 360) / 90) / ((360 + 360) / 90);
+    expect(r.g90).toBeCloseTo((1 - XG_WEIGHT) * raw + XG_WEIGHT * expectedRate, 10);
+    expect(r.g90).toBeLessThan(raw);
+  });
+
+  it("pencere kısaysa harman uygulanmaz, ham sayım kalır", () => {
+    const r = shrunkRates("FWD", { ...emptySummary, minutes: 90, goals: 1, xg: 0 });
+    expect(r.g90).toBeCloseTo((1 + (0.35 * 360) / 90) / ((90 + 360) / 90), 10);
   });
 });
 
@@ -141,7 +158,7 @@ describe("expectedPointsForFixture", () => {
     const { against } = expectedGoals(80, 20, "E", 6, 1.4);
     expect(def.pCleanSheet).toBeCloseTo(Math.exp(-against), 10);
     expect(def.cleanSheet).toBeCloseTo(4 * Math.exp(-against), 10);
-    expect(def.conceded).toBeCloseTo(-expectedConcededSteps(against, 2), 10);
+    expect(def.conceded).toBeCloseTo(-expectedSteps(against, 2), 10);
     expect(def.goals).toBe(0);
     expect(def.total).toBeCloseTo(def.appearance + def.cleanSheet + def.conceded, 10);
   });
@@ -158,12 +175,18 @@ describe("expectedPointsForFixture", () => {
     expect(strong.conceded).toBe(0);
   });
 
-  it("kaleci: kurtarış rakibin beklenen golüyle artar", () => {
+  it("kaleci: kurtarış rakibin beklenen golüyle artar, üçer üçer sayılır", () => {
     const gkRates = { ...rates, saves90: 3 };
     const easy = expectedPointsForFixture(player({ team: "A", pos: "GK" }), { opp: "B", ha: "E" }, ctx, sure, gkRates);
     const hard = expectedPointsForFixture(player({ team: "B", pos: "GK" }), { opp: "A", ha: "D" }, ctx, sure, gkRates);
     expect(hard.saves).toBeGreaterThan(easy.saves);
     expect(easy.cleanSheet).toBeGreaterThan(hard.cleanSheet);
+    // Eşik maç içinde: beklenen kurtarışı 3'e bölmek değil, E[floor(S/3)].
+    const { against } = expectedGoals(80, 20, "E", 6, 1.4);
+    const lambda = 3 * (against / 1.4);
+    expect(easy.saves).toBeCloseTo(expectedSteps(lambda, 3), 10);
+    // Bölme her zaman daha büyük: düzeltilen hata testte sabitleniyor.
+    expect(easy.saves).toBeLessThan(lambda / 3);
   });
 });
 

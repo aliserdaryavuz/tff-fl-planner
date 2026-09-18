@@ -22,7 +22,7 @@ const row = (name: string, team: string, pos: Position, price: number, score: nu
     summary: {
       matches: 0, minutes: 0, starts: 0, subIns: 0, minutesWhenStarted: null, minutesWhenSub: null,
       over60WhenStarted: null, goals: 0, assists: 0, yellow: 0, red: 0, ownGoals: 0, penMissed: 0,
-      penSaved: 0, bonus: 0, fantasyPoints: 0,
+      penSaved: 0, bonus: 0, xg: 0, xa: 0, saves: 0, fantasyPoints: 0,
     },
   },
   avgDifficulty: 3,

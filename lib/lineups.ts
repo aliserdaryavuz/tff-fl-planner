@@ -30,6 +30,21 @@ export type RecentMatch = {
    * çıkan defansa sonradan yenilen goller kesilmemeli (PLAN.md 1.1).
    */
   concededOn?: number | null;
+  /**
+   * Maç istatistiği (FotMob maç sayfası). Gerçekleşen gol gürültülü: bir maçta
+   * gol atmak 4-6 puan, atmamak 2. Beklenen gol ve asist aynı şeyin daha az
+   * gürültülü ölçümü, bu yüzden oranlar bunlardan türetilebiliyor.
+   *
+   * Kurtarış burada maç maç: kural her 3 kurtarışa 1 puan veriyor ve bu eşik
+   * maç içinde işliyor, sezon toplamından geri kurulamıyor (PLAN.md 1.1).
+   */
+  xg?: number;
+  /** Penaltısız beklenen gol; yalnız penaltı kullanan maçlarda farklı. */
+  xgnp?: number | null;
+  xa?: number;
+  shots?: number;
+  chances?: number;
+  saves?: number;
   cleanSheet?: boolean;
   /** Maçtaki bonus (3/2/1), her iki takımın puanına göre. */
   bonus?: number;
@@ -319,6 +334,15 @@ export type RecentSummary = {
   penMissed: number;
   penSaved: number;
   bonus: number;
+  /**
+   * Beklenen üretim toplamı. Gerçekleşen gol 5 maçlık örneklemde çok gürültülü;
+   * beklenen gol aynı şeyin daha az gürültülü ölçümü, bu yüzden oran hesabına
+   * ikisi birlikte girebiliyor (lib/xp.ts).
+   */
+  xg: number;
+  xa: number;
+  /** Maç bazlı kurtarış toplamı; kural her 3 kurtarışa 1 puan, eşik maç içinde. */
+  saves: number;
   /** TFF puan tablosuyla hesaplanan gerçek fantasy puanı (bonus dahil). */
   fantasyPoints: number;
 };
@@ -368,6 +392,9 @@ export function summarizeRecent(
     penMissed: 0,
     penSaved: 0,
     bonus: 0,
+    xg: 0,
+    xa: 0,
+    saves: 0,
     fantasyPoints: 0,
   };
   if (!info) return s;
@@ -394,6 +421,11 @@ export function summarizeRecent(
     s.penMissed += m.penMissed ?? 0;
     s.penSaved += m.penSaved ?? 0;
     s.bonus += m.bonus ?? 0;
+    // Beklenen üretim ve maç bazlı kurtarış: eski dosyalarda bu alanlar yok,
+    // o yüzden hepsi sıfıra düşüyor ve model eski davranışına geri dönüyor.
+    s.xg += m.xg ?? 0;
+    s.xa += m.xa ?? 0;
+    s.saves += m.saves ?? 0;
     s.fantasyPoints +=
       matchPoints(player.pos, {
         minutes: m.minutes,
@@ -403,6 +435,9 @@ export function summarizeRecent(
         // Ceza yalnız oyuncu sahadayken yenilen gole işlemeli; alan yoksa
         // matchPoints maç toplamına düşüyor (lib/scoring.mjs).
         concededOn: m.concededOn ?? undefined,
+        // Kurtarış maç içinde üçer üçer puanlanıyor; sezon toplamından geri
+        // kurulamıyor, bu yüzden maç bazlı sayı kullanılıyor (PLAN.md 1.1).
+        saves: m.saves,
         penSaved: m.penSaved,
         penMissed: m.penMissed,
         yellow: m.yellow,

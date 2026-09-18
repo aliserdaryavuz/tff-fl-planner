@@ -56,7 +56,7 @@ const TERMS = [
   { key: "assists", label: "asist", from: "game", expected: () => SCORING.assist },
   { key: "cleanSheets", label: "gol yememe", from: "game", expected: (pos) => SCORING.cleanSheet[pos] },
   { key: "concededSteps", label: "yenilen gol (her 2)", from: "match", expected: (pos) => (pos === "GK" || pos === "DEF" ? SCORING.concededPenalty : 0) },
-  { key: "saveSteps", label: "kurtarış (her 3)", from: "game", expected: (pos) => (pos === "GK" ? 1 : 0) },
+  { key: "saveSteps", label: "kurtarış (her 3)", from: "match", expected: (pos) => (pos === "GK" ? 1 : 0) },
   { key: "yellow", label: "sarı kart", from: "game", expected: () => SCORING.yellow },
   { key: "red", label: "kırmızı kart", from: "game", expected: () => SCORING.red },
   { key: "ownGoals", label: "kendi kalesine", from: "match", expected: () => SCORING.ownGoal },
@@ -77,6 +77,7 @@ function featuresOf(p) {
   let apps = 0;
   let over60 = 0;
   let concededSteps = 0;
+  let saveSteps = 0;
   let ownGoals = 0;
   let penMissed = 0;
   let penSaved = 0;
@@ -87,6 +88,11 @@ function featuresOf(p) {
     // Ceza yalnız oyuncu sahadayken yenilen gole işliyor (18.09 ölçümü);
     // `concededOn` yoksa eski davranışa, maç toplamına düşülür.
     concededSteps += Math.floor((m.concededOn ?? m.conceded ?? 0) / SCORING.concededPer);
+    // Kurtarış da MAÇ BAŞINA üçer üçer puanlanıyor. Sezon toplamını 3'e bölmek
+    // yanlış: 5 maçta ikişer kurtarış yapan kaleci maç başına 0 puan alır,
+    // sezon toplamıyla (10/3) 3 puan yazılırdı. Kalecinin 5/21'de takılmasının
+    // sebebi buydu (PLAN.md 1.1); maç bazlı veri 1.3 ile geldi.
+    saveSteps += Math.floor((m.saves ?? 0) / SCORING.savesPerPoint);
     ownGoals += m.ownGoals ?? 0;
     penMissed += m.penMissed ?? 0;
     penSaved += m.penSaved ?? 0;
@@ -98,7 +104,7 @@ function featuresOf(p) {
     assists: p.assists ?? 0,
     cleanSheets: p.cleanSheets ?? 0,
     concededSteps,
-    saveSteps: Math.floor((p.saves ?? 0) / SCORING.savesPerPoint),
+    saveSteps,
     yellow: p.yellow ?? 0,
     red: p.red ?? 0,
     ownGoals,

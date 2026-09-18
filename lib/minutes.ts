@@ -13,7 +13,7 @@ import { isScoredMatch, type LineupInfo } from "@/lib/lineups";
  * | Başlayanın 60+ oranı | 0,85 | 0,912 |
  * | Başlayanın dakikası | 84 | 81,7 |
  * | Yedeğin oyuna girme oranı | 0,30 | 0,491 |
- * | Giren yedeğin dakikası | 15 | 21,1 |
+ * | Giren yedeğin dakikası | 15 | 21,0 |
  *
  * En büyük hata yedekten girme oranındaydı: gerçeğin yaklaşık yarısı yazılıydı,
  * yani yedek ve rotasyon oyuncularının beklenen puanı sistematik olarak düşük
@@ -50,8 +50,12 @@ export type MinuteRates = {
 };
 
 /**
- * Veri yetersizse kullanılan değerler: ölçümün 18.09.2026'daki hâli (955 ilk 11
- * ve 751 yedek kaydı). Sezon başında dosya boşken uydurma sayı üretmemek için.
+ * Veri yetersizse kullanılan değerler: ölçümün 18.09.2026'daki hâli (1010 ilk 11
+ * ve 802 yedek kaydı). Sezon başında dosya boşken uydurma sayı üretmemek için.
+ *
+ * Pencere `--matches 6`'dan 9'a çıkınca gözlem %6 arttı ama **oranlar oynamadı**
+ * (p60IfStart 0,9119 · p90IfStart 0,5970 · subAppears 0,4913). Oranların örneklem
+ * büyürken yerinde kalması, ölçümün oturduğunu gösteriyor.
  */
 export const FALLBACK: MinuteRates = {
   p60IfStart: 0.912,
@@ -59,10 +63,10 @@ export const FALLBACK: MinuteRates = {
   subAppears: 0.491,
   p60IfSub: 0.003,
   starterMinutes: 81.7,
-  subMinutes: 21.1,
-  starts: 955,
-  benched: 751,
-  subs: 369,
+  subMinutes: 21.0,
+  starts: 1010,
+  benched: 802,
+  subs: 394,
 };
 
 /** Bu kadar ilk 11 kaydı görülmeden ölçüme güvenilmiyor. */
