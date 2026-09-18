@@ -16,11 +16,11 @@
       "Onana",
       "Pina",
       "Nwaiwu",
-      "Muçi",
-      "Mitongo",
+      "Savic",
+      "Mustafa",
       "Ozan",
       "Fabinho",
-      "Mustafa",
+      "Muçi",
       "Salah",
       "Onuachu",
       "Aral"
@@ -76,13 +76,13 @@
       "Mert (2)",
       "Škriniar",
       "Ake",
-      "İsmail",
+      "Brown",
       "Kanté",
       "İsmail",
       "Guendouzi",
       "Greenwood",
       "Lukaku",
-      "Fred"
+      "Kerem"
      ],
      "unmatched": []
     }
@@ -102,13 +102,13 @@
      "match": "Fenerbahçe - Eyüpspor",
      "starters": [
       "Moldovan",
-      "Michalak",
-      "Jules",
+      "Talha",
+      "El Yamiq",
       "Jules",
       "Giordano",
       "Massanga",
       "Boutobba",
-      "Mete",
+      "Costa",
       "Charles",
       "Michalak",
       "Ahmed"
@@ -131,14 +131,14 @@
       "Lafont",
       "Umut",
       "Bates",
-      "Kahraman",
+      "Dellova",
       "Krasniqi",
       "Rayan",
       "Furkan",
       "Khalil",
       "Dia Saba",
       "Ballet",
-      "Veysel"
+      "Orban"
      ],
      "unmatched": []
     }
@@ -156,7 +156,7 @@
      "match": "Amed Sportif - Beşiktaş",
      "starters": [
       "Nübel",
-      "Amir",
+      "Murillo",
       "Agbadou",
       "Emirhan",
       "Ouattara",
@@ -210,14 +210,14 @@
      "starters": [
       "İrfan Can",
       "Pereira",
-      "Zuzek",
+      "Goutas",
       "Thalisson",
       "Abdurrahim",
       "Diabate",
-      "Oğulcan",
-      "Fıratcan",
-      "Tongya",
       "Traoré",
+      "Oğulcan",
+      "Tongya",
+      "Gouveia",
       "Mendes"
      ],
      "unmatched": []
@@ -235,7 +235,8 @@
      "kind": "lastStarting11",
      "match": "Erzurumspor FK - Samsunspor",
      "starters": [
-      "Orbanic",
+      "Ertuğrul",
+      "Gerxhaliu",
       "Mustafa",
       "Mujakic",
       "Orhan",
@@ -244,11 +245,9 @@
       "Owusu",
       "Baiye",
       "Rodríguez",
-      "Rodríguez"
+      "Eren"
      ],
-     "unmatched": [
-      "Mustafa Yumlu"
-     ]
+     "unmatched": []
     }
    ],
    "unavailable": []
@@ -262,14 +261,14 @@
      "starters": [
       "Okan",
       "Mendes",
-      "Fatih",
+      "Erakovic",
       "Guarino",
       "Tómasson",
       "Celil",
       "Samed",
       "Jarju",
       "Yalçın",
-      "Ceesay",
+      "Emre",
       "Marius"
      ],
      "unmatched": []
@@ -277,9 +276,9 @@
    ],
    "unavailable": [
     "Sousa",
-    "Watt",
+    "Fatih",
     "Elayis",
-    "Bilal",
+    "Coulibaly",
     "Assoumou"
    ]
   },
@@ -293,12 +292,12 @@
       "Serhat",
       "Dijksteel",
       "Zoukrou",
-      "Emir",
+      "Maglica",
       "Haïdara",
-      "Haïdara",
+      "Susoho",
       "Show",
       "Berkan",
-      "Metehan",
+      "Sousa",
       "Aye",
       "Agyei"
      ],
@@ -320,15 +319,15 @@
      "match": "Kocaelispor - Gaziantep FK",
      "starters": [
       "Tobiasz",
-      "Sorescu",
-      "Sangaré",
+      "Pérez",
+      "Arda",
       "Abena",
-      "Muhammet",
+      "Kerim",
       "Meleke",
-      "Gassama",
-      "Camara",
+      "Sorescu",
+      "Gidado",
       "Maxim",
-      "Maxim",
+      "Kozlowski",
       "Halil"
      ],
      "unmatched": []
@@ -348,12 +347,12 @@
      "match": "Çorum FK - Alanyaspor",
      "starters": [
       "Felipe",
-      "Ramirez",
+      "Gökhan",
       "Serdar",
+      "Smolcic",
+      "Borza",
       "Ramadani",
-      "Cemali",
-      "Emircan",
-      "Serdar (2)",
+      "Cengiz",
       "Diomandé",
       "Fredy",
       "Kyziridis",
@@ -430,12 +429,12 @@
      "starters": [
       "Fofana",
       "Taha",
-      "Furkan",
+      "Mocsi",
       "Sagnan",
       "Mithat",
-      "Olawoyin",
+      "Taylan",
       "Doicaru",
-      "Varesanovic",
+      "Olawoyin",
       "Laçi",
       "Mihăilă",
       "Ali Sowe"
@@ -463,7 +462,7 @@
       "Mendes",
       "Kerem",
       "Sakyi",
-      "Emirhan",
+      "Emirhan (2)",
       "Ali",
       "Benedyczak"
      ],
@@ -490,7 +489,7 @@
       "Adil",
       "Masuaku",
       "Jevtovic",
-      "Mücahit",
+      "Melih",
       "Deniz (2)",
       "Tóth",
       "Gonçalves",

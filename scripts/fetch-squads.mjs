@@ -85,20 +85,77 @@ for (const [team, [id, slug]] of Object.entries(FOTMOB)) {
 
 let out;
 if (keepGame) {
-  // Oyun listesi esas; FotMob id ve sakatlık bilgisi ada göre eşlenir.
+  // Oyun listesi esas; FotMob id ve sakatlık bilgisi eşlemeyle bulunur.
+  //
+  // Eşleme **tek yönlü**: bir FotMob oyuncusu yalnız bir oyun kaydına bağlanır.
+  // Sıra güçlüden zayıfa — önce tam ad, sonra görünen kısa ad, en sonda forma
+  // numarası; forma yalnız ad da örtüşüyorsa sayılır.
+  //
+  // Neden böyle: forma numarası 12.09'da tek başına birincil anahtar sanılmıştı.
+  // İki kaynağın numaraları her zaman aynı değil ve kontrol yalnız "FotMob
+  // tarafında tek mi" diye bakıyordu. Sonuç: oyunun 4 numarası "Çağlar Söyüncü",
+  // FotMob'un 4 numarası "Serdar Saatçi" — 457 eşlemenin 109'unda ortak ad
+  // parçası yoktu ve 64 FotMob oyuncusu birden çok kayda bağlanmıştı (Çorum'da
+  // biri üç kayda). Yanlış bağlanan oyuncu başkasının dakikalarını devralıyor,
+  // yani başlama olasılığı ve kadro yanlış çıkıyordu.
+  const norm = (s) =>
+    String(s ?? "")
+      .toLocaleLowerCase("tr")
+      .replace(/ı/g, "i")
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z ]/g, " ")
+      .trim();
+  /** İki adın en az bir anlamlı kelimesi ortak mı (kısa ekler sayılmaz). */
+  const shareToken = (a, b) => {
+    const left = new Set(norm(a).split(/\s+/).filter((t) => t.length > 2));
+    return norm(b)
+      .split(/\s+/)
+      .some((t) => t.length > 2 && left.has(t));
+  };
+
+  const keyOf = (p) => `${p.team}|${p.name}`;
+  const claimed = new Set();
+  const assigned = new Map();
+  const claim = (p, hit) => {
+    assigned.set(keyOf(p), hit);
+    claimed.add(`${p.team}|${hit.fotmobId}`);
+  };
+  /** O kulüpten henüz kimseye bağlanmamış FotMob oyuncuları. */
+  const free = (p) =>
+    (fotmobByTeam[p.team] ?? []).filter((m) => !claimed.has(`${p.team}|${m.fotmobId}`));
+
+  const byName = { full: 0, short: 0, shirt: 0 };
+  for (const p of existing.players) {
+    if (!p.fullName) continue;
+    const hit = matchPlayer(p.fullName, free(p));
+    if (hit) {
+      claim(p, hit);
+      byName.full++;
+    }
+  }
+  for (const p of existing.players) {
+    if (assigned.has(keyOf(p))) continue;
+    const hit = matchPlayer(p.name, free(p));
+    if (hit) {
+      claim(p, hit);
+      byName.short++;
+    }
+  }
+  for (const p of existing.players) {
+    if (assigned.has(keyOf(p)) || p.shirt == null) continue;
+    const byShirt = free(p).filter((m) => m.shirt === p.shirt);
+    // Ad örtüşmesi şart: numara tek başına yanlış oyuncuyu bağlıyordu.
+    if (byShirt.length !== 1 || !shareToken(p.fullName || p.name, byShirt[0].name)) continue;
+    claim(p, byShirt[0]);
+    byName.shirt++;
+  }
+
   let matched = 0;
   const merged = existing.players.map((p) => {
-    const pool = fotmobByTeam[p.team] ?? [];
-    // Sırayla: forma numarası (kulüp içinde tek ve kesin), oyunun tam adı
-    // ("Arda Okan Kurtulan"), görünen kısa ad ("Arda"). Kısa adlar aynı takımda
-    // tekrar ettiği için tek başına yetmiyor.
-    const byShirt =
-      p.shirt == null ? [] : pool.filter((m) => m.shirt != null && m.shirt === p.shirt);
-    const hit =
-      (byShirt.length === 1 ? byShirt[0] : null) ??
-      (p.fullName ? matchPlayer(p.fullName, pool) : null) ??
-      matchPlayer(p.name, pool);
-    if (!hit) return { ...p, fotmobId: p.fotmobId ?? null };
+    const hit = assigned.get(keyOf(p));
+    // Eski dosyadaki id taşınmıyor: yanlış bağlanmış bir id sonsuza kadar kalırdı.
+    if (!hit) return { ...p, fotmobId: null };
     matched++;
     return {
       ...p,
@@ -108,6 +165,7 @@ if (keepGame) {
     };
   });
   log(`oyun listesi korundu: ${matched}/${existing.players.length} oyuncu FotMob ile eşleşti`);
+  log(`  tam ad ${byName.full} · kısa ad ${byName.short} · forma no ${byName.shirt}`);
   out = { ...existing, meta: { ...existing.meta, fotmobMatched: matched }, players: merged };
 } else {
   players.sort(
