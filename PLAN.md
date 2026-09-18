@@ -211,6 +211,16 @@ doğru yere insin.
 
 ## 7. Faz 4 — TFF'ye özel özellikler
 
+- [ ] **4.0 Menajer kartları modele girsin.** (M)
+  §9'daki karar (18.09) bir iş kalemine bağlanmamıştı; boşluk burada kapanıyor.
+  Beşi de kadro kurucunun hedefinde tek satırlık değişiklikler:
+  Tripleks kaptan çarpanını 2 yerine 3, Dört Dörtlük 4 yapar (kaptan seçimi kart başına
+  değişebilir); Tüm Takım Sahaya yedek ağırlığını 1'e çıkarır; Limitsiz Bütçe bütçe kısıtını
+  kaldırır; Hücum diziliş kısıtını kaldırır ve +5 M bütçe verir.
+  Çıktı: her kart için "bu hafta oynasam ne kazanırdım" farkı, kartsız plana göre.
+  Arayüz kuralı: ilk kullanımdan sonra **ücretli** olduğu her öneride yazılı kalsın;
+  model kart öneriyorsa bu para harcamayı önermek demektir.
+
 - [ ] **4.1 Kadro kaydetme (tarayıcıda).** (M)
   Kadroyu bir kez gir, her hafta öneri al; dışa/içe aktarmayla cihaz değiştir.
   Hesap yok (CLAUDE.md yasak), bedeli dürüstçe yazılır: tek tarayıcıya bağlı.
