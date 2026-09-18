@@ -43,17 +43,38 @@ if (!running) {
   await sleep(4000);
 }
 
-log("Açılan pencerede Google hesabınla giriş yap; giriş algılanınca devam edeceğim.");
-
 const chrome = await connect({ launch: false });
-const started = Date.now();
-let ok = false;
-while ((Date.now() - started) / 1000 < TIMEOUT) {
-  if (await chrome.loggedIn()) {
-    ok = true;
-    break;
+
+/**
+ * Önce sessiz deneme. Erişim belirteci (`kc_access_token`) birkaç günde düşüyor
+ * ama Keycloak'ın tek oturum açma kaydı (`KEYCLOAK_SESSION`) çok daha uzun
+ * yaşıyor; o duruyorsa OAuth akışını başlatmak hiçbir tıklama istemeden geri
+ * dönüyor. 18.09.2026'da altı gün sonra bu şekilde geri girildi.
+ *
+ * Neden önemli: bu betik görünür bir pencere açıp tıklama bekliyor. Kullanıcı
+ * makinenin başında değilse (uzaktan bağlıysa) o pencereye erişemez ve tek işe
+ * yarayan yol budur. `/giris` sayfasını açmak yetmiyor — akış ancak Google
+ * düğmesine basınca, yani bu adrese gidince başlıyor.
+ */
+let ok = await chrome.loggedIn();
+if (!ok) {
+  log("Sessiz giriş deneniyor (mevcut Google oturumu üzerinden)…");
+  await chrome.navigate(`${SITE}/api/auth/social/google`);
+  await sleep(9000);
+  ok = await chrome.loggedIn();
+  if (ok) log("Sessiz giriş başarılı; pencereye dokunmaya gerek kalmadı.");
+}
+
+if (!ok) {
+  log("Açılan pencerede Google hesabınla giriş yap; giriş algılanınca devam edeceğim.");
+  const started = Date.now();
+  while ((Date.now() - started) / 1000 < TIMEOUT) {
+    if (await chrome.loggedIn()) {
+      ok = true;
+      break;
+    }
+    await sleep(3000);
   }
-  await sleep(3000);
 }
 await chrome.close();
 

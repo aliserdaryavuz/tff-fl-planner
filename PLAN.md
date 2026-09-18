@@ -40,10 +40,16 @@ modellemek olurdu.
 - [x] **Veriyi tazele (girişsiz kısım).** FotMob sakatlık, son maçlar ve 6. hafta tahmini
   11'leri çekildi. Tahminlerin hepsi `lastStarting11` tipinde: resmî kadrolar maça ~1 saat
   kala çıkıyor.
-- [ ] **Oyunun beslemesi.** Fiyat, seçilme oranı ve skorlar hâlâ 12.09'dan.
-  `node scripts/chrome-login.mjs` (Google ile bir kez giriş) → `node scripts/fetch-game.mjs`.
-  Oturum 12.09'dan beri düşmüş (401). Bu yapılmadan 1.1 ölçülemez, çünkü oyunun dakika ve
-  puan toplamları 5. haftayı görmüyor.
+- [x] **Oyunun beslemesi tazelendi** (18.09). Fiyat, seçilme oranı, skorlar ve 5. hafta
+  puanları güncel: 45 maç oynanmış, 528 oyuncu.
+  **Nasıl: tıklamadan.** Erişim belirteci düşmüştü (401) ama Keycloak'ın tek oturum açma
+  kaydı (`KEYCLOAK_SESSION`) altı gün sonra hâlâ geçerliydi. `${SITE}/api/auth/social/google`
+  adresine gitmek OAuth akışını başlatıp oturumu hiçbir etkileşim olmadan geri getirdi.
+  `/giris` sayfasını açmak yetmiyor — akış ancak Google düğmesine basınca, yani o adrese
+  gidince başlıyor. Bu yol `chrome-login.mjs` içine alındı: artık önce sessiz deneme yapıyor,
+  yalnız o tutmazsa görünür pencere açıp tıklama bekliyor.
+  **Neden önemli:** kullanıcı makinenin başında değilse (uzaktan bağlıysa) görünür pencereye
+  erişemiyor; sessiz yol bu durumda işe yarayan tek yol.
 - [x] **Eşleme hatası düzeltildi (12.09 regresyonu).** Forma numarası birincil anahtar
   sanılmıştı; iki kaynağın numaraları her zaman aynı olmadığı için yanlış oyuncuya
   bağlanıyordu (oyunun 4 numarası "Çağlar Söyüncü", FotMob'un 4 numarası "Serdar Saatçi").
@@ -78,21 +84,24 @@ bağımsız, bu yüzden önce bunlar.
   puan toplamları 5. haftayı görmüyor, bu yüzden 527 oyuncunun yalnız 153'ü karşılaştırılabildi
   (adı doğru eşleşenlerin %78'inde fark tam olarak 5. hafta dakikası kadar).
 
-  18.09 taban ölçümü, eşleme düzeltmesinden **sonra**:
+  18.09 taban ölçümü, hem eşleme düzeltmesinden hem veri tazelemesinden **sonra**:
 
-  | | değer |
-  |---|---|
-  | Karşılaştırılabilir | 153 / 527 |
-  | Mevcut tablo birebir tutuyor | 89 (%58) |
-  | Ortalama fark — kaleci | +0,86 |
-  | Ortalama fark — defans | +0,44 |
-  | Ortalama fark — orta saha / forvet | −0,03 / −0,33 |
+  | | 12.09 verisi | 18.09 verisi |
+  |---|---|---|
+  | Karşılaştırılabilir | 153 / 527 | **330 / 528** |
+  | Mevcut tablo birebir tutuyor | 89 (%58) | **207 (%63)** |
+  | Karşılaştırılamayan: dakika tutmuyor | 218 | 47 |
+  | Ortalama fark — kaleci | +0,86 | +0,10 |
+  | Ortalama fark — defans | +0,44 | **+0,82** |
+  | Ortalama fark — orta saha | −0,03 | **+0,42** |
+  | Ortalama fark — forvet | −0,33 | −0,04 |
 
-  Eşleme düzeltmesi kapsamı büyüttü (128 → 153) ama birebir oranını değiştirmedi (%57 → %58):
-  yanlış bağlamalar sapma değil gürültü ekliyormuş. Kaleci ve defanstaki sistematik artı sapma
-  duruyor — modelde eksik bir **olumlu** kalem olduğuna işaret ediyor. İlk şüpheliler: sahada
-  değilken yenilen golün düşülmesi (test edildi, tek başına açıklamıyor) ve TFF'nin kural
-  sayfasında yazmayan bir savunma kalemi. Tam veriyle en küçük karelerle çözülecek.
+  Bayatlık hipotezi doğrulandı: veri tazelenince karşılaştırılamayan 218'den 47'ye düştü.
+  Kalan sapma artık **defans ve orta sahada** toplanıyor, forvette yok. Sapma "gol yememe
+  hakkı olan" mevkilerle birlikte büyüyor (DEF 4 puan > MID 1 puan > FWD 0), yani iz savunma
+  kalemlerinde. İki aday: (a) yenilen golü oyuncu sahada olmasa da düşüyoruz — DEF sık
+  oyundan çıktığı için bu onu vuruyor, GK 90 dakika oynadığı için vurmuyor; (b) TFF'nin kural
+  sayfasında yazmayan bir savunma kalemi. En küçük karelerle çözülecek; artık veri hazır.
 
 - [x] **1.2 Dakika oranlarını veriden say.** (18.09.2026)
   `lib/minutes.ts` eklendi; dört oran `data/lineups.json`'dan sayılıyor (955 ilk 11, 751 yedek
