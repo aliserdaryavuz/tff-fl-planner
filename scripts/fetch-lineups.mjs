@@ -18,7 +18,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { bonusPoints, matchPoints } from "../lib/scoring.mjs";
+import { bonusPoints, matchPoints, SCORING } from "../lib/scoring.mjs";
 import { FOTMOB, matchPage, teamFixtures } from "./lib/fotmob.mjs";
 import { matchFantasyName as matchName } from "./lib/names.mjs";
 
@@ -60,10 +60,16 @@ function countEvents(events = []) {
   return n;
 }
 
-/** Bir takımın bir maçtaki oyuncuları: başladı mı, kaç dakika, olaylar. */
-function sideAppearances(side, conceded) {
+/**
+ * Bir takımın bir maçtaki oyuncuları: başladı mı, kaç dakika, olaylar.
+ *
+ * `against` rakibin gol dakikaları. Her oyuncu için sahada olduğu pencereye
+ * düşen goller ayrıca sayılıyor (`concededOn`): yenilen gol cezası yalnız
+ * oyuncu sahadayken yenilen gole işliyor (lib/scoring.mjs).
+ */
+function sideAppearances(side, conceded, against = []) {
   const rows = [];
-  const add = (p, started, minutes) => {
+  const add = (p, started, minutes, from, to) => {
     rows.push({
       id: p.id,
       name: p.name,
@@ -73,16 +79,20 @@ function sideAppearances(side, conceded) {
       rating: p.performance?.rating ?? null,
       ...countEvents(p.performance?.events),
       conceded,
-      cleanSheet: conceded === 0 && minutes >= 60,
+      concededOn: against.filter((min) => min > from && min <= to).length,
+      // Gol yememe tam maç istiyor; eşik lib/scoring.mjs'ten.
+      cleanSheet: conceded === 0 && minutes >= SCORING.cleanSheetMinutes,
     });
   };
   for (const p of side.starters ?? []) {
     const out = (p.performance?.substitutionEvents ?? []).find((e) => e.type === "subOut");
-    add(p, true, out ? out.time : 90);
+    // Üst sınır 200: uzatma dakikasındaki goller de pencereye girsin.
+    add(p, true, out ? out.time : 90, 0, out ? out.time : 200);
   }
   for (const p of side.subs ?? []) {
     const on = (p.performance?.substitutionEvents ?? []).find((e) => e.type === "subIn");
-    add(p, false, on ? Math.max(0, 90 - on.time) : 0);
+    if (on) add(p, false, Math.max(0, 90 - on.time), on.time, 200);
+    else add(p, false, 0, 0, 0);
   }
   return rows;
 }
@@ -115,8 +125,11 @@ for (const [team, [fotmobId, slug]] of teams) {
     // Bonus (3/2/1) maçtaki tüm oyuncuların TFF puanına göre: iki taraf birden.
     const other = isHome ? L.awayTeam : L.homeTeam;
     const otherConceded = page.conceded?.[isHome ? "away" : "home"] ?? null;
-    const ours = sideAppearances(side, conceded);
-    const theirs = other ? sideAppearances(other, otherConceded) : [];
+    // Golü atan taraf `home`; bize karşı olanlar rakibin attıkları.
+    const minutesOf = (scoredByHome) =>
+      (page.goals ?? []).filter((g) => g.home === scoredByHome).map((g) => g.min);
+    const ours = sideAppearances(side, conceded, minutesOf(!isHome));
+    const theirs = other ? sideAppearances(other, otherConceded, minutesOf(isHome)) : [];
     const everyone = [...ours, ...theirs];
     const points = everyone.map((a) =>
       matchPoints(a.pos, {
@@ -124,6 +137,7 @@ for (const [team, [fotmobId, slug]] of teams) {
         goals: a.goals,
         assists: a.assists,
         conceded: a.conceded ?? undefined,
+        concededOn: a.concededOn ?? undefined,
         penSaved: a.penSaved,
         penMissed: a.penMissed,
         yellow: a.yellow,

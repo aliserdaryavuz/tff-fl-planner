@@ -18,12 +18,30 @@ describe("matchPoints", () => {
     expect(matchPoints("FWD", { minutes: 90, goals: 2, assists: 1, conceded: 1 })).toBe(2 + 8 + 3);
   });
 
-  it("gol yememe: kaleci/defans 4, orta saha 1, forvet 0; 60 dk şart", () => {
+  it("gol yememe: kaleci/defans 4, orta saha 1, forvet 0; TAM MAÇ şart", () => {
     expect(matchPoints("GK", { minutes: 90, conceded: 0 })).toBe(2 + 4);
-    expect(matchPoints("DEF", { minutes: 60, conceded: 0 })).toBe(1 + 4);
-    expect(matchPoints("DEF", { minutes: 59, conceded: 0 })).toBe(1);
+    expect(matchPoints("DEF", { minutes: 90, conceded: 0 })).toBe(2 + 4);
     expect(matchPoints("MID", { minutes: 90, conceded: 0 })).toBe(2 + 1);
     expect(matchPoints("FWD", { minutes: 90, conceded: 0 })).toBe(2);
+  });
+
+  it("60-89 dakika oynayan gol yememe puanı almaz", () => {
+    // Kural sayfası "en az 60 dakika" diyor; oyunun kendi sayımı tam maç
+    // istiyor. Ölçüm: 90 dk tanımı 316 oyuncunun 312'sinde oyunun sezon
+    // `cleanSheets` sayısını birebir veriyor, 60 dk tanımı orta sahada iki
+    // katından fazla sayıyor (lib/scoring.mjs cleanSheetMinutes).
+    expect(matchPoints("DEF", { minutes: 89, conceded: 0 })).toBe(2);
+    expect(matchPoints("DEF", { minutes: 60, conceded: 0 })).toBe(1);
+    expect(matchPoints("MID", { minutes: 80, conceded: 0 })).toBe(2);
+  });
+
+  it("yenilen gol cezası yalnız oyuncu sahadayken yenilen gole işler", () => {
+    // Takım 4 gol yemiş ama oyuncu sahadayken 0: ceza yok.
+    expect(matchPoints("DEF", { minutes: 45, conceded: 4, concededOn: 0 })).toBe(1);
+    // Sahadayken 2 gol: bir kademe ceza.
+    expect(matchPoints("DEF", { minutes: 90, conceded: 4, concededOn: 2 })).toBe(2 - 1);
+    // Alan verilmezse eskisi gibi maç toplamına düşülür.
+    expect(matchPoints("DEF", { minutes: 90, conceded: 4 })).toBe(2 - 2);
   });
 
   it("yenilen her 2 gol kaleci/defanstan -1; orta sahaya etkisi yok", () => {

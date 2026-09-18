@@ -32,6 +32,14 @@ describe("dakika oranları", () => {
     expect(MINUTES.subs).toBeLessThanOrEqual(MINUTES.benched);
   });
 
+  it("tam maç oynama, 60 dakikayı geçmekten belirgin daha seyrek", () => {
+    // Gol yememe tam maç istiyor, süre puanı 60'ı geçmeye bakıyor. İkisini aynı
+    // sayıyla çarpmak gol yememe kalemini şişiriyordu: ölçüm 0,597'ye karşı 0,912.
+    expect(MINUTES.p90IfStart).toBeGreaterThan(0.4);
+    expect(MINUTES.p90IfStart).toBeLessThan(0.8);
+    expect(MINUTES.p90IfStart).toBeLessThan(MINUTES.p60IfStart - 0.15);
+  });
+
   it("ilk 11 çoğunlukla 60 dakikayı geçer, yedek neredeyse hiç", () => {
     expect(MINUTES.p60IfStart).toBeGreaterThan(0.8);
     // Yedekten girip 60 dakikayı geçmek gerçekte görülmüyor (ölçülen ~0,003);

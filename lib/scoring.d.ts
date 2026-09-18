@@ -7,6 +7,8 @@ export type MatchStats = {
   assists?: number;
   /** Takımın maçta yediği gol. */
   conceded?: number;
+  /** Oyuncu sahadayken yenilen gol; verilirse ceza buna göre işler. */
+  concededOn?: number;
   saves?: number;
   penSaved?: number;
   penMissed?: number;

@@ -25,6 +25,11 @@ export type RecentMatch = {
   penSaved?: number;
   /** Takımın o maçta yediği gol (skor bilinmiyorsa null). */
   conceded?: number | null;
+  /**
+   * Oyuncu sahadayken yenilen gol. Yenilen gol cezası buna işliyor: oyundan
+   * çıkan defansa sonradan yenilen goller kesilmemeli (PLAN.md 1.1).
+   */
+  concededOn?: number | null;
   cleanSheet?: boolean;
   /** Maçtaki bonus (3/2/1), her iki takımın puanına göre. */
   bonus?: number;
@@ -395,6 +400,9 @@ export function summarizeRecent(
         goals: m.goals,
         assists: m.assists,
         conceded: m.conceded ?? undefined,
+        // Ceza yalnız oyuncu sahadayken yenilen gole işlemeli; alan yoksa
+        // matchPoints maç toplamına düşüyor (lib/scoring.mjs).
+        concededOn: m.concededOn ?? undefined,
         penSaved: m.penSaved,
         penMissed: m.penMissed,
         yellow: m.yellow,

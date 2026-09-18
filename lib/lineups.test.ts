@@ -96,6 +96,21 @@ describe("summarizeRecent ve fantasyPer90", () => {
 });
 
 describe("gerçek veri", () => {
+  it("her lig maçı kaydında sahadayken yenilen gol var", () => {
+    // `concededOn` olmadan yenilen gol cezası maç toplamına düşer ve oyundan
+    // çıkan defans haksız yere cezalanır (PLAN.md 1.1). Alan sessizce düşerse
+    // model eski hatalı davranışına geri döner, bu yüzden veri burada korunuyor.
+    const league = Object.values(lineups).flatMap((info) =>
+      info.recent.filter((m) => m.minutes > 0 && !/champions|europa|conference|friendl|cup|kupa/i.test(m.competition)),
+    );
+    expect(league.length).toBeGreaterThan(500);
+    expect(league.every((m) => typeof m.concededOn === "number")).toBe(true);
+    // Sahadayken yenilen gol, takımın maçta yediğinden çok olamaz.
+    expect(league.every((m) => (m.concededOn ?? 0) <= (m.conceded ?? 0))).toBe(true);
+    // Oyundan çıkan oyuncular yüzünden bir kısmı maç toplamından düşük olmalı.
+    expect(league.filter((m) => (m.concededOn ?? 0) < (m.conceded ?? 0)).length).toBeGreaterThan(50);
+  });
+
   it("son maç verisi yüklü ve oyun dosyasındaki adlarla eşleşiyor", () => {
     expect(hasLineupData).toBe(true);
     expect(Object.keys(lineups).length).toBeGreaterThan(300);

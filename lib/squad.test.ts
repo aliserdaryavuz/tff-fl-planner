@@ -17,7 +17,7 @@ const row = (name: string, team: string, pos: Position, price: number, score: nu
     xp: score,
     xpPerStart: score,
     weeks: [],
-    minutes: { pStart: 1, pPlay: 1, p60: 1, expectedMinutes: 90 },
+    minutes: { pStart: 1, pPlay: 1, p60: 1, p90: 1, expectedMinutes: 90 },
     rates: { g90: 0, a90: 0, y90: 0, r90: 0, bonus90: 0, saves90: 0, minutes: 0 },
     summary: {
       matches: 0, minutes: 0, starts: 0, subIns: 0, minutesWhenStarted: null, minutesWhenSub: null,

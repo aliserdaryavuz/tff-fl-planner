@@ -132,7 +132,7 @@ describe("minutesModel", () => {
 
 describe("expectedPointsForFixture", () => {
   const ctx = { strength: { A: 80, B: 20 }, homeAdvantage: 6, mu: 1.4 };
-  const sure = { pStart: 1, pPlay: 1, p60: 1, expectedMinutes: 90 };
+  const sure = { pStart: 1, pPlay: 1, p60: 1, p90: 1, expectedMinutes: 90 };
   const rates = { g90: 0, a90: 0, y90: 0, r90: 0, bonus90: 0, saves90: 0, minutes: 0 };
 
   it("kesin 90 dk oynayan, hiç olay yok: 2 puan + gol yememe × olasılık − yenilen", () => {

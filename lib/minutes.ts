@@ -32,6 +32,13 @@ import { isScoredMatch, type LineupInfo } from "@/lib/lineups";
  */
 export type MinuteRates = {
   p60IfStart: number;
+  /**
+   * P(tam 90 dakika | ilk 11'de başladı). Gol yememe puanı bunu istiyor:
+   * kural 90 dakika (bkz. `lib/scoring.mjs` `cleanSheetMinutes`), oysa süre
+   * puanı 60'ı geçmeye bakıyor. İkisi çok farklı: ölçüm 0,597'ye karşı 0,912.
+   * Aynı sayıyı kullanmak gol yememe kalemini ~1,5 kat şişiriyordu.
+   */
+  p90IfStart: number;
   subAppears: number;
   p60IfSub: number;
   starterMinutes: number;
@@ -48,6 +55,7 @@ export type MinuteRates = {
  */
 export const FALLBACK: MinuteRates = {
   p60IfStart: 0.912,
+  p90IfStart: 0.597,
   subAppears: 0.491,
   p60IfSub: 0.003,
   starterMinutes: 81.7,
@@ -64,6 +72,7 @@ function measure(): MinuteRates | null {
   const players = raw.players as Record<string, LineupInfo>;
   let starts = 0;
   let start60 = 0;
+  let start90 = 0;
   let startMin = 0;
   let benched = 0;
   let subs = 0;
@@ -77,6 +86,7 @@ function measure(): MinuteRates | null {
         starts++;
         startMin += m.minutes;
         if (m.minutes > 60) start60++;
+        if (m.minutes >= 90) start90++;
       } else {
         benched++;
         if (m.minutes > 0) {
@@ -91,6 +101,7 @@ function measure(): MinuteRates | null {
   if (starts < MIN_STARTS || benched === 0) return null;
   return {
     p60IfStart: start60 / starts,
+    p90IfStart: start90 / starts,
     subAppears: subs / benched,
     // Yedekten girip 60 dakikayı geçmek neredeyse görülmüyor (ölçülen 0,003);
     // yine de sayılıyor, sabitlenmiyor.

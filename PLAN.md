@@ -71,7 +71,64 @@ modellemek olurdu.
 Kullanıcının gördüğü sıralamayı ve kadroyu doğrudan değiştiren işler. Sayfa yapısından
 bağımsız, bu yüzden önce bunlar.
 
-- [ ] **1.1 Puan tablosunu veriden çöz ve sına.** (M)
+- [x] **1.1 Puan tablosunu veriden çöz ve sına.** (18.09.2026)
+  `scripts/solve-scoring.mjs`: oyuncu başına bir denklem, mevki başına en küçük kareler.
+  Sayımların bir kısmı oyunun resmî sezon toplamlarından, eşik taşıyanlar maç maç kayıttan.
+
+  **Doğrulandı.** Forvet kontrol grubu gibi davrandı: gol 3,97 (tablo 4), asist 2,99 (3),
+  süre 1,02 (1), sarı −1,04 (−1), bonus 0,98 (1), RMSE 0,19. Orta sahada da gol 4,80 (5),
+  asist 3,05 (3). Yani yöntem çalışıyor ve tablo hücum tarafında doğru.
+
+  **İki düzeltme çıktı.**
+
+  1. *Gol yememe tam maç istiyor, 60 dakika değil.* Kanıt regresyon değil, doğrudan sayı
+     eşleşmesi: oyuncunun sezon `cleanSheets` alanı bizim hesabımızla karşılaştırıldı.
+
+     | | oyunun toplamı | 60 dk tanımı | 90 dk tanımı | 90 dk birebir |
+     |---|---|---|---|---|
+     | Kaleci | 21 | 21 | 21 | 21/21 |
+     | Defans | 66 | 78 | 67 | 102/103 |
+     | Orta saha | 37 | 82 | 39 | 141/143 |
+     | Forvet | 2 | 22 | 3 | 48/49 |
+
+     Örnek: Ruan'ın takımı iki maçta gol yememiş ama o 81 ve 86 dakika oynamış; oyun sıfır
+     yazmış. Forvetteki 2 de böyle: yalnız üç forvet gol yenmeyen bir maçta tam 90 oynamış.
+
+  2. *Yenilen gol cezası yalnız oyuncu sahadayken yenilen gole işliyor.* Eskiden oyundan
+     çıkan defansa sonradan yenilen goller de kesiliyordu. Düzeltmeyle defansta oyunun
+     puanını birebir veren oyuncu **31'den 51'e** çıktı, RMSE 1,44 → 1,16. Gol dakikaları
+     FotMob maç sayfalarından; `concededOn` olarak `data/lineups.json`'a yazılıyor.
+
+  **Modele etkisi:** `lib/xp.ts` gol yememe kalemini `p60` ile çarpıyordu. Ölçüm: başlayanın
+  60'ı geçme olasılığı 0,912, tam 90 oynama olasılığı 0,597. Yani kalem ~1,5 kat şişikti.
+  Artık `p90` kullanılıyor. 369 yedek girişinin hiçbiri 90'a ulaşmadığı için yedek bu puanı
+  hiç alamıyor.
+
+  **Çürütüldü:** savunma aksiyonu / top kazanma terimi. FotMob'dan alınan tackle, interception,
+  clearance, block ve recovery sütunları aday olarak eklendi; katsayıları 0,01-0,08 çıktı ve
+  birebir tutmayı hiç değiştirmedi. Kural sayfasında yazmayan bir savunma kalemi yok.
+
+  **Sonuç (asıl ölçü).** Önemli olan serbest çözümün katsayıları değil, *gönderdiğimiz
+  tablonun* oyunun puanını yeniden kurabilmesi:
+
+  | | düzeltmelerden önce | sonra |
+  |---|---|---|
+  | Defans birebir | 64 / 108 | **87 / 108** |
+  | Defans RMSE | 1,86 | 1,37 |
+  | Orta saha birebir | — | 97 / 150 |
+  | Forvet birebir | — | 50 / 52 |
+
+  **Açık kalan iki şey, ikisi de bilinçli bırakıldı.**
+
+  - *Serbest çözüm defans ve kalecide tabloya oturmuyor* (gol yememe ~2,7, olması gereken 4;
+    bonus ~1,4, olması gereken 1). Ama o çözüm daha düşük RMSE'ye rağmen birebir tutmayı
+    87'den 56'ya **düşürüyor** — yani gerçeği bulmuyor, aşırı uyum yapıyor. Sütunlar
+    (maç sayısı, 60 dk üstü, gol yememe, yenilen gol) birbirine fazla bağlı ve 5 haftalık
+    veri bunları ayırmaya yetmiyor. Terim uydurulmadı.
+  - *Kaleci zayıf: 5/21.* Sebebi biliniyor: kurtarış puanı **maç başına** üçer üçer işliyor,
+    bizim elimizde yalnız sezon toplamı var. 5 maçta ikişer kurtarış yapan kaleciye maç
+    başına 0, sezon toplamıyla 3 puan yazılıyor. Maç bazlı kurtarış FotMob maç sayfalarında
+    var; 1.3 ile gelecek ve o zaman yeniden ölçülecek.
   Bugün `lib/scoring.mjs` TFF'nin kural sayfasından elle yazıldı. Oyunun beslemesi her
   oyuncunun sezon dökümünü (`goals, assists, cleanSheets, conceded, saves, yellow, red,
   bonus, minutes`) ve `totalPoints`'ini veriyor — yani tablo **geri çıkarılabilir**.

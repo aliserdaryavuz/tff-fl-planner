@@ -128,8 +128,14 @@ export type MinutesModel = {
   pStart: number;
   /** Oynama olasılığı (başlama + yedekten girme). */
   pPlay: number;
-  /** 60 dakikadan fazla oynama olasılığı. */
+  /** 60 dakikadan fazla oynama olasılığı (süre puanının ikinci kademesi). */
   p60: number;
+  /**
+   * Tam 90 dakika oynama olasılığı. Gol yememe puanı bunu istiyor, `p60`'ı
+   * değil: oyunun sayımı gol yememe için tam maç arıyor. Yedekten girenin
+   * 90'a ulaşma olasılığı sıfır sayılıyor (369 girişin hiçbiri ulaşmadı).
+   */
+  p90: number;
   expectedMinutes: number;
 };
 
@@ -150,10 +156,13 @@ export function minutesModel(
   const minStarted = summary.minutesWhenStarted ?? MINUTES.starterMinutes;
   const minSub = summary.minutesWhenSub ?? MINUTES.subMinutes;
   const over60 = summary.over60WhenStarted ?? MINUTES.p60IfStart;
+  // Tam maç oranı oyuncu bazında tutulmuyor; lig ortalaması kullanılıyor.
+  const full90 = MINUTES.p90IfStart;
   return {
     pStart,
     pPlay,
     p60: pStart * over60,
+    p90: pStart * full90,
     expectedMinutes: pStart * minStarted + Math.max(0, pAvailable - pStart) * subRate * minSub,
   };
 }
@@ -207,7 +216,8 @@ export function expectedPointsForFixture(
   const goals = rates.g90 * share * attack * SCORING.goal[pos];
   const assists = rates.a90 * share * attack * SCORING.assist;
   const pCleanSheet = Math.exp(-against);
-  const cleanSheet = minutes.p60 * pCleanSheet * SCORING.cleanSheet[pos];
+  // Gol yememe tam maç istiyor: p60 değil p90 (lib/minutes.ts p90IfStart).
+  const cleanSheet = minutes.p90 * pCleanSheet * SCORING.cleanSheet[pos];
   const conceded =
     pos === "GK" || pos === "DEF"
       ? share * expectedConcededSteps(against, SCORING.concededPer) * SCORING.concededPenalty
@@ -266,6 +276,7 @@ export const FULL_MINUTES: MinutesModel = {
   pStart: 1,
   pPlay: 1,
   p60: 1,
+  p90: 1,
   expectedMinutes: 90,
 };
 

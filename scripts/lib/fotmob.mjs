@@ -98,10 +98,17 @@ export function matchPage(pageUrl, opts) {
   const teams = pp.header?.teams ?? [];
   const home = teams[0]?.score;
   const away = teams[1]?.score;
+  // Gol dakikaları: "oyuncu sahadayken yenilen gol" bunlardan hesaplanıyor
+  // (lib/scoring.mjs, concededOn). `isHome` golü atan tarafı söylüyor.
+  const goals = (pp.content?.matchFacts?.events?.events ?? [])
+    .filter((e) => /^goal$/i.test(e.type ?? "") && typeof e.time === "number")
+    .map((e) => ({ min: e.time, home: e.isHome === true }));
+
   return {
     date: (pp.general?.matchTimeUTCDate ?? "").slice(0, 10),
     competition: pp.general?.leagueName ?? "",
     lineup: pp.content?.lineup ?? null,
+    goals,
     conceded:
       typeof home === "number" && typeof away === "number"
         ? { home: away, away: home }
