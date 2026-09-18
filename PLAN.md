@@ -472,11 +472,24 @@ doğru yere insin.
   rotada `PageHead` sahipleniyor, böylece başlık listesi sayfanın kendi adıyla başlıyor.
   Telefonda dört bölüm alt çubuğa sığdığı için UCL'deki "daha fazla" listesine gerek kalmadı.
 
-  **Doğrulanan ve doğrulanmayan.** Doğrulandı: dört rota statik üretiliyor, typecheck, lint ve
-  143 test geçiyor. **Doğrulanmadı:** gezinmede durumun korunduğu *ölçülmedi*. Yapısal olarak
-  böyle — yerleşim alt ağacı rota değişiminde bağlı kalıyor, Shell de orada — ama tarayıcıda
-  sınanmadı. Otomatik sınamak bugün ucuz değil: vitest `environment: "node"` ve React test
-  kütüphanesi bağımlılıklarda yok. İlk elle bakışta doğrulanacak.
+  **Doğrulandı — ve tarayıcıda ölçüldü.** Build dört rotayı statik üretiyor; typecheck, lint ve
+  143 test geçiyor. Durumun korunması ise akıl yürütmeyle bırakılmadı: üretim sunucusu ayağa
+  kaldırılıp headless Chrome'a CDP ile bağlanıldı (oyunun profiline dokunulmadan — ayrı port,
+  geçici profil) ve sekmeye **gerçekten tıklandı**.
+
+  | ölçülen | sonuç |
+  | --- | --- |
+  | `/?gw=9&h=3&t=Besiktas` açılışı | `h1` = "Model ve haftalar", **tek** |
+  | "Takımlar"a tıklama | yol `/teams`, sorgu **birebir korundu** |
+  | gezinme sonrası başlık | `h1` = "Takımlar ve fikstür", **tek** |
+  | Shell'in 250 ms'lik `replaceState`'i sonrası | adres hâlâ `/teams?…`, ayarlar yerinde |
+
+  Son satır asıl risk noktasıydı: Shell adres çubuğunu `?${encodeState(state)}` ile geciktirerek
+  yeniden yazıyor. Göreli adres geçerli yola çözüldüğü için yolu ezmiyor — ölçüldü.
+
+  Küçük bir gözlem, sorun değil ama kayda geçsin: `aria-current="page"` iki öge döndürüyor,
+  çünkü üst şerit ve alt çubuk ikisi de DOM'da. Her ekran genişliğinde biri `display:none`
+  olduğundan erişilebilirlik ağacında yalnız biri görünüyor.
 
 - [ ] **3.2 Tasarım belirteçleri ve açık tema.** (M)
   Bugün paletler `globals.css` içinde koyu-tek; yazı boyutları px. UCL'de rol tabanlı yazı
