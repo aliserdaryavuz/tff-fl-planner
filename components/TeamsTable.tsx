@@ -5,7 +5,8 @@ import { Exportable } from "@/components/Exportable";
 import { useI18n } from "@/components/I18nProvider";
 import { Segmented } from "@/components/Segmented";
 import { TeamLogo } from "@/components/TeamLogo";
-import { BANDS, bandOf } from "@/lib/bands";
+import { useTheme } from "@/components/PlannerContext";
+import { BANDS, bandColors, bandOf } from "@/lib/bands";
 import { byId, MATCHDAYS, schedule, teamIds } from "@/lib/data";
 import type { TeamResult } from "@/lib/models";
 
@@ -34,6 +35,7 @@ export function TeamsTable({
   onSelect: (id: string) => void;
 }) {
   const { t, f } = useI18n();
+  const theme = useTheme();
   const [sort, setSort] = useState<Sort>("total");
   const to = Math.min(MATCHDAYS, gw + horizon - 1);
 
@@ -68,7 +70,15 @@ export function TeamsTable({
               fx.ha === "E" ? t.fixture.homeLabel : t.fixture.awayLabel
             }) ${f.n1(value)}`}
             className={`block ${size} min-w-0 rounded-[3px]`}
-            style={{ background: bandOf(value).fill }}
+            // Minik şerit hücresi: çerçeve kutuyu büyütmesin diye içeriden
+            // gölge olarak veriliyor. Açık temada dolgu tek başına zeminden
+            // yeterince ayrılmıyor.
+            style={{
+              background: bandColors(bandOf(value), theme).fill,
+              boxShadow: bandColors(bandOf(value), theme).border
+                ? `inset 0 0 0 1px ${bandColors(bandOf(value), theme).border}`
+                : undefined,
+            }}
           />
         );
       });
@@ -173,7 +183,7 @@ export function TeamsTable({
                       className="block h-full"
                       style={{
                         width: `${Math.max(4, Math.round(width * 100))}%`,
-                        background: `linear-gradient(90deg, ${BANDS[0].fill}, ${BANDS[2].fill}, ${BANDS[4].fill})`,
+                        background: `linear-gradient(90deg, ${bandColors(BANDS[0], theme).fill}, ${bandColors(BANDS[2], theme).fill}, ${bandColors(BANDS[4], theme).fill})`,
                       }}
                     />
                   </i>

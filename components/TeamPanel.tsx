@@ -8,7 +8,8 @@ import { FixtureList } from "@/components/FixtureList";
 import { useI18n } from "@/components/I18nProvider";
 import { TeamLogo } from "@/components/TeamLogo";
 import { TeamSelect } from "@/components/TeamSelect";
-import { bandOf } from "@/lib/bands";
+import { useTheme } from "@/components/PlannerContext";
+import { bandOf, bandStyle } from "@/lib/bands";
 import { byId, computeTable, MATCHDAYS, schedule, teamIds } from "@/lib/data";
 import type { ModelKey, TeamResult } from "@/lib/models";
 
@@ -181,6 +182,7 @@ function WeekCells({
   compact?: boolean;
 }) {
   const { t, f } = useI18n();
+  const theme = useTheme();
   const cells = schedule[teamId].filter((fx) => fx.md >= gw && fx.md < gw + horizon);
   return (
     <div
@@ -203,7 +205,7 @@ function WeekCells({
               "rounded-md px-0.5 text-center leading-none",
               compact ? "pt-1.5 pb-1" : "pt-[7px] pb-1.5",
             ].join(" ")}
-            style={{ background: band.fill, color: band.ink }}
+            style={bandStyle(theme, band)}
           >
             <small className="mb-1 block text-[11px] font-semibold opacity-85">
               {t.team.week(fixture.md)}

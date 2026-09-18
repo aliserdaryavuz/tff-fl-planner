@@ -7,6 +7,7 @@ describe("encodeState", () => {
   it("dil, dilim, takım, model, parametreler, hafta, ufuk, azalma, yedek ağırlığı", () => {
     const q = new URLSearchParams(encodeState(DEFAULT_STATE));
     expect(q.get("lang")).toBe("tr");
+    expect(q.get("th")).toBe("light");
     expect(q.get("tz")).toBe("Europe/Istanbul");
     expect(q.get("t")).toBe("Galatasaray");
     expect(q.get("m")).toBe("abs");
@@ -24,6 +25,8 @@ describe("decodeState", () => {
   it("gidiş-dönüş", () => {
     const state: PlannerState = {
       lang: "en",
+      // Varsayılan "light"; gidiş-dönüş gerçekten sınansın diye diğeri seçiliyor.
+      theme: "dark",
       tz: "Asia/Tokyo",
       team: "Besiktas",
       model: "rel",
@@ -41,9 +44,12 @@ describe("decodeState", () => {
 
   it("boş query varsayılanı verir; tanınmayan takım ve model yok sayılır", () => {
     expect(decode("")).toEqual(DEFAULT_STATE);
-    const s = decode("t=Antalyaspor&m=torba");
+    const s = decode("t=Antalyaspor&m=torba&th=neon");
     expect(s.team).toBe(DEFAULT_STATE.team);
     expect(s.model).toBe(DEFAULT_STATE.model);
+    // Adres çubuğundan gelen çöp değer temayı bozmamalı.
+    expect(s.theme).toBe(DEFAULT_STATE.theme);
+    expect(decode("th=dark").theme).toBe("dark");
   });
 
   it("hafta, ufuk ve ağırlıklar aralığına kırpılır", () => {

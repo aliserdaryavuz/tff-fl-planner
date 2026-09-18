@@ -5,7 +5,8 @@ import { Exportable } from "@/components/Exportable";
 import { useI18n } from "@/components/I18nProvider";
 import { Segmented } from "@/components/Segmented";
 import { TeamLogo } from "@/components/TeamLogo";
-import { bandOf } from "@/lib/bands";
+import { useTheme } from "@/components/PlannerContext";
+import { bandOf, bandStyle } from "@/lib/bands";
 import { byId } from "@/lib/data";
 import { hasPrices, POSITIONS, type Position } from "@/lib/fantasy";
 import {
@@ -309,6 +310,7 @@ function signalTitle(
 /** Tek oyuncu satırı; `compact` görselde ikinci satırı tek satıra indirir. */
 function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: number; compact?: boolean }) {
   const { t, f } = useI18n();
+  const theme = useTheme();
   const band = bandOf(row.avgDifficulty);
   const s = row.detail.summary;
   const ppm = officialPerMatch(row.player);
@@ -334,7 +336,7 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
           <span
             title={t.picks.difficultyTitle}
             className="shrink-0 rounded px-1 font-semibold tabular-nums"
-            style={{ background: band.fill, color: band.ink }}
+            style={bandStyle(theme, band)}
           >
             {f.n1(row.avgDifficulty)}
           </span>

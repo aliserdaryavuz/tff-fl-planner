@@ -2,7 +2,8 @@
 
 import { useI18n } from "@/components/I18nProvider";
 import { TeamLogo } from "@/components/TeamLogo";
-import { bandOf } from "@/lib/bands";
+import { useTheme } from "@/components/PlannerContext";
+import { bandOf, bandStyle } from "@/lib/bands";
 import { byId, fixturesOf, isPlayed } from "@/lib/data";
 import type { TeamResult } from "@/lib/models";
 
@@ -19,6 +20,7 @@ export function WeekSchedule({
   onSelect: (id: string) => void;
 }) {
   const { t, f } = useI18n();
+  const theme = useTheme();
   const matches = fixturesOf(gw);
 
   return (
@@ -54,7 +56,7 @@ export function WeekSchedule({
                 {band && !played ? (
                   <span
                     className="shrink-0 rounded px-1 font-cond text-[12px] tabular-nums"
-                    style={{ background: band.fill, color: band.ink }}
+                    style={bandStyle(theme, band)}
                     title={t.picks.difficultyTitle}
                   >
                     {f.n1(diff as number)}

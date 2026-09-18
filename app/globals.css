@@ -34,6 +34,60 @@
      metni için sıkışık kalıyor; hepsini tek yerden açıyoruz. */
   --text-xs--line-height: 1.5;
   --text-sm--line-height: 1.55;
+
+  /* Köşe yarıçapları tek yerden: kart, kontrol, hap. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Yazı rolleri. Bileşen boyutu pikselle değil rolle seçer: aynı roldeki metin
+     her sayfada aynı boyutta.
+
+     rem, çünkü tarayıcının yazı boyutu ayarını izlesin — px yazılınca ayar
+     büyütülse de metin büyümüyor, yalnız rem boşluklar büyüyor ve düzen bozuluyor.
+     16 px tabanda değerler bugünkü px karşılıklarıyla aynı. */
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.4;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.5;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.5;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.6;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 1.6;
+  --text-lead: 1.0625rem;
+  --text-lead--line-height: 1.35;
+  --text-title: 1.25rem;
+  --text-title--line-height: 1.25;
+  --text-display: 1.75rem;
+  --text-display--line-height: 1.1;
+}
+
+/* Açık tema (kullanıcı kararı 18.09.2026: varsayılan açık, koyu seçenek).
+   Taban palet yukarıda KOYU, varsayılan tema ise açık: varsayılan
+   `app/layout.tsx`'te `<html data-theme="light">` ile veriliyor. Taban bloğunu
+   açığa çevirmek koyu paletin bütün gerekçelerini yeniden yazmak olurdu.
+
+   Değerler `../ucl-fantasy-planner`'ın ölçülmüş açık paletinden devralındı;
+   burada yeniden ölçülmedi. Zorluk bantları burada değil `lib/bands.ts`'te
+   (proje kuralı: renk kodu tek yerde). */
+:root[data-theme="light"] {
+  --color-ground: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef0f4;
+  --color-line: #d9dce4;
+  --color-line-strong: #b4b9c6;
+  --color-ink: #12151c;
+  --color-muted: #5a6070;
+  --color-accent: #c62222;
+  --color-accent-ink: #ffffff;
+  --color-easier: #1f7a46;
+  --color-harder: #b3261e;
+  --color-pitch: #e6efe8;
+  --color-pitch-2: #d8e6dc;
+  --color-pitch-line: rgba(0, 0, 0, 0.16);
+  color-scheme: light;
 }
 
 @layer base {

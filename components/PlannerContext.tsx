@@ -3,6 +3,7 @@
 import { createContext, useContext, useMemo } from "react";
 import { computeAll, windowMask } from "@/lib/models";
 import { weekDecayWeights } from "@/lib/picks";
+import type { ThemeKey } from "@/lib/theme";
 import type { PlannerState } from "@/lib/url-state";
 
 /**
@@ -40,6 +41,12 @@ export function usePlanner(): PlannerContextValue {
   const value = useContext(Ctx);
   if (!value) throw new Error("usePlanner yalnız PlannerProvider içinde");
   return value;
+}
+
+/** Seçili tema; zorluk bantlarını çizen bileşenler rengi buna göre alıyor. */
+export function useTheme(): ThemeKey {
+  const { state } = usePlanner();
+  return state.theme;
 }
 
 /** Seçili hafta ve ufkun kapsadığı haftalar (maske). */

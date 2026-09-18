@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import { Suspense } from "react";
 import { Shell } from "@/components/Shell";
+import { GROUND, GROUND_LIGHT } from "@/lib/theme";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -53,13 +54,22 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  // Mobil tarayıcı çubuğu sayfa zeminiyle aynı renk. İki değer, çünkü tema
+  // seçilebilir (`lib/theme.ts`); cihazın tercihine göre açık ya da koyu.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: GROUND_LIGHT },
+    { media: "(prefers-color-scheme: dark)", color: GROUND },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="tr"
+      // Varsayılan tema burada, sunucuda: `globals.css`'teki taban palet koyu,
+      // açık tema `:root[data-theme="light"]` ile geliyor. İşaret HTML'de
+      // olmasaydı sayfa önce koyu boyanıp hydration'da açığa atlardı.
+      data-theme="light"
       className={`${barlow.variable} ${barlowCondensed.variable} h-full antialiased`}
     >
       <body className="min-h-full">

@@ -3,7 +3,8 @@
 import { Badge } from "@/components/Badges";
 import { useI18n } from "@/components/I18nProvider";
 import { TeamLogo } from "@/components/TeamLogo";
-import { bandOf } from "@/lib/bands";
+import { useTheme } from "@/components/PlannerContext";
+import { bandOf, bandStyle } from "@/lib/bands";
 import { byId, schedule } from "@/lib/data";
 
 /** Seçili takımın maçları: rakip, tarih, saat, rakip gücü, ev/dep, zorluk ya da skor. */
@@ -27,6 +28,7 @@ export function FixtureList({
   to?: number;
 }) {
   const { t, f } = useI18n();
+  const theme = useTheme();
 
   return (
     <div className="mt-3 border-t border-line">
@@ -68,7 +70,7 @@ export function FixtureList({
                 </div>
                 <div
                   className="rounded-md py-0.5 text-center font-cond text-base font-bold tabular-nums"
-                  style={{ background: band.fill, color: band.ink }}
+                  style={bandStyle(theme, band)}
                 >
                   {f.n1(value)}
                 </div>
@@ -111,7 +113,7 @@ export function FixtureList({
               <div
                 title={t.bands[band.key]}
                 className="rounded-lg py-1 text-center font-cond text-xl font-bold tabular-nums"
-                style={{ background: band.fill, color: band.ink }}
+                style={bandStyle(theme, band)}
               >
                 {f.n1(value)}
               </div>

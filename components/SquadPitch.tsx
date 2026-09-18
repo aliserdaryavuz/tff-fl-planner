@@ -3,7 +3,8 @@
 import { useI18n } from "@/components/I18nProvider";
 import { breakdownTitle } from "@/components/PickList";
 import { TeamLogo } from "@/components/TeamLogo";
-import { ROLE_STYLE } from "@/lib/bands";
+import { useTheme } from "@/components/PlannerContext";
+import { roleStyle } from "@/lib/bands";
 import { byId } from "@/lib/data";
 import { type Player, playerKey, POSITIONS } from "@/lib/fantasy";
 import { formationLabel } from "@/lib/formations";
@@ -24,6 +25,7 @@ export function SquadPitch({
   locked: string[];
 }) {
   const { t, f } = useI18n();
+  const roles = roleStyle(useTheme());
   const rowOf = (p: Player) => rows.find((r) => playerKey(r.player) === playerKey(p));
 
   const card = (p: Player, small = false) => {
@@ -54,8 +56,8 @@ export function SquadPitch({
           <span
             className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full font-cond text-[11px] font-bold"
             style={{
-              background: isCaptain ? ROLE_STYLE.captain.fill : ROLE_STYLE.vice.fill,
-              color: isCaptain ? ROLE_STYLE.captain.ink : ROLE_STYLE.vice.ink,
+              background: isCaptain ? roles.captain.fill : roles.vice.fill,
+              color: isCaptain ? roles.captain.ink : roles.vice.ink,
             }}
             title={isCaptain ? t.squad.captain : t.squad.vice}
           >

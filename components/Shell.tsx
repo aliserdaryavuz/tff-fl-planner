@@ -9,9 +9,11 @@ import { LangSwitch } from "@/components/LangSwitch";
 import { Legend } from "@/components/Legend";
 import { BottomNav, Nav } from "@/components/Nav";
 import { PlannerProvider } from "@/components/PlannerContext";
+import { ThemeSwitch } from "@/components/ThemeSwitch";
 import { TimeZoneSelect, timeZoneLabel } from "@/components/TimeZoneSelect";
 import { meta } from "@/lib/data";
 import type { Lang } from "@/lib/i18n";
+import type { ThemeKey } from "@/lib/theme";
 import type { TimeZone } from "@/lib/time";
 import { decodeState, encodeState, type PlannerState } from "@/lib/url-state";
 
@@ -43,13 +45,20 @@ export function Shell({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = state.lang;
   }, [state.lang]);
 
+  // Varsayılan tema sunucuda `<html data-theme="light">` ile veriliyor; burada
+  // yalnız seçim değişince yeniden yazılıyor.
+  useEffect(() => {
+    document.documentElement.dataset.theme = state.theme;
+  }, [state.theme]);
+
   const setLang = (lang: Lang) => setState((s) => ({ ...s, lang }));
   const setTz = (tz: TimeZone) => setState((s) => ({ ...s, tz }));
+  const setTheme = (theme: ThemeKey) => setState((s) => ({ ...s, theme }));
 
   return (
     <I18nProvider lang={state.lang} tz={state.tz}>
       <PlannerProvider state={state} onChange={setState}>
-        <Body onLangChange={setLang} onTzChange={setTz}>
+        <Body theme={state.theme} onLangChange={setLang} onTzChange={setTz} onThemeChange={setTheme}>
           {children}
         </Body>
       </PlannerProvider>
@@ -59,12 +68,16 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
 function Body({
   children,
+  theme,
   onLangChange,
   onTzChange,
+  onThemeChange,
 }: {
   children: React.ReactNode;
+  theme: ThemeKey;
   onLangChange: (lang: Lang) => void;
   onTzChange: (tz: TimeZone) => void;
+  onThemeChange: (theme: ThemeKey) => void;
 }) {
   const { t, tz } = useI18n();
 
@@ -91,7 +104,8 @@ function Body({
               {t.header.title} <span className="whitespace-nowrap text-accent">{meta.season}</span>
             </span>
           </Link>
-          <div className="shrink-0">
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeSwitch theme={theme} onChange={onThemeChange} />
             <LangSwitch onChange={onLangChange} />
           </div>
         </div>

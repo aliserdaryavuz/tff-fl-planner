@@ -23,6 +23,11 @@ const tr = {
   lang: {
     label: "Dil",
   },
+  theme: {
+    label: "Tema",
+    light: "Açık",
+    dark: "Koyu",
+  },
   docTitle: (season: string) => `TFF FL Planner ${season}`,
   header: {
     title: "TFF FL Planner",
@@ -425,6 +430,11 @@ export type Strings = typeof tr;
 const en: Strings = {
   lang: {
     label: "Language",
+  },
+  theme: {
+    label: "Theme",
+    light: "Light",
+    dark: "Dark",
   },
   docTitle: (season: string) => `TFF FL Planner ${season}`,
   header: {

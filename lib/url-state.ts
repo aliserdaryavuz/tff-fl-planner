@@ -19,11 +19,14 @@ import {
 } from "@/lib/picks";
 import { DEFAULT_BENCH_WEIGHT } from "@/lib/squad";
 import { SOURCES, type SourceKey, type SourceWeights } from "@/lib/strength";
+import { isTheme, type ThemeKey } from "@/lib/theme";
 import { DEFAULT_TZ, isTimeZone, type TimeZone } from "@/lib/time";
 
 /** Paylaşılabilir bağlantıda tutulan durum. */
 export type PlannerState = {
   lang: Lang;
+  /** Arayüz teması; paylaşılan bağlantı aynı temada açılsın diye adreste. */
+  theme: ThemeKey;
   tz: TimeZone;
   team: string;
   model: ModelKey;
@@ -46,6 +49,8 @@ export type PlannerState = {
 
 export const DEFAULT_STATE: PlannerState = {
   lang: "tr",
+  // Varsayılan açık (kullanıcı kararı 18.09.2026); koyu seçenek olarak kalıyor.
+  theme: "light",
   tz: DEFAULT_TZ,
   team: "Galatasaray",
   model: "abs",
@@ -112,6 +117,7 @@ function parsePickWeights(raw: string | null, base: PickWeights): PickWeights {
 export function encodeState(state: PlannerState): string {
   const q = new URLSearchParams();
   q.set("lang", state.lang);
+  q.set("th", state.theme);
   q.set("tz", state.tz);
   q.set("t", state.team);
   q.set("m", state.model);
@@ -150,8 +156,11 @@ export function decodeState(
   const lang = q.get("lang");
   const tz = q.get("tz");
 
+  const theme = q.get("th");
+
   const next: PlannerState = {
     lang: isLang(lang) ? lang : base.lang,
+    theme: isTheme(theme) ? theme : base.theme,
     tz: isTimeZone(tz) ? tz : base.tz,
     team: team && byId[team] ? team : base.team,
     model:

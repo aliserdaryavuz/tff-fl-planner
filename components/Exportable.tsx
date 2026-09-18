@@ -4,9 +4,11 @@ import { toPng } from "html-to-image";
 import { useEffect, useRef, useState } from "react";
 import { ExportContext } from "@/components/ExportContext";
 import { useI18n } from "@/components/I18nProvider";
+import { useTheme } from "@/components/PlannerContext";
 import { logoUrl } from "@/components/TeamLogo";
 import { cachedAsset, preloadAssets } from "@/lib/asset-cache";
 import { meta, teamIds } from "@/lib/data";
+import { groundOf } from "@/lib/theme";
 
 const SITE = "tff-fl-planner.vercel.app";
 const SITE_LOGO = "/logo.svg";
@@ -42,6 +44,7 @@ export function Exportable({
   exportChildren?: React.ReactNode;
 }) {
   const { t, f } = useI18n();
+  const theme = useTheme();
   const liveRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number | null>(null);
@@ -72,7 +75,9 @@ export function Exportable({
       try {
         const options = {
           pixelRatio: 3,
-          backgroundColor: "#000000",
+          // Görselin zemini seçili temanın zemini; sabit siyah açık temada
+          // sayfayla çelişiyordu (lib/theme.ts).
+          backgroundColor: groundOf(theme),
           cacheBust: true,
         };
         // Safari ilk yakalamada görselleri ve yazı tiplerini sık sık boş
@@ -93,7 +98,9 @@ export function Exportable({
     return () => {
       cancelled = true;
     };
-  }, [width, filename, title]);
+    // `theme` de bağımlılık: zemin rengi ondan geliyor, yoksa tema değişince
+    // görsel eski zeminle üretilirdi.
+  }, [width, filename, title, theme]);
 
   const busy = preparing || width != null;
 

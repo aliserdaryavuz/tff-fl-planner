@@ -491,13 +491,47 @@ doğru yere insin.
   çünkü üst şerit ve alt çubuk ikisi de DOM'da. Her ekran genişliğinde biri `display:none`
   olduğundan erişilebilirlik ağacında yalnız biri görünüyor.
 
-- [ ] **3.2 Tasarım belirteçleri ve açık tema.** (M)
-  Bugün paletler `globals.css` içinde koyu-tek; yazı boyutları px. UCL'de rol tabanlı yazı
-  ölçeği (`--text-micro/caption/label/body`), rem tabanlı (tarayıcı yazı ayarını izler),
-  köşe/boşluk belirteçleri, `data-theme="light"` paleti ve üst çubukta tema düğmesi var.
-  Varsayılan tema kararı kullanıcıya ait (UCL'de açık seçildi).
-  UCL karşılığı: `app/globals.css`, `lib/theme.ts`, `components/ThemeSwitch.tsx`,
-  `docs/design-system.md`.
+- [x] **3.2 Tasarım belirteçleri ve açık tema.** (M) — 18.09, **açık tema çalışıyor.**
+  Varsayılan tema açık (§9 kararı), koyu seçenek olarak kaldı, seçim adreste `th` ile taşınıyor.
+
+  **Teslim edilenler.** `lib/theme.ts` (zemin renkleri tek kaynak), `globals.css`'te köşe
+  belirteçleri + rem tabanlı rol ölçeği + `:root[data-theme="light"]` paleti,
+  `components/ThemeSwitch.tsx` (dil seçicisiyle aynı kalıp), `PlannerState.theme`,
+  `useTheme()`, temaya duyarlı `lib/bands.ts` (`bandStyle`, `bandColors`, `roleStyle`).
+
+  **Tema yalnız CSS işi değilmiş** — üç yer sabit renk yazıyordu ve hepsi düzeltildi:
+  `layout.tsx`'teki `themeColor` (mobil tarayıcı çubuğu), `Exportable.tsx`'teki PNG zemini
+  (`#000000` sabitti; artık `groundOf(theme)` ve `theme` efektin bağımlılığında, yoksa tema
+  değişince görsel eski zeminle üretilirdi) ve `ROLE_STYLE` (kadro sahasındaki `xi`/`bench`
+  koyu zemine göre seçilmişti, açık temada sayfayla çakışıyordu).
+
+  **Açık palet ölçülmedi, devralındı.** Değerler `../ucl-fantasy-planner`'ın kontrast
+  ölçülerek seçilmiş açık paletinden alındı; burada yeniden ölçülmedi ve öyle sunulmuyor.
+  İki projenin bant skalası birebir aynı olduğu için devralma geçerli; farklılaşırlarsa
+  yeniden ölçülmeli.
+
+  **Tarayıcıda doğrulandı** (üretim sunucusu + headless Chrome, CDP):
+
+  | ölçülen | açık | koyu |
+  | --- | --- | --- |
+  | sayfa zemini | `rgb(247,248,250)` | `rgb(0,0,0)` |
+  | gövde mürekkebi | `rgb(18,21,28)` | `rgb(244,244,245)` |
+  | zorluk hücresi "3,8" | `#E08A2E`, 1 px çerçeve | `#F5B041`, çerçevesiz |
+  | adres | `th=light` | `th=dark`, yol korunuyor |
+
+  Üçüncü satır asıl sınanmak isteneniydi: sekiz renk uygulama noktası elle değiştirildi ve
+  biri bağlanmamış olsa **build yine yeşil olurdu**. Hücrenin iki temada farklı renk ve farklı
+  çerçeve alması, `bandStyle`'ın uçtan uca bağlı olduğunu gösteriyor.
+
+  **Yapılmadı ve gizlenmiyor: px → rem dönüşümü.** Rol belirteçleri (`--text-micro/caption/
+  label/body/…`) tanımlandı ama mevcut çağrı yerleri çevrilmedi — **20 dosyada 82 px yazı
+  boyutu** duruyor. Yani rem'e geçmenin asıl faydası (tarayıcının yazı boyutu ayarını izleme)
+  henüz gerçekleşmiş değil. Görsel kontrol imkânı olmadan 82 yeri toptan çevirmek gerçek bir
+  gerileme riskiydi; yarısını yapıp "tamam" demek daha kötü olurdu. **Artık iş:** rol
+  belirteçlerine geçiş, tercihen sayfa sayfa ve her adımda bakılarak. 5.4 (erişilebilirlik
+  ölçümü) bunu zaten gerektirecek.
+
+  **3.1'den devreden `ContextBar` artık mümkün:** belirteçler geldiği için engeli kalktı.
 
 - [ ] **3.3 Ağır hesabı Web Worker'a al.** (M)
   Kadro kurma gerçek havuzda ~0,3 s; kaydırak oynatınca ana iş parçacığı donuyor.
