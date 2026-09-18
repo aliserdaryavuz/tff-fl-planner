@@ -94,12 +94,30 @@ bağımsız, bu yüzden önce bunlar.
   değilken yenilen golün düşülmesi (test edildi, tek başına açıklamıyor) ve TFF'nin kural
   sayfasında yazmayan bir savunma kalemi. Tam veriyle en küçük karelerle çözülecek.
 
-- [ ] **1.2 Dakika oranlarını veriden say.** (S)
-  `lib/xp.ts` bugün sabit yazıyor: başlayanın 84 dakikası, yedeğin 15'i, %85 60+ oranı,
-  %30 yedek girme. UCL bunları `data/lineups.json`'dan sayıyor ve sabitin veri tazelendikçe
-  kaydığını ölçmüş. Aynısını yap: `lib/minutes.ts`, dört olay ayrı (`p60IfStart`,
-  `subAppears`, `p60IfSub`, koşullu ortalama süreler).
-  UCL karşılığı: `lib/minutes.ts`.
+- [x] **1.2 Dakika oranlarını veriden say.** (18.09.2026)
+  `lib/minutes.ts` eklendi; dört oran `data/lineups.json`'dan sayılıyor (955 ilk 11, 751 yedek
+  kaydı). Sabitler ölçümden belirgin sapmıştı:
+
+  | | kodda | ölçülen |
+  |---|---|---|
+  | Başlayanın 60+ oranı | 0,85 | 0,912 |
+  | Başlayanın dakikası | 84 | 81,7 |
+  | Yedeğin oyuna girme oranı | 0,30 | **0,491** |
+  | Giren yedeğin dakikası | 15 | 21,1 |
+
+  En büyük hata yedekten girme oranındaydı: gerçeğin yaklaşık yarısı yazılıydı, yani yedek ve
+  rotasyon oyuncuları sistematik olarak değersiz görünüyordu. Etkisi kadroda görünür oldu —
+  yedek kulübesi artık 4 M'lik dolgu değil, değer taşıyan oyuncular (İrfan Can 4,5 M, Ake 5 M,
+  Dia Saba 5,5 M). Test aralık sınıyor, birebir değer değil: ölçümü teste kopyalamak düzeltilen
+  hatanın tekrarı olurdu.
+
+  **Planda olmayan ama aynı işte çıkan düzeltme:** `summarizeRecent` yarışma ayrımı yapmıyordu.
+  1873 kaydın 167'si Avrupa maçı ve 436 oyuncunun 109'unu etkiliyordu; oyun yalnız Süper Lig'i
+  puanladığı için üretim oranları ve ekrandaki puan/90 şişiyordu (Ederson'un 360 lig dakikasının
+  yanında 180 Avrupa dakikası sayılıyordu). Artık `isScoredMatch` ile eleniyor. Başlama
+  olasılığı bilinçli olarak **etkilenmedi**: o özeti değil `info.recent`'i okuyor ve Avrupa'da
+  oynamak "kadroda ve formda" bilgisi taşıyor. Filtre kara liste (Avrupa, kupa, hazırlık);
+  beyaz liste olsaydı FotMob lig adını değiştirdiğinde veri sessizce boşalırdı.
 
 - [ ] **1.3 Maç bazlı oyuncu istatistiği (xG/xA).** (M)
   FotMob maç sayfalarında saha oyuncusu için `Expected goals (xG)`, `xGOT`, `xA`,

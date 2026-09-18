@@ -9,6 +9,7 @@ import {
   startProbability,
   summarizeRecent,
 } from "@/lib/lineups";
+import { MINUTES } from "@/lib/minutes";
 import { withHomeAway } from "@/lib/models";
 import { SCORING } from "@/lib/scoring.mjs";
 
@@ -37,12 +38,9 @@ export const PRIORS: Record<
 /** Öncelik bu kadar maç değerinde sayılır: 4 maç = 360 dk. */
 export const PRIOR_MATCHES = 4;
 
-/** Başlayan oyuncunun varsayılan dakikası, yedek girenin dakikası, 60+ oranı. */
-const DEFAULT_MINUTES_STARTED = 84;
-const DEFAULT_MINUTES_SUB = 15;
-const DEFAULT_OVER60 = 0.85;
-/** Son maç verisi olmayan oyuncunun yedekten girme olasılığı. */
-const DEFAULT_SUB_RATE = 0.3;
+// Oyuncunun kendi geçmişi yoksa lig ortalaması kullanılıyor. Bu dört sayı
+// eskiden burada sabitti (84 / 15 / 0,85 / 0,30) ve ölçümden sapmıştı; artık
+// `lib/minutes.ts` veri dosyasından sayıyor.
 
 /** Güç farkının gol beklentisine etkisi: e^(k·100/100) ≈ 2,2 kat (0 ile 100 arası). */
 export const GOAL_K = 0.8;
@@ -145,13 +143,13 @@ export function minutesModel(
   const predicted = predictedFor(player, md);
   const pStart = startProbability(player, info, predicted);
   const benchMatches = summary.matches - summary.starts;
-  const subRate = benchMatches > 0 ? summary.subIns / benchMatches : DEFAULT_SUB_RATE;
+  const subRate = benchMatches > 0 ? summary.subIns / benchMatches : MINUTES.subAppears;
   // Yedekten girme yolu ancak oyuncu kadrodaysa açık: sakat/cezalı 0 alır.
   const pAvailable = availability(player, info, predicted);
   const pPlay = pStart + Math.max(0, pAvailable - pStart) * subRate;
-  const minStarted = summary.minutesWhenStarted ?? DEFAULT_MINUTES_STARTED;
-  const minSub = summary.minutesWhenSub ?? DEFAULT_MINUTES_SUB;
-  const over60 = summary.over60WhenStarted ?? DEFAULT_OVER60;
+  const minStarted = summary.minutesWhenStarted ?? MINUTES.starterMinutes;
+  const minSub = summary.minutesWhenSub ?? MINUTES.subMinutes;
+  const over60 = summary.over60WhenStarted ?? MINUTES.p60IfStart;
   return {
     pStart,
     pPlay,

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { players as gamePlayers, type Player } from "@/lib/fantasy";
 import { type RecentSummary, startProbability, UNKNOWN_START } from "@/lib/lineups";
+import { MINUTES } from "@/lib/minutes";
 import { computeAll, DEFAULT_PARAMS } from "@/lib/models";
 import {
   expectedConcededSteps,
@@ -106,8 +107,13 @@ describe("minutesModel", () => {
     // Başlama olasılığı lib/lineups.ts'ten; burada onunla tutarlılık aranıyor.
     const base = startProbability(p, undefined);
     expect(m.pStart).toBeCloseTo(base, 10);
-    expect(m.pPlay).toBeCloseTo(base + (1 - base) * 0.3, 10);
-    expect(m.expectedMinutes).toBeCloseTo(base * 84 + (1 - base) * 0.3 * 15, 10);
+    // Sabit sayı yazılmıyor: lig oranları veriden sayılıyor (lib/minutes.ts).
+    // Sayıyı buraya kopyalamak, düzeltilen hatanın testte tekrarı olurdu.
+    expect(m.pPlay).toBeCloseTo(base + (1 - base) * MINUTES.subAppears, 10);
+    expect(m.expectedMinutes).toBeCloseTo(
+      base * MINUTES.starterMinutes + (1 - base) * MINUTES.subAppears * MINUTES.subMinutes,
+      10,
+    );
   });
 
   it("tahmini 11'de olmayan bilinmeyen oyuncu taban olasılığın altına iner", () => {

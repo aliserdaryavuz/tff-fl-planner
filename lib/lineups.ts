@@ -318,6 +318,31 @@ export type RecentSummary = {
   fantasyPoints: number;
 };
 
+/**
+ * Oyunun puanlamadığı maçlar. TFF Fantezi Lig yalnız Süper Lig'i sayıyor; Avrupa
+ * kupaları, Türkiye Kupası ve hazırlık maçları puan üretmiyor.
+ *
+ * Kural "neyi dışla" diye yazıldı, "neyi dahil et" diye değil: FotMob lig adını
+ * bir gün "Trendyol Süper Lig" yaparsa beyaz liste veriyi sessizce boşaltırdı.
+ * Tanınmayan bir yarışma adı lig sayılır — eksik veriye değil, fazla veriye düşer.
+ *
+ * Ölçüm (18.09.2026): 1873 kaydın 167'si Avrupa maçı, 436 oyuncunun 109'unu
+ * etkiliyor. Fenerbahçe'de Ederson'un 360 lig dakikasının yanında 180 Avrupa
+ * dakikası var; bunlar üretim oranına ve puan/90'a girdiğinde oyuncu olduğundan
+ * verimli görünüyordu.
+ */
+const UNSCORED = /champions|europa|conference|friendl|cup|kupa/i;
+
+export function isScoredMatch(m: { competition: string }): boolean {
+  return !UNSCORED.test(m.competition);
+}
+
+/**
+ * Son maçların özeti. **Yalnız oyunun puanladığı maçlar** sayılır (bkz.
+ * `isScoredMatch`). Başlama olasılığı bundan etkilenmiyor: `startProbability`
+ * özeti değil `info.recent`'i doğrudan okuyor ve Avrupa'da oynamak "kadroda ve
+ * formda" bilgisini taşıdığı için orada bilinçli olarak hepsi sayılıyor.
+ */
 export function summarizeRecent(
   player: Player,
   info: LineupInfo | undefined = lineupOf(player),
@@ -345,6 +370,7 @@ export function summarizeRecent(
   let subMin = 0;
   let over60 = 0;
   for (const m of info.recent) {
+    if (!isScoredMatch(m)) continue;
     s.matches++;
     s.minutes += m.minutes;
     if (m.started) {
