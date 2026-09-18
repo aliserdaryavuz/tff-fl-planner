@@ -1,4 +1,5 @@
 import { type HomeAway, leagueAvgGoals, schedule } from "@/lib/data";
+import { POSITION_RATES, type PositionRates } from "@/lib/priors";
 import type { Player, Position } from "@/lib/fantasy";
 import {
   availability,
@@ -24,18 +25,14 @@ import { SCORING } from "@/lib/scoring.mjs";
  * Kesin bir tahmin değil, aynı ölçekte karşılaştırılabilir bir beklenti.
  */
 
-/** Mevki başına 90 dakikalık öncelik oranları (Süper Lig düzeyi, kaba). */
-export const PRIORS: Record<
-  Position,
-  { g90: number; a90: number; y90: number; r90: number; bonus90: number; saves90: number }
-> = {
-  // saves90 ölçüldü (data/lineups.json, tam maç oynayan kaleciler): 87 maçta
-  // 272 kurtarış = 3,13. Elle yazılmış 3,0'a yakın çıktı, yani prior sorun değildi.
-  GK: { g90: 0, a90: 0.005, y90: 0.08, r90: 0.005, bonus90: 0.35, saves90: 3.13 },
-  DEF: { g90: 0.05, a90: 0.06, y90: 0.22, r90: 0.012, bonus90: 0.3, saves90: 0 },
-  MID: { g90: 0.13, a90: 0.14, y90: 0.2, r90: 0.01, bonus90: 0.35, saves90: 0 },
-  FWD: { g90: 0.35, a90: 0.14, y90: 0.16, r90: 0.008, bonus90: 0.45, saves90: 0 },
-};
+/**
+ * Mevki başına 90 dakikalık öncelik oranları — artık elle yazılı değil,
+ * `data/lineups.json`'dan sayılıyor (`lib/priors.ts`). Ölçüm elle yazılı
+ * değerlerin bonusta her mevkide düşük kaldığını gösterdi (forvet 0,45'e karşı
+ * 0,783). Tek istisna kırmızı kart: nadir olduğu için ölçüm sıfır veriyor ve
+ * orada elle konmuş bir taban kullanılıyor, gerekçesi `lib/priors.ts` içinde.
+ */
+export const PRIORS: Record<Position, PositionRates> = POSITION_RATES;
 
 /** Öncelik bu kadar maç değerinde sayılır: 4 maç = 360 dk. */
 export const PRIOR_MATCHES = 4;

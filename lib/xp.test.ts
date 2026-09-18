@@ -98,22 +98,25 @@ describe("shrunkRates", () => {
     expect(r.a90).toBeCloseTo(PRIORS.FWD.a90, 10);
   });
 
-  it("xG sayımla aynıysa harman hiçbir şeyi değiştirmez: 1,0 ile öncelik 0,35'in ortası", () => {
+  // Öncelik sayısı buraya KOPYALANMIYOR: 1.4 ile ölçüme bağlanacak ve kopya bayatlar.
+  const fwdPrior = PRIORS.FWD.g90;
+
+  it("xG sayımla aynıysa harman hiçbir şeyi değiştirmez: gözlenen 1,0 ile önceliğin ortası", () => {
     const r = shrunkRates("FWD", { ...emptySummary, minutes: 360, goals: 4, xg: 4 });
-    expect(r.g90).toBeCloseTo((1.0 + 0.35) / 2, 10);
+    expect(r.g90).toBeCloseTo((1.0 + fwdPrior) / 2, 10);
   });
 
   it("4 gol ama xG 0: harman oranı aşağı çeker", () => {
     const r = shrunkRates("FWD", { ...emptySummary, minutes: 360, goals: 4, xg: 0 });
-    const raw = (1.0 + 0.35) / 2;
-    const expectedRate = (0 + (0.35 * 360) / 90) / ((360 + 360) / 90);
+    const raw = (1.0 + fwdPrior) / 2;
+    const expectedRate = (0 + (fwdPrior * 360) / 90) / ((360 + 360) / 90);
     expect(r.g90).toBeCloseTo((1 - XG_WEIGHT) * raw + XG_WEIGHT * expectedRate, 10);
     expect(r.g90).toBeLessThan(raw);
   });
 
   it("pencere kısaysa harman uygulanmaz, ham sayım kalır", () => {
     const r = shrunkRates("FWD", { ...emptySummary, minutes: 90, goals: 1, xg: 0 });
-    expect(r.g90).toBeCloseTo((1 + (0.35 * 360) / 90) / ((90 + 360) / 90), 10);
+    expect(r.g90).toBeCloseTo((1 + (fwdPrior * 360) / 90) / ((90 + 360) / 90), 10);
   });
 });
 

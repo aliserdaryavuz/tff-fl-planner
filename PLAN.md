@@ -328,9 +328,41 @@ bağımsız, bu yüzden önce bunlar.
   gelir; 4-5 maçlık örneklemde fark büyük.
   UCL karşılığı: `lib/stats.ts` + `data/player-stats.json`.
 
-- [ ] **1.4 Az veri düzeltmesini ölçülmüş mevki ortalamasına bağla.** (S)
-  `lib/xp.ts` `PRIORS` elle yazılı (FWD 0,35 gol/90 vb.). Mevki ortalamalarını veriden
-  hesapla; 1.3 bittikten sonra xG tabanlı.
+- [x] **1.4 Az veri düzeltmesini ölçülmüş mevki ortalamasına bağla.** (S) — 18.09 tamamlandı.
+  `lib/xp.ts` `PRIORS` elle yazılıydı (FWD 0,35 gol/90 vb.). Artık `lib/priors.ts` import
+  anında `data/lineups.json`'dan sayıyor — `lib/minutes.ts` ile aynı gerekçe: bir ölçümü koda
+  kopyalamak, kopyayı bayatlatıyor. Gol ve asist önceliği plana uygun olarak **xG/xA tabanlı**.
+
+  | | elle | ölçülen | |
+  | --- | --- | --- | --- |
+  | Kaleci bonus/90 | 0,350 | **0,761** | +%117 |
+  | Forvet bonus/90 | 0,450 | **0,783** | +%74 |
+  | Defans bonus/90 | 0,300 | **0,460** | +%53 |
+  | Orta saha bonus/90 | 0,350 | 0,339 | −%3 |
+  | Forvet gol/90 | 0,350 | **0,440** | +%26 |
+  | Forvet asist/90 | 0,140 | **0,078** | −%44 |
+  | Kaleci sarı/90 | 0,080 | 0,033 | −%59 |
+  | Kaleci kurtarış/90 | 3,130 | 3,076 | −%2 |
+
+  **En büyük hata bonustaydı** ve tek yönlüydü: orta saha dışında her mevkide düşük yazılmış.
+  Orta sahanın doğru çıkması, elle yazılan sayıların muhtemelen orta sahaya bakılarak
+  kestirildiğini düşündürüyor.
+
+  **İki yerde ölçüme körü körüne uyulmadı, ikisi de bilinçli:**
+
+  - *Kırmızı kart.* 5 haftada kaleci ve defansta hiç kırmızı kart yok, yani ölçüm sıfır veriyor.
+    Sıfırı almak "kırmızı kart imkânsız" demek olurdu; gözlenmemesi nadir olmasından, imkânsız
+    olmasından değil. `RED_FLOOR = 0,005` tabanı kondu ve iki mevkide gerçekten devreye girdi.
+    Ölçüm tabanın üstündeyse ölçüm kazanıyor (orta saha 0,012, forvet 0,017).
+  - *Forvet asisti.* Öncelik xA tabanlı olduğu için 0,140'tan 0,078'e düştü: bu örneklemde
+    forvetlerin gerçek asisti (15) xA'yı (9,2) belirgin aşıyor. 13 forvetlik bir örneklemde
+    hangisinin doğru olduğunu **söyleyemeyiz**. Plan xG tabanlı öncelik istediği ve 1.3'te
+    beklenen üretimin daha iyi öngördüğü ölçüldüğü için xA seçildi; **izlenecek bir kalem**,
+    sezon uzadıkça yeniden bakılmalı.
+
+  Sessiz bozulmaya karşı kalıcı test var (`lib/priors.test.ts`): ölçüm yedeğe düşerse her şey
+  yine "çalışır" görünürdü, oysa model eski elle yazılı sayılara dönmüş olurdu. Test
+  `PRIORS_MEASURED`'ı ve yedekle birebir aynı olmadığını doğruluyor.
 
 ---
 
