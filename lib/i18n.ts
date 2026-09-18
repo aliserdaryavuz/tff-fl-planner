@@ -28,6 +28,11 @@ const tr = {
     light: "Açık",
     dark: "Koyu",
   },
+  compute: {
+    working: "Hesaplanıyor…",
+    failed: "Kadro hesaplanamadı.",
+    retry: "Yeniden dene",
+  },
   docTitle: (season: string) => `TFF FL Planner ${season}`,
   header: {
     title: "TFF FL Planner",
@@ -435,6 +440,11 @@ const en: Strings = {
     label: "Theme",
     light: "Light",
     dark: "Dark",
+  },
+  compute: {
+    working: "Working…",
+    failed: "Could not build the squad.",
+    retry: "Try again",
   },
   docTitle: (season: string) => `TFF FL Planner ${season}`,
   header: {

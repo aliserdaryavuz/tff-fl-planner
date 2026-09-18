@@ -533,10 +533,50 @@ doğru yere insin.
 
   **3.1'den devreden `ContextBar` artık mümkün:** belirteçler geldiği için engeli kalktı.
 
-- [ ] **3.3 Ağır hesabı Web Worker'a al.** (M)
-  Kadro kurma gerçek havuzda ~0,3 s; kaydırak oynatınca ana iş parçacığı donuyor.
-  UCL ölçümü: sekmeye basınca ~0,5 s (yavaş telefonda 2 s+) boyama gecikiyordu.
-  UCL karşılığı: `lib/compute-jobs.ts`, `lib/compute.worker.ts`, `components/useComputed.ts`.
+- [x] **3.3 Ağır hesabı Web Worker'a al.** (M) — 18.09 tamamlandı, **ölçüldü.**
+  Kadro kurma `useMemo` içinde, ana iş parçacığında koşuyordu; kaydırak oynatılınca ekran
+  donuyordu. Artık iş bir Web Worker'a gidiyor.
+
+  **Ölçüm — kaçınılan maliyet ve kalan donma:**
+
+  | | süre |
+  | --- | --- |
+  | sıralama (`rankPicks`, 487 oyuncu) | 9,9 ms |
+  | **kadro kurma** (`buildSquad`) | **163,0 ms** |
+  | iş, sıralama dahil (ilk çağrı) | 182,7 ms |
+  | kaydırak oynatılırken en uzun kare boşluğu | **25,3 ms** (p95 18 ms, 232 kare) |
+
+  Yani her kaydırak değişiminde ana iş parçacığına düşen ~163 ms'lik blok kalktı; kalan en uzun
+  duraklama bir buçuk kare. **Planda "~0,3 s" yazıyordu, kendi ölçtüğüm sayı ~165 ms** — devraldığım
+  rakam değil ölçülen kullanıldı. *Çekince:* 163 ms Node'da, 25 ms headless Chrome'da ölçüldü;
+  aynı çalışma ortamı değiller, yani kusursuz kontrollü bir karşılaştırma değil. Büyüklük farkı
+  sonucu taşıyor ama bu sınır kayda geçsin.
+
+  Worker'ın gerçekten kurulduğu da doğrulandı: sayfanın indirdiği kaynaklar arasında
+  `turbopack-worker-…js` var. Bu önemliydi, çünkü `useComputed` kimse tarafından import
+  edilmediği sürece Turbopack worker girişini derlemeyi hiç denemiyordu — o aşamada yeşil build
+  worker hakkında hiçbir şey söylemiyordu.
+
+  **Taşınan tasarım kararları (UCL'den, yeniden icat edilmedi):**
+
+  - *Yaşam döngüsü* `lib/compute-store.ts`'te ve React'ten bağımsız: worker, hesap ve zamanlayıcı
+    dışarıdan veriliyor. Kurallar denetimle sertleşmiş — hiçbir iş askıda kalmıyor, `settle`
+    reddetmiyor, worker yoksa/düşerse/zaman aşarsa/mesaj kopyalanamazsa hesap ana iş parçacığına
+    düşüyor, worker yeniden kurma sayısı sınırlı (sınırsız olsa sürekli düşen worker her işte
+    yeniden kurulurdu; hiç olmasa tek düşüş oturumun kalanını ana iş parçacığına indirirdi).
+  - *İş, satırları değil sıralamanın **girdisini** taşıyor;* worker satırları kendi havuzundan
+    kuruyor. Böylece 487 oyuncunun nesnesi sınırdan geçmiyor.
+  - *`stale` ayrımı:* yeni girdinin sonucu gelene kadar önceki kadro görünür ama soluk ve
+    `aria-busy`; önceki ayarların sonucu yeni ayarlarınki diye sunulmuyor.
+  - *Hata ayrı:* worker da ana iş parçacığı da beceremediyse "yeniden dene" düğmesi çıkıyor.
+    Kısıt hatasıyla (kilit çelişkisi, bütçe) karıştırılmıyor.
+
+  **Kapsam:** tek iş türü (kadro). UCL'de joker ve transfer işleri de var ama TFF'de o sayfalar
+  yok (Faz 4); olmayan özellik için iş türü açılmadı.
+
+  **Klonlanabilirlik doğrulandı:** `SquadResult` tamamen düz veri (`Lineup` + `Player[]` +
+  sayılar), `lib/` ağacında tarayıcıya özgü tek bir çağrı yok. İkisi de worker sınırının
+  çalışma anında patladığı yerler olduğu için yazmadan önce bakıldı.
 
 - [ ] **3.4 Oyuncu ve kulüp sayfaları.** (M)
   `/players/<oyuncu>`: başlama olasılığı, oranlar, hafta hafta beklenen puan dökümü.

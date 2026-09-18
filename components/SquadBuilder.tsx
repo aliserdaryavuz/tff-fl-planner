@@ -5,12 +5,15 @@ import { Exportable } from "@/components/Exportable";
 import { useI18n } from "@/components/I18nProvider";
 import { SquadPitch } from "@/components/SquadPitch";
 import { TeamLogo } from "@/components/TeamLogo";
+import { useComputed } from "@/components/useComputed";
 import { useDebouncedValue } from "@/components/useDebouncedValue";
+import { usePickArgs } from "@/components/usePickRows";
+import type { Job } from "@/lib/compute-jobs";
 import { byId, teamIds } from "@/lib/data";
 import { hasPrices, playerKey } from "@/lib/fantasy";
 import { formationLabel } from "@/lib/formations";
 import type { PickRow } from "@/lib/picks";
-import { BUDGET, buildSquad, FORMATION, MAX_PER_CLUB } from "@/lib/squad";
+import { BUDGET, FORMATION, MAX_PER_CLUB, type SquadResult } from "@/lib/squad";
 
 /** Aramada "Söyüncü" ile "soyuncu" eşleşsin. */
 function norm(s: string): string {
@@ -53,16 +56,31 @@ export function SquadBuilder({
     return [...keys];
   }, [excluded, excludedClubs, rows]);
 
+  // Kadro kurma gerçek havuzda ~0,3 s; ana iş parçacığında koşunca kaydırak
+  // oynatılırken ekran donuyordu. İş Web Worker'a gidiyor (lib/compute-jobs.ts);
+  // satırlar değil sıralamanın girdisi gönderiliyor, worker satırları kendi
+  // havuzundan kuruyor.
+  const { args: pickArgs } = usePickArgs();
   const deferredBench = useDebouncedValue(benchWeight);
-  const stale = pending || deferredBench !== benchWeight;
 
-  const result = useMemo(
+  const job = useMemo<Job | null>(
     () =>
       hasPrices
-        ? buildSquad(rows, { benchWeight: deferredBench, locked, excluded: excludedAll })
-        : { best: null, count: 0, capped: false, options: [], error: "no-prices" as const },
-    [rows, deferredBench, locked, excludedAll],
+        ? { kind: "squad", picks: pickArgs, benchWeight: deferredBench, locked, excluded: excludedAll }
+        : null,
+    [pickArgs, deferredBench, locked, excludedAll],
   );
+
+  const view = useComputed<SquadResult>(job);
+  const result: SquadResult = view.value ?? {
+    best: null,
+    count: 0,
+    capped: false,
+    options: [],
+    error: hasPrices ? undefined : "no-prices",
+  };
+  // Gösterilen kadro başka bir girdiye aitse ya da hesap sürüyorsa soluk çizilir.
+  const stale = pending || view.pending || view.stale || deferredBench !== benchWeight;
 
   const byKey = useMemo(() => {
     const map = new Map<string, PickRow>();
@@ -283,12 +301,38 @@ export function SquadBuilder({
     );
   }
 
+  // Hesap hatası kısıt hatasından ayrı: worker da ana iş parçacığı da
+  // beceremediyse kullanıcı yeniden deneyebilmeli, sessizce "kadro kurulamadı"
+  // demek yanlış olurdu.
+  if (view.error && !squad) {
+    return (
+      <section aria-labelledby="squad-heading">
+        {heading}
+        <p className="mb-2 text-[13px] text-harder">{t.compute.failed}</p>
+        <button
+          type="button"
+          onClick={view.retry}
+          className="mb-2 min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+        >
+          {t.compute.retry}
+        </button>
+        {picker}
+      </section>
+    );
+  }
+
   if (!squad) {
     const code = result.error as keyof typeof t.squad.errors | undefined;
     return (
       <section aria-labelledby="squad-heading">
         {heading}
-        <p className="mb-2 text-[13px] text-harder">{code ? t.squad.errors[code] : t.squad.failed}</p>
+        <p className="mb-2 text-[13px]">
+          {view.pending ? (
+            <span className="text-muted">{t.compute.working}</span>
+          ) : (
+            <span className="text-harder">{code ? t.squad.errors[code] : t.squad.failed}</span>
+          )}
+        </p>
         {picker}
       </section>
     );
