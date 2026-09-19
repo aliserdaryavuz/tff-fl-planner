@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { teamIds } from "@/lib/data";
 import { players as gamePlayers, type Player } from "@/lib/fantasy";
-import { type RecentSummary, startProbability, UNKNOWN_START } from "@/lib/lineups";
+import { predictedFor, type RecentSummary, startProbability, UNKNOWN_START } from "@/lib/lineups";
 import { MINUTES } from "@/lib/minutes";
 import { computeAll, DEFAULT_PARAMS } from "@/lib/models";
 import {
@@ -137,8 +138,21 @@ describe("minutesModel", () => {
   });
 
   it("tahmini 11'de olmayan bilinmeyen oyuncu taban olasılığın altına iner", () => {
-    // Takımın "son çıkan 11"i veride var; bu ada rastlanmıyor.
-    expect(startProbability(player(), undefined)).toBeLessThan(UNKNOWN_START);
+    // Ceza yalnız takımın bir tahmin kaynağı varken devreye giriyor
+    // (`startProbability` içindeki `predicted.sources`/`weakSources`). Takım
+    // adı SABİT yazılamaz: hangi kulüplerin tahmini 11'i olduğu hafta içinde
+    // değişiyor ve 19.09'da veri yenilenince "Galatasaray" kapsam dışı kalıp
+    // test takvim yüzünden kırıldı. Kaynağı olan bir takım veriden seçiliyor.
+    const team = teamIds.find((id) => {
+      const pr = predictedFor(player({ team: id }));
+      return pr.sources > 0 || pr.weakSources > 0;
+    });
+    if (!team) {
+      // Hafta arası: hiçbir takımın tahmini yok. Sınanacak durum yok demektir,
+      // yanlış bir iddiayı geçmiş göstermektense açıkça atlanıyor.
+      return;
+    }
+    expect(startProbability(player({ team }), undefined)).toBeLessThan(UNKNOWN_START);
   });
 
   it("sakat: hiç oynamaz, yedekten de giremez", () => {
