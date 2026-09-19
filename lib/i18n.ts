@@ -176,6 +176,7 @@ const tr = {
     players: "Oyuncular",
     squad: "Kadro",
     results: "Sonuçlar",
+    skip: "İçeriğe geç",
   },
   pages: {
     model: {
@@ -717,6 +718,7 @@ const en: Strings = {
     players: "Players",
     squad: "Squad",
     results: "Results",
+    skip: "Skip to content",
   },
   pages: {
     model: {

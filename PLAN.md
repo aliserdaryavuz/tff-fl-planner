@@ -783,15 +783,30 @@ doğru yere insin.
     masaüstünde 34 → 28 px, site adı 32 → 28 px. İkisi de artık ölçekte ve UCL'nin duyarlı
     olmayan `display` yaklaşımını izliyor.
 
-    **Kalan dört madde** (aşağıdakiler) hâlâ açık; bu kalem onlarla birlikte kapanacak.
+    **Kalan iki madde** — `ContextBar` ve yapışkan üst çubuk + sayfa geçişleri; bu kalem
+    onlarla birlikte kapanacak. (Tek form dili ve içeriğe geç bağlantısı 19.09'da bitti.)
   - **`ContextBar`.** 3.1'de belirteçler olmadığı için ertelenmişti, engeli kalktı: sayfadaki
     sayıları belirleyen ayarlar başlığın altında çip olarak, her sayfada aynı sırada.
-  - **Tasarım sistemi parçaları.** Başlık yardımcıları (`heading-section`/`heading-sub`),
-    tek form dili (aynı yükseklik/çerçeve/köşe; dokunmatikte 16 px alan), odak halkası rengi,
-    katman ölçeği (`--z-*`), kabuk yükseklikleri, yatay şeritlerde kenar solması.
+  - **Tasarım sistemi parçaları.** Başlık yardımcıları (`heading-section`/`heading-sub`) ✓,
+    katman ölçeği (`--z-*`) ✓, kenar solması (`scroll-fade` + `useEdgeFade`) ✓,
+    **tek form dili ✓** (19.09), odak halkası rengi — açık kalan tek parça.
+
+    *Tek form dili, ölçümle kapandı.* Metin/arama/sayı alanları ve açılır listeler aynı
+    yükseklik, çerçeve ve köşe; dokunmatik cihazda en az 16 px — sonuncusu kozmetik değil,
+    iOS Safari 16 px altı bir alana odaklanınca sayfayı yakınlaştırıp geri döndürmüyor
+    (`maximum-scale` ile kapatmak WCAG 1.4.4'ü çiğnerdi).
+
+    **Kural yazıldıktan sonra da bozuktu ve dört kapı da yeşildi.** Taban `min-height: 44px`
+    zaten vardı ama kabuktaki saat dilimi seçicisinin `min-h-9`'u onu eziyordu: ölçümde
+    **her sayfada `[36, 44]`** çıktı, yani "tek dil" tek değildi. Yardımcı sınıf taban
+    katmanını geçtiği için build, typecheck, lint ve testlerin hiçbiri bunu göremezdi.
+    Düzeltildi; yeniden ölçüm: **`[44]`**, taşıran alan yok, yatay taşma yok.
+
+  - **İçeriğe geç bağlantısı ✓** (19.09). Klavyeyle gelen kullanıcı her sayfada gezinme
+    şeridini baştan geçmek zorundaydı. Ölçüldü: dinlenmede −200 px (ekran dışı), odakta
+    8 px, hedefi (`main#main`) gerçekten var.
   - **Yapışkan üst çubuk ve sayfa geçişleri.** Kabuk geçişte canlanmamalı; hareket azaltma
     tercihi tümünü kapatmalı.
-  - **İçeriğe geç bağlantısı** (klavye) — 5.4'ün de gereği.
 
   UCL karşılığı: `app/globals.css` (`@utility` blokları), `components/{ContextBar,Nav}.tsx`,
   `docs/design-system.md`.

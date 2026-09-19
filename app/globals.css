@@ -218,4 +218,54 @@
   button {
     cursor: pointer;
   }
+
+  /* Tek form dili: metin, arama, sayı ve açılır liste aynı yükseklik, aynı
+     çerçeve, aynı köşe. Her bileşen kendi sınıfını yazınca hafif farklı
+     yüksekliklerde kutular çıkıyordu. */
+  input[type="text"],
+  input[type="search"],
+  input[type="number"],
+  select {
+    min-height: 44px;
+    width: 100%;
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-ground);
+    padding: 0 10px;
+    font-size: var(--text-body-sm);
+  }
+
+  select {
+    /* Tarayıcının kendi oku kalsın; okun yerini açmak için sağda pay. */
+    padding-right: 28px;
+  }
+
+  /* Dokunmatik cihazda form alanı en az 16 px. Kozmetik değil: iOS Safari,
+     yazı boyutu 16 px'in altındaki bir alana odaklanınca sayfayı yakınlaştırır
+     ve geri döndürmez. `maximum-scale` ile yakınlaştırmayı kapatmak WCAG
+     1.4.4'ü çiğnerdi, o yol kapalı. Kural yalnız kaba işaretçide; masaüstü
+     tipografisi aynı kalıyor. */
+  @media (pointer: coarse) {
+    input[type="text"],
+    input[type="search"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    select,
+    textarea {
+      font-size: max(1rem, var(--text-body-sm));
+    }
+  }
+
+  input::placeholder {
+    color: var(--color-muted);
+  }
+
+  input[type="text"]:hover,
+  input[type="search"]:hover,
+  input[type="number"]:hover,
+  select:hover {
+    border-color: var(--color-muted);
+  }
 }

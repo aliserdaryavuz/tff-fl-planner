@@ -18,7 +18,10 @@ export function TimeZoneSelect({ onChange }: { onChange: (tz: TimeZone) => void 
       title={t.time.label}
       value={tz}
       onChange={(e) => onChange(e.target.value as TimeZone)}
-      className="min-h-9 max-w-[190px] rounded-lg border border-line bg-surface px-2 text-caption font-medium text-ink"
+      // 36 px'ti (`min-h-9`) ve taban form kuralındaki 44 px'i eziyordu: ölçümde
+      // kabuktaki bu seçici her sayfada tek başına 36 px çıkıyordu. Genişlik
+      // sınırı kalıyor, başlıkta yer dar.
+      className="min-h-11 max-w-[190px] rounded-lg border border-line bg-surface px-2 text-caption font-medium text-ink"
     >
       {TIME_ZONES.map((zone) => (
         <option key={zone} value={zone}>

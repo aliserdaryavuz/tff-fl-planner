@@ -88,6 +88,12 @@ function Body({
 
   return (
     <>
+      {/* Klavyeyle gelen kullanıcı gezinme şeridini baştan geçmesin: ekran
+          dışında durur, odak alınca görünür (`skip-link`, globals.css). */}
+      <a href="#main" className="skip-link">
+        {t.nav.skip}
+      </a>
+
       <header className="mb-4 border-b border-line pb-3">
         <div className="flex items-start justify-between gap-3">
           {/* Site adı artık h1 değil: h1'i her rotada PageHead sahipleniyor,
@@ -121,7 +127,7 @@ function Body({
         </div>
       </header>
 
-      {children}
+      <main id="main">{children}</main>
 
       <section className="mt-8">
         <h2 className="mb-2.5 font-cond text-title font-semibold tracking-wide">{t.bands.heading}</h2>
