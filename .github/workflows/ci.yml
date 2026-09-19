@@ -37,6 +37,12 @@ jobs:
 
       # Sıra bilinçli: en ucuz ve en çok bilgi veren önce. Tip hatası varsa
       # derlemeyi beklemeye gerek yok.
+      #
+      # `typecheck` betiği `next typegen` ile başlıyor: `LayoutProps` ve
+      # `PageProps` Next'in `.next/types/` altına ÜRETTİĞİ genel tipler. Yerelde
+      # `.next` dolu olduğu için görünüyorlar, temiz checkout'ta yoklar — ilk CI
+      # koşusu tam bu yüzden düştü. Üretim betiğin içinde, yani yerelde de CI'da
+      # da aynı.
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm test

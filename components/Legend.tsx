@@ -18,8 +18,10 @@ export function Legend() {
         >
           {t.bands[band.key]}
           {/* Açık rol şart: `<small>` tarayıcıda 0.8em, yani 12 px'lik kapsayıcıda
-              9,6 px'e düşüyordu — 11 px sınırının altında (ölçüldü). */}
-          <small className="block text-micro font-medium opacity-80">
+              9,6 px'e düşüyordu — 11 px sınırının altında (ölçüldü).
+              `opacity-80` kaldırıldı: bant zemininde kontrastı 4,03'e düşürüyordu
+              (gereken 4,5). Hiyerarşiyi punto farkı zaten taşıyor. */}
+          <small className="block text-micro font-medium">
             {f.n1(bandFloor(i))}-
             {f.n1(i === BANDS.length - 1 ? DIFFICULTY_MAX : band.upTo)}
           </small>

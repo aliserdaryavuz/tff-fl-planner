@@ -1097,6 +1097,13 @@ doğru yere insin.
   Sır ya da ağ erişimi istemiyor — veri repoda; oyuna giriş gerektiren betikler burada
   koşmuyor. `data/validate.test.ts` ve `data/source-meta.test.ts` testlerin içinde, yani
   veri bozulursa ya da türetilmiş özet bayatlarsa kapı düşer.
+
+  **İlk koşu düştü ve bu kapının değerini hemen gösterdi.** `LayoutProps` ve `PageProps`,
+  Next'in `.next/types/` altına **ürettiği** genel tipler. Yerelde `.next` dolu olduğu için
+  `tsc` onları görüyordu; temiz checkout'ta yoklar ve dört dosyada `TS2304` veriyor. Yani
+  yerelde aylardır geçen bir kapı, aslında üretilmiş bir ara çıktıya yaslanıyormuş.
+  Düzeltme CI'da sıra değiştirmek değil, bağımlılığı kaldırmak oldu: `typecheck` betiği
+  artık `next typegen && tsc --noEmit` — yerelde de CI'da da aynı.
   UCL karşılığı: `.github/workflows/ci.yml`.
 
 - [ ] **5.2 Günlük veri işi — kısmi.** (M)
@@ -1130,7 +1137,32 @@ doğru yere insin.
   ödeme olmadığı için kalan risk sınırlı. `next.config.ts` içinde yazılı.
   `robots.ts`, `sitemap.ts`, temalı `not-found.tsx` ve `error.tsx`, güvenlik başlıkları (CSP).
 
-- [ ] **5.4 Erişilebilirlik ve mobil ölçümü.** (M)
+- [x] **5.4 Erişilebilirlik ölçümü.** (M) — **bitti 19.09.**
+
+  axe-core projeye **bağımlılık olarak eklenmedi** (proje kuralı: bağımlılıkta cimri ol);
+  ölçüm anında CDN'den indirilip CDP ile sayfaya enjekte ediliyor. CDP değerlendirmesi
+  sayfanın CSP'sine takılmıyor, yani 5.3'teki sıkı politika ölçümü engellemiyor.
+
+  Kapsam: 7 rota × 2 tema, WCAG 2.0/2.1 A + AA kuralları. Üretim derlemesine karşı —
+  dev sunucusunda sayfa hidre olmuyor (CLAUDE.md).
+
+  **Bulunan: tek kural, iki ayrı kaynak. İkisi de düzeltildi.**
+
+  1. `GameweekBar` — ufuk 1 haftayken azalma denetimi soluklaştırılıyordu, ama opaklık
+     **kapsayıcıdaydı**: kaydırak zaten `disabled` olsa da etiket ve çıktı metni de
+     soluyordu ve WCAG'ın "devre dışı denetim" muafiyeti onları kapsamıyor. Ölçülen
+     kontrast 2,4 ve 2,16 (gereken 4,5). Soluklaştırma kaydırağın kendisine taşındı;
+     görsel ipucu duruyor, metin tam kontrastta (accent/beyaz 5,77).
+  2. `Legend` — bant açıklamasındaki `opacity-80`, beyaz yazıyı yeşil zeminde 4,03'e
+     düşürüyordu. Kaldırıldı → 5,41. Hiyerarşiyi punto farkı zaten taşıyor.
+
+  Düzeltme sonrası: **7 rotada da 0 ihlal, açık ve koyu temada.**
+
+  **Sınır dürüstçe:** otomatik denetim WCAG sorunlarının yalnız bir bölümünü yakalar.
+  Klavye sırası, odak görünürlüğü, anlamlı alt metin ve ekran okuyucu semantiği makine
+  tarafından doğrulanmadı. Bunların bir kısmı 3.5'te elle ölçülmüştü (atlama bağlantısı,
+  odak halkası, 44 px dokunma hedefi, 375 px'te taşma yok); gerçek ekran okuyucu denemesi
+  yapılmadı.
   Altı genişlikte ölçüm, 44 px dokunma hedefi, 11 px altı metin yok, kontrast kapısı,
   yatay kayan tabloların klavyeyle kaydırılabilmesi.
   UCL karşılığı: `scripts/{ui-audit,reflow-check,contrast-check,cls-check}.mjs`.

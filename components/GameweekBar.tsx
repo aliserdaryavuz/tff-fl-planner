@@ -114,9 +114,12 @@ export function GameweekBar({
           <p className="col-span-2 -mt-0.5 text-caption text-muted">{t.gameweek.horizon.note}</p>
         </div>
 
-        <div
-          className={`grid grid-cols-[1fr_auto] items-center gap-x-2.5 ${horizon <= 1 ? "opacity-50" : ""}`}
-        >
+        {/* Soluklaştırma kapsayıcıda DEĞİL, kaydırağın kendisinde: kutunun
+            tamamı %50 olunca etiket ve çıktı metni de soluyordu ve WCAG'ın
+            "devre dışı denetim" muafiyeti onları kapsamıyor — ölçülen kontrast
+            2,4 ve 2,16 (gereken 4,5). Kaydırak zaten `disabled`, görsel ipucu
+            orada kalıyor; metin tam kontrastta. */}
+        <div className="grid grid-cols-[1fr_auto] items-center gap-x-2.5">
           <label htmlFor="decay" className="text-body-sm">
             {t.gameweek.decay.label}
           </label>
@@ -135,7 +138,7 @@ export function GameweekBar({
             value={weekDecay}
             onChange={(e) => onDecayChange(Number(e.target.value))}
             disabled={horizon <= 1}
-            className="col-span-2 w-full accent-accent"
+            className="col-span-2 w-full accent-accent disabled:opacity-50"
           />
           <p className="col-span-2 -mt-0.5 text-caption text-muted">{t.gameweek.decay.note}</p>
           {window.length > 1 ? (
