@@ -94,7 +94,7 @@ function Body({
         {t.nav.skip}
       </a>
 
-      <header className="mb-4 border-b border-line pb-3">
+      <header className="pb-3">
         <div className="flex items-start justify-between gap-3">
           {/* Site adı artık h1 değil: h1'i her rotada PageHead sahipleniyor,
               böylece başlık listesi sayfanın kendi adıyla başlıyor. */}
@@ -122,10 +122,29 @@ function Body({
           </p>
           <TimeZoneSelect onChange={onTzChange} />
         </div>
-        <div className="mt-2">
-          <Nav />
-        </div>
       </header>
+
+      {/* Yalnız gezinme şeridi yapışkan, başlığın tamamı değil: logo+ad,
+          açıklama ve şerit birlikte ~150 px ve telefonda ekranın üçte birini
+          yerdi. Asıl değer, bölüm değiştirmenin kaydırınca kaybolmaması.
+
+          Bilerek `<header>`in DIŞINDA: yapışkanlık ögenin ebeveyni boyunca
+          sürer, header ise kısa bir kutu — içinde kalsaydı şerit kaydırır
+          kaydırmaz kaybolurdu (derlemeden geçen ölü davranış). Burada kolon
+          div'inin doğrudan çocuğu ve o kutu sayfa boyu yüksek.
+
+          `-mx-3.5` zemini kolonun dolgusunun dışına taşırıyor; kolon dışında
+          hiçbir şey çizilmediği için kenardan içerik sızmıyor.
+
+          `max-sm:hidden` süs değil: `Nav`ın kendisi telefonda gizli (yerini
+          `BottomNav` alıyor), sarmalayıcı gizlenmezse tepeye 9 piksellik BOŞ
+          bulanık bir çubuk yapışıyor — 19.09'da tarayıcıda ölçüldü. Aynı kural
+          WCAG 1.4.10'u da karşılıyor: %400 yakınlaştırmada CSS genişliği 320 px
+          olur ve çubuk hiç çizilmez. Eşik globals.css'teki `scroll-padding`
+          kuralıyla aynı kalmalı. */}
+      <div className="sticky top-0 z-[var(--z-nav)] -mx-3.5 mb-4 border-b border-line bg-ground/95 px-3.5 py-1 backdrop-blur-sm max-sm:hidden">
+        <Nav />
+      </div>
 
       <main id="main">{children}</main>
 

@@ -155,9 +155,25 @@
     --z-raised: 20;
     --z-nav: 30;
     --z-skip: 50;
+
+    /* Yapışkan gezinme şeridinin yüksekliği; `scroll-padding-top` buna bakıyor.
+       Bilerek px: dokunma hedefinin alt sınırı, içindeki yazı rem. */
+    --tabbar-h: 52px;
   }
 
   html {
+    /* Çıpaya atlayan bağlantı yapışkan şeridin altında kalmasın: `ContextBar`
+       çipleri `#gw-heading` gibi başlıklara gidiyor ve şerit olmasa da klavye
+       odağı üstte kalmalı (WCAG 2.4.11). Dar düzende şerit yapışkan değil. */
+    scroll-padding-top: calc(var(--tabbar-h) + 12px);
+
+    /* Yapışkan şerit yalnız `sm` ve üstünde var (telefonda yerini alt çubuk
+       alıyor), boşluk da yalnız orada gerekli. Eşik Tailwind'in `sm`iyle aynı:
+       40rem DAHİL, yani burada `< 40rem`. */
+    @media (width < 40rem) {
+      scroll-padding-top: 8px;
+    }
+
     background: var(--color-ground);
     color-scheme: dark;
     -webkit-text-size-adjust: 100%;

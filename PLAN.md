@@ -715,7 +715,10 @@ doğru yere insin.
   oyun dosyasındaki adlara eşleyen bir haritamız yok. Uydurma bağlantı üretmektense düz metin
   bırakıldı; eşleme kurulursa açılır.
 
-- [ ] **3.5 Görsel sistemi tamamla (UCL'den).** (L) — kullanıcı isteği, 19.09.
+- [x] **3.5 Görsel sistemi tamamla (UCL'den).** (L) — kullanıcı isteği, 19.09. **Bitti 19.09:**
+  rol belirteçleri, tek form dili, atlama bağlantısı, bağlam çipleri, yapışkan şerit. Tek açık
+  alt madde sayfa geçişleri; engelli ve gerekçesi aşağıda ölçülü (React 19.2.8 `ViewTransition`
+  dışa aktarmıyor).
   3.1 ve 3.2'de bilerek ertelenen arayüz/düzen/görsel işleri. Sıra içinde, her adım
   tarayıcıda bakılarak; toptan bir "her şeyi çevir" hamlesi görsel gerilemeyi görünmez kılar.
 
@@ -827,8 +830,51 @@ doğru yere insin.
   - **İçeriğe geç bağlantısı ✓** (19.09). Klavyeyle gelen kullanıcı her sayfada gezinme
     şeridini baştan geçmek zorundaydı. Ölçüldü: dinlenmede −200 px (ekran dışı), odakta
     8 px, hedefi (`main#main`) gerçekten var.
-  - **Yapışkan üst çubuk ve sayfa geçişleri.** Kabuk geçişte canlanmamalı; hareket azaltma
-    tercihi tümünü kapatmalı.
+  - **Yapışkan şerit ✓ / sayfa geçişleri — engelli.** (19.09)
+
+    *Geçişler yapılmadı ve gerekçesi ölçüldü.* UCL geçişi CSS ile değil React'in
+    `ViewTransition` bileşeniyle yapıyor (`<ViewTransition default="page">`). Ama
+    **`ViewTransition` React 19.2.8'de dışa aktarılmıyor** — TFF'de de, UCL'nin kendi
+    kurulu ağacında da yok (ikisi de aynı sürümü sabitlemiş, override/deneysel kanal yok).
+    Yani `globals.css`'teki `::view-transition-*` kurallarını kopyalamak **ölü kural**
+    yazmak olurdu. Kozmetik bir solma için deneysel React kanalına geçmek bağımlılık riski;
+    madde açık bırakıldı. React bu API'yi kararlı hâle getirince açılır.
+
+    *Yapışkanlık, ilk tasarımdan küçültülerek yapıldı.* UCL'nin üst çubuğu 52 px olduğu için
+    tamamı yapışkan; TFF'nin başlığı logo+ad, açıklama+saat dilimi ve şeritle **~150 px** ve
+    tamamı yapışkan olsa telefonda ekranın üçte birini yerdi. Asıl değer bölüm değiştirmenin
+    kaydırınca kaybolmaması olduğu için **yalnız gezinme şeridi** yapışkan. Bu ayrıca kolon
+    sınırını taşıma ihtiyacını da kaldırdı: kolon dışında hiçbir şey çizilmediğinden zemin
+    kolonla sınırlı kalabiliyor, kenardan içerik sızmıyor.
+
+    `scroll-padding-top` eklendi: `ContextBar` çipleri `#gw-heading` gibi çıpalara atlıyor,
+    hedef şeridin altında kalmamalı (WCAG 2.4.11).
+
+    **Derlemeden geçip tarayıcıda düşen üç şey** — üçü de yalnız ölçümle görüldü:
+
+    1. Şerit önce `<header>`in içindeydi. `position: sticky` ögenin EBEVEYNİ boyunca sürer;
+       header kısa bir kutu olduğu için şerit kaydırır kaydırmaz kaybolurdu. Sınıf doğru,
+       davranış ölü. Şerit kolon div'inin doğrudan çocuğu yapıldı (ebeveyn yüksekliği =
+       belge yüksekliği, ölçüldü).
+    2. Telefonda şerit **boş** çiziliyordu: `Nav`ın kendisi `max-sm:hidden` (yerini
+       `BottomNav` alıyor), sarmalayıcı gizlenmeyince tepede 9 piksellik boş bulanık bir
+       çubuk kalıyordu. Sarmalayıcıya `max-sm:hidden` eklendi.
+    3. `max-[20rem]:static` kaçış kapısı yazmıştım; **ölü kural**. Ölçüm tam 320 px'te
+       şeridin hâlâ `sticky` olduğunu gösterdi — Tailwind v4'te `max-[20rem]` sınırı
+       HARİÇ. Zaten gereksizdi: şerit 640 px altında hiç çizilmiyor, bu da WCAG 1.4.10'u
+       kendiliğinden karşılıyor (%400 yakınlaştırmada CSS genişliği 320 px). Kaldırıldı,
+       `scroll-padding` eşiği de 20rem'den 40rem'e alındı.
+
+    Ölçüm (19.09, başsız Chrome, 1400 px kaydırılmış):
+
+    | durum | görünür | konum | kaydırınca `top` | `scroll-padding` | yatay taşma |
+    | --- | --- | --- | --- | --- | --- |
+    | Masaüstü 1262 | `block` | `sticky` | 0 | 64px | yok |
+    | Eşik 640 (`sm`) | `block` | `sticky` | 0 | 64px | yok |
+    | Telefon 375 | `none` | — | — | 8px | yok |
+    | Dar 320 (%400) | `none` | — | — | 8px | yok |
+
+    Çıpa hedefi 64 px'te, şeridin altı 53 px'te: 11 px açık.
 
   UCL karşılığı: `app/globals.css` (`@utility` blokları), `components/{ContextBar,Nav}.tsx`,
   `docs/design-system.md`.
