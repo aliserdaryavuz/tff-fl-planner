@@ -3,7 +3,6 @@
 import { useI18n } from "@/components/I18nProvider";
 import { PageHead } from "@/components/PageHead";
 import { useModelResults, usePlanner, useWeeks } from "@/components/PlannerContext";
-import { Standings } from "@/components/Standings";
 import { TeamPanel } from "@/components/TeamPanel";
 import { TeamsTable } from "@/components/TeamsTable";
 import { WeekSchedule } from "@/components/WeekSchedule";
@@ -45,9 +44,9 @@ export default function TeamsPage() {
         />
       </div>
 
+      {/* Puan durumu `/results` sayfasına taşındı (plan 2.1): skorlara dayanan
+          her şey tek yerde toplansın. */}
       <WeekSchedule gw={gw} results={results} selected={team} onSelect={setTeam} />
-
-      <Standings selected={team} onSelect={setTeam} />
     </div>
   );
 }

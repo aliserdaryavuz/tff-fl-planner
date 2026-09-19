@@ -88,8 +88,67 @@ export function teamFixtures(fotmobId, slug, opts) {
 }
 
 /**
- * Maç sayfası: tarih, lig, lineup (starters/subs/unavailable, lineupType) ve
- * skor üzerinden her iki tarafın yediği gol (temiz kalma hesabı için).
+ * Maçın olay dökümü: gol, kart, kaçan penaltı. Diğer türler atılıyor —
+ * `Substitution` zaten oyuncu bazında kayıtlı, `Half`/`AddedTime`/`VAR` sonuç
+ * sayfasında bir şey anlatmıyor, `Comment` ise çöp oyuncu taşıyor
+ * (`id: 0`, adı boşluk).
+ *
+ * Alan adları ve değer kümeleri önbellekteki 59 maç sayfasında sayılarak
+ * belirlendi, örnekten genellenmedi: kart üç değer alıyor (Yellow 225,
+ * Red 8, YellowRed 5), gol tarifi dört (boş 142, penalty 14, owngoal 6,
+ * direct_free_kick 1), ve `assistStr` dolu olup `assistInput` boş olan tek
+ * kayıt yok — yani asist için tek alan yeterli.
+ *
+ * `shotmapEvent` bilerek saklanmıyor: olay başına yüzlerce bayt ve sonuç
+ * sayfasında kullanılmıyor.
+ */
+function matchEvents(raw = []) {
+  const out = [];
+  for (const e of raw) {
+    const type = String(e.type ?? "");
+    const kind =
+      type === "Goal" ? "goal" : type === "Card" ? "card" : type === "MissedPenalty" ? "penaltyMiss" : null;
+    if (!kind) continue;
+    const id = e.player?.id ?? e.playerId ?? null;
+    // Comment gibi olaylarda oyuncu sahte (id 0); adı da boşluk.
+    const name = (e.nameStr ?? e.fullName ?? e.player?.name ?? "").trim();
+    if (!name) continue;
+    const ev = {
+      kind,
+      min: typeof e.time === "number" ? e.time : null,
+      home: e.isHome === true,
+      player: name,
+      playerId: id || null,
+    };
+    if (kind === "goal") {
+      ev.own = e.ownGoal === true || e.goalDescriptionKey === "owngoal";
+      ev.how = e.goalDescriptionKey ?? null;
+      ev.assist = e.assistInput ?? null;
+      ev.assistId = e.assistPlayerId ?? null;
+      ev.score = Array.isArray(e.newScore) ? e.newScore : null;
+    }
+    if (kind === "card") ev.card = e.card ?? null;
+    out.push(ev);
+  }
+  return out;
+}
+
+/** Maçın adamı: ad bir nesne, puan metin olarak geliyor. */
+function playerOfTheMatch(potm) {
+  if (!potm?.name?.fullName) return null;
+  const rating = Number(potm.rating?.num);
+  return {
+    id: potm.id ?? null,
+    name: potm.name.fullName,
+    home: potm.isHomeTeam === true,
+    rating: Number.isFinite(rating) ? rating : null,
+  };
+}
+
+/**
+ * Maç sayfası: tarih, lig, lineup (starters/subs/unavailable, lineupType),
+ * skor üzerinden her iki tarafın yediği gol (temiz kalma hesabı için), olay
+ * dökümü ve maçın adamı.
  */
 export function matchPage(pageUrl, opts) {
   const j = nextData(`https://www.fotmob.com${pageUrl}`, opts);
@@ -134,6 +193,10 @@ export function matchPage(pageUrl, opts) {
     lineup: pp.content?.lineup ?? null,
     stats,
     goals,
+    // Sonuç sayfası için; `goals` ve `lineup` olduğu gibi duruyor çünkü
+    // `fetch-lineups.mjs` onlara bağlı.
+    events: matchEvents(pp.content?.matchFacts?.events?.events),
+    potm: playerOfTheMatch(pp.content?.matchFacts?.playerOfTheMatch),
     conceded:
       typeof home === "number" && typeof away === "number"
         ? { home: away, away: home }

@@ -368,13 +368,64 @@ bağımsız, bu yüzden önce bunlar.
 
 ## 5. Faz 2 — Yeni veri
 
-- [ ] **2.1 Sonuç verisi ve `/results`.** (M)
-  Aynı FotMob sayfalarında `matchFacts.events` (gol dakikası, atan, asist, penaltı, kart),
-  `playerOfTheMatch` ve iki takımın kadrosu var. Skorlar zaten elimizde; eksik olan
-  **maçın içi**. Sonuçlar sayfası: hafta hafta maçlar, dokununca goller/kartlar/kadrolar.
-  Puan durumu zaten `Standings` bileşeninde; oraya taşınır.
-  Not: `playerOfTheMatch` 1.1'deki bonus çözümünü de doğrular.
-  UCL karşılığı: `lib/results.ts`, `app/results/page.tsx`, `components/Results.tsx`.
+- [x] **2.1 Sonuç verisi ve `/results`.** (M) — 19.09 tamamlandı.
+  Skorlar zaten elimizdeydi; eksik olan **maçın içi**. `scripts/fetch-results.mjs` aynı FotMob
+  maç sayfalarından (ek indirme yok, sayfalar zaten önbellekte) goller, kartlar, kaçan
+  penaltılar, maçın adamı ve iki kadroyu çıkarıp `data/results.json`'a yazıyor: **46 maç,
+  0 eşlenemeyen**. Okuma tarafı `lib/results.ts`, sayfa `components/Results.tsx` + `/results`.
+
+  **Anahtar ölçülerek seçildi.** FotMob UTC anı veriyor, bizim fikstür İstanbul tarihi tutuyor;
+  geç başlayan maçta gün kayabilirdi. Tarih aritmetiğine hiç girmedim: 306 fikstürde
+  **306 benzersiz `ev|deplasman` çifti** var (sayıldı), yani sıralı çift tek başına anahtar.
+
+  **Puan tablosu kopyalanmadı.** UCL'nin `results.ts`'i kendi `standings`'ini hesaplıyor; TFF'de
+  `lib/data.ts` `computeTable()` zaten var ve TFF'nin kendi eşitlik bozma ölçütlerini kullanıyor.
+  İkincisini eklemek tabloyu iki doğruluk kaynağından üretmek olurdu. `Standings` bileşeni
+  `/teams`'ten `/results`'a taşındı; skora dayanan her şey tek sayfada.
+
+  **Ayrıştırıcı örnekten değil sayımdan yazıldı.** İki maç sayfasına bakıp genelleseydim sessizce
+  veri kaybederdim; onun yerine önbellekteki 59 sayfanın tamamı tarandı:
+
+  | bulgu | sayı |
+  | --- | --- |
+  | `MissedPenalty` olayı | 5 (iki örnekte hiç yoktu) |
+  | `YellowRed` (ikinci sarı) | 5 — kart **üç** değer alıyor, iki değil |
+  | `penalty` / `owngoal` golü | 14 / 6 |
+  | `direct_free_kick` | 1, yalnız Avrupa maçında |
+  | `assistStr` dolu ama `assistInput` boş | **0** → asist için tek alan yeter |
+
+  `matchPage` yalnız **eklenerek** genişletildi; `fetch-lineups.mjs`'in bağlı olduğu `lineup`,
+  `goals`, `stats`, `conceded` alanlarının gerçek bir sayfada bozulmadığı ayrıca doğrulandı.
+  Şişkin `shotmapEvent` saklanmıyor.
+
+  **Bir varsayımım daha ölçülüp çürütüldü.** Kendi kalesine golün, atan oyuncunun tarafına
+  işaretlenip skora ters yazıldığını varsaymış ve testi öyle yazmıştım. Test düştü (Gaziantep-
+  Rizespor). Ölçüm: ters çevirmek **5 maçta** tutmuyor (veride tam 5 kendi kalesine gol),
+  çevirmemek **0**, `newScore` farkından türetmek **0**. Yani FotMob'un `home` alanı golün
+  **yazıldığı taraf**, atanın tarafı değil. Testi gevşetmek yerine varsayım düzeltildi.
+
+  **Donmuş beslemenin izi burada da var:** FotMob'un bitmiş saydığı bir maçı (Kasımpaşa-
+  Konyaspor, 6. hafta) oyunun verisi henüz skorlamamış — olayları dolu, skoru null. Tip bunu
+  taşıyor (`hg: number | null`) ve arayüz skor yerine saati yazıyor. Aynı iki kulüp 1.3'teki
+  dakika ayrışmasında da çıkmıştı; teşhisi bağımsız olarak doğruluyor.
+
+  **Varsayılan hafta: ilk düzeltmem sözde kaldı.** "Planlanan hafta" boşa yakın bir sayfa
+  açıyordu (6. haftada 1/9 maç). Önce "sonucu olan son hafta" yazdım — ama 6. haftanın `played`
+  değeri 1, yani sıfırdan büyük ve aynı haftayı veriyordu; hiçbir şey değişmemişti. Doğrusu
+  **tamamlanmış son hafta**. Tarayıcıda doğrulandı: sayfa 5. haftayla ve 9 maç satırıyla açılıyor.
+
+  **Tarayıcıda doğrulanan:** açılan hafta 5, 9 maç satırı, görünür metinde bozuk değer yok,
+  ayrıntı açılıyor ve iki kadro çiziliyor, puan durumu sekmesi tabloyu getiriyor. *Not:*
+  `document.body.textContent` ile "null" aramak yanlış alarm veriyor — Next sayfaya RSC yükünü
+  gömüyor ve orada `"hg":null` zaten geçiyor; tarama yalnız görünür metne daraltıldı.
+
+  Bütünlük için 8 yeni test (`data/results.test.ts`): fikstüre bağlanma, tekillik, skorun oyunun
+  verisiyle birebirliği, değer kümeleri ve **gollerin toplamının skorla tutması**. Sayılar
+  sabitlenmedi (her hafta artıyor); toplam test 143 → 151.
+
+  **Yapılmadı, bilerek:** oyuncu adları bağlantı değil — oyuncu sayfaları **3.4**'e ait.
+  Planın "`playerOfTheMatch` 1.1'deki bonus çözümünü doğrular" notu da **henüz yapılmadı**:
+  veri artık elimizde ama karşılaştırma yapılmadı, açık iş olarak duruyor.
 
 - [x] **2.2 Fiyat ve seçilme günlüğü.** (S) — 18.09 tamamlandı, **ilk kayıt alındı.**
   Oyun yalnız anlık değeri veriyor. "Bu hafta kim zamlandı, kim düşüyor" ancak kendi
