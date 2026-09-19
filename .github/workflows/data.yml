@@ -1,0 +1,94 @@
+# Günlük veri yenileme — **kısmi**.
+#
+# Yenilenen: FotMob kaynakları (son maç kadroları, maç içi, tahmini 11).
+# Yenilenmeyen: oyunun kendi API'si (fiyat, seçilme, fikstür, kendi takımım).
+# Sebep teknik değil, mimari: API Keycloak ile korunuyor ve giriş **Google
+# hesabıyla**. Şifreyle programatik giriş yok, oturum ayrılmış bir Chrome
+# profilinde duruyor ve o profil runner'a taşınamaz (taşınsa bile token'ı
+# repoya ya da sır kasasına koymak proje kuralına aykırı). Onlar elle:
+#   node scripts/fetch-game.mjs && node scripts/fetch-team-history.mjs
+#
+# FotMob'un runner'dan erişilebildiği ölçüldü (19.09): kök ve takım sayfası
+# 200, headless Chrome 1,08 MB DOM ve `__NEXT_DATA__` yerinde.
+
+name: Veri yenileme
+
+on:
+  schedule:
+    # 05:00 UTC = 08:00 TSİ. Maçlar akşam oynanıyor, sabah her şey oturmuş olur.
+    - cron: "0 5 * * *"
+  workflow_dispatch:
+
+# Veri dosyalarını commit'leyeceği için yazma izni gerekiyor.
+permissions:
+  contents: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # Tam çekim ~10-20 dakika (18 fikstür + 120-160 maç sayfası); önbellek
+    # ısındıktan sonra çok daha kısa. Pay bırakılıyor ama sonsuz değil.
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: browser-actions/setup-chrome@v1
+        id: chrome
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Bitmiş maç sayfaları değişmiyor; her koşuda yeniden indirmek hem 20
+      # dakika hem FotMob'a gereksiz yük. Betikler önbelleği TMPDIR altına
+      # yazıyor (scripts/lib/fotmob.mjs) — TMPDIR açıkça veriliyor, yoksa
+      # varsayılan "." olur ve önbellek REPO dizinine düşerdi.
+      - name: Sayfa önbelleği
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/fotmob-cache
+          key: fotmob-pages-${{ github.run_id }}
+          restore-keys: fotmob-pages-
+
+      - name: Veriyi çek
+        env:
+          CHROME: ${{ steps.chrome.outputs.chrome-path }}
+          TMPDIR: /home/runner/fotmob-cache
+        run: |
+          mkdir -p "$TMPDIR"
+          node scripts/fetch-predicted.mjs
+          node scripts/fetch-lineups.mjs
+          node scripts/fetch-results.mjs
+          node scripts/build-source-meta.mjs
+
+      # Kapı commit'ten ÖNCE: bozuk ya da yarım bir çekim repoya girmesin.
+      # `data/validate.test.ts` 18 takım / 306 maç / hafta başına bir maç
+      # kuralını, `data/source-meta.test.ts` türetilmiş özetin sapmadığını
+      # sınıyor. Düşerse iş burada durur ve eski veri yerinde kalır.
+      - run: pnpm test
+
+      - name: Değişiklikleri işle
+        run: |
+          if [ -z "$(git status --porcelain data/)" ]; then
+            echo "veri değişmedi, commit yok"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "Refresh the FotMob data
+
+          Automated daily run. Game-API sources (prices, ownership, fixtures,
+          my own squad) are not included: they need a Google sign-in that
+          cannot live on a runner."
+          git push

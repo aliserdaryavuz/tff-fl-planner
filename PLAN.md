@@ -1106,7 +1106,32 @@ doğru yere insin.
   artık `next typegen && tsc --noEmit` — yerelde de CI'da da aynı.
   UCL karşılığı: `.github/workflows/ci.yml`.
 
-- [ ] **5.2 Günlük veri işi — kısmi.** (M)
+- [x] **5.2 Günlük veri işi — kısmi.** (M) — **bitti 19.09.** `.github/workflows/data.yml`,
+  her gün 05:00 UTC (08:00 TSİ) ve elle tetiklenebilir.
+
+  **Kısmi olması teknik bir eksiklik değil, mimarinin sonucu.** FotMob kaynakları
+  (son maç kadroları, maç içi, tahmini 11) yenileniyor; oyunun kendi API'si yenilenmiyor,
+  çünkü Keycloak ile korunuyor ve giriş **Google hesabıyla**. Şifreyle programatik giriş
+  yok, oturum ayrılmış Chrome profilinde ve o profil runner'a taşınamaz — taşınsa bile
+  token'ı repoya ya da sır kasasına koymak proje kuralına aykırı. Fiyat, seçilme, fikstür
+  ve kendi takımım elle kalıyor.
+
+  **Önce erişim ölçüldü, sonra iş yazıldı.** Cloudflare'in veri merkezi IP'lerini
+  engellemesi yaygın ve engellenseydi bütün iş boşa emek olurdu. Geçici bir
+  `workflow_dispatch` deneyiyle ölçüldü: kök ve takım sayfası **200**, headless Chrome
+  **1,08 MB** DOM çekiyor, `__NEXT_DATA__` yerinde, challenge izi yok. Deney dosyası
+  sonuç kaydedildikten sonra silindi.
+
+  İki ayrıntı sessiz hataya karşı:
+  - `TMPDIR` açıkça veriliyor. `scripts/lib/fotmob.mjs` önbelleği
+    `LOCALAPPDATA ?? TMPDIR ?? "."` altına yazıyor; Linux'ta ikisi de boşsa önbellek
+    **repo dizinine** düşer ve commit'e karışırdı.
+  - `pnpm test` commit'ten **önce** koşuyor. Bozuk ya da yarım bir çekimde iş orada durur
+    ve eski veri yerinde kalır (`data/validate.test.ts` 18 takım / 306 maç / hafta başına
+    bir maç; `data/source-meta.test.ts` türetilmiş özetin sapmadığını).
+
+  Açık: `fetch-lineups.mjs --matches` varsayılanda kalıyor; sezon uzadıkça büyümesi
+  gerekiyor (zaten kayıtlı açık madde). İlk zamanlanmış koşu henüz gözlenmedi.
   **Kısıt:** oyunun API'si Keycloak + Google girişi istiyor; GitHub Actions'ta oturum açmanın
   güvenli bir yolu yok ve CLAUDE.md token'ı hiçbir yere yazmayı yasaklıyor. Bu yüzden:
   - CI'da koşabilenler: FotMob (sakatlık, son maçlar, tahmini 11), Opta, Transfermarkt.
