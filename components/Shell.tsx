@@ -155,7 +155,13 @@ function Body({
 
       <footer className="mt-10 grid gap-2.5 border-t border-line pt-4 text-label text-muted">
         <p>
-          <b className="text-ink">{t.footer.how}</b> {t.footer.howText}
+          <b className="text-ink">{t.footer.how}</b> {t.footer.howText}{" "}
+          {/* Yöntem sayfası gezinmede değil burada: kaynak tablosuyla aynı
+              soruya ("bu sayılar nereden geliyor") cevap veriyor ve gezinmeye
+              yedinci sekme eklemek telefonda sekme başına 53 px bırakırdı. */}
+          <Link href="/methodology" className="underline underline-offset-2 hover:no-underline">
+            {t.methodology.link}
+          </Link>
         </p>
         <p>
           <b className="text-ink">{t.footer.rules}</b> {t.footer.rulesText}

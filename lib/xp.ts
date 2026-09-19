@@ -54,7 +54,9 @@ export const XG_WEIGHT = 0.7;
  * Resmî sayımlar sezonun tamamını, xG yalnız son maçları kapsıyor; kısa bir
  * pencereden çıkan oranı sezon oranıyla harmanlamak yanıltıcı olur.
  */
-const XG_MIN_MINUTES = 180;
+// Dışa açık: yöntem sayfası model sabitlerini koddan okuyor, elle yazılmış
+// ikinci bir kopya sabit değişince sessizce bayatlardı.
+export const XG_MIN_MINUTES = 180;
 
 // Oyuncunun kendi geçmişi yoksa lig ortalaması kullanılıyor. Bu dört sayı
 // eskiden burada sabitti (84 / 15 / 0,85 / 0,30) ve ölçümden sapmıştı; artık

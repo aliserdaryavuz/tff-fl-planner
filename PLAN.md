@@ -920,9 +920,18 @@ doğru yere insin.
   yapılmıyor, yani Tripleks ve Dört Dörtlük'ün kazancı **alt sınır**. Hücum'da takaslar
   diziliş kısıtlı aranıp sonuç kısıtsız değerlendiriliyor. İkisi de arayüzde yazılı.
 
-- [ ] **4.1 Kadro kaydetme (tarayıcıda).** (M)
-  Kadroyu bir kez gir, her hafta öneri al; dışa/içe aktarmayla cihaz değiştir.
-  Hesap yok (CLAUDE.md yasak), bedeli dürüstçe yazılır: tek tarayıcıya bağlı.
+- [ ] **4.1 Kadro kaydetme (tarayıcıda).** (M) — **gerekçesi büyük ölçüde düştü, karar
+  kullanıcıda.** (19.09)
+
+  Özgün gerekçe üç parçaydı: (a) kadroyu bir kez gir, (b) her hafta öneri al, (c) dışa/içe
+  aktarmayla cihaz değiştir. 4.3-ön'de doğrulanan uç, gerçek kadroyu **otomatik** okuyor ve
+  her cihazda aynı hesaptan geliyor — yani (a) ve (c) ortadan kalktı, (b) zaten
+  "Kadromu iyileştir"de var.
+
+  Geriye tek gerçek kullanım kalıyor: **sahip olmadığın varsayımsal bir kadroyu** kaydedip
+  senaryo denemek. Değerli olabilir ama özgün gerekçenin küçük bir parçası. Kendi başıma
+  kapsam daraltmıyorum; yapılsın mı yapılmasın mı kullanıcının kararı.
+
   UCL karşılığı: `lib/saved-squads.ts`, `components/{SavedSquads,useSavedSquads}.tsx`.
 
 - [x] **4.2 "Kadromu iyileştir".** (M) — **bitti 19.09.** Ayrı sayfa değil, kadro sayfasında
@@ -1060,10 +1069,23 @@ doğru yere insin.
 
   UCL karşılığı: `lib/season-log.ts`, `components/SeasonLog.tsx`.
 
-- [ ] **4.4 Yöntem sayfası.** (M)
-  Modelin ne yaptığı, hangi sabitin nereden geldiği, neyin ölçülmediği. Sayılar koddan
-  okunur (elle yazılan ikinci kopya bayatlıyor).
-  UCL karşılığı: `components/Methodology.tsx`, `app/methodology/page.tsx`.
+- [x] **4.4 Yöntem sayfası.** (M) — **bitti 19.09.** `components/Methodology.tsx`,
+  `app/methodology/page.tsx`. Bağlantısı gezinmede değil dipnotta, kaynak tablosunun yanında:
+  ikisi de "bu sayılar nereden geliyor" sorusunun cevabı ve yedinci sekme telefonda sekme
+  başına 53 px bırakırdı.
+
+  Sayılar **koddan** okunuyor (`SCORING`, `XG_WEIGHT`, `XG_MIN_MINUTES`, `PRIOR_MATCHES`,
+  `PRIOR_MINS`, `BUDGET`, `FORMATION`, `MAX_PER_CLUB`, `DEFAULT_BENCH_WEIGHT`,
+  `DEFAULT_HORIZON`, `DEFAULT_WEEK_DECAY`, `DEFAULT_PICK_WEIGHTS`). `XG_MIN_MINUTES` bunun
+  için dışa açıldı; elle yazılmış ikinci kopya, sabit değişince en çok güvenilmesi gereken
+  sayfada sessizce yanlış bilgi verirdi.
+
+  Tarayıcıda doğrulandı: 19 puan satırı `lib/scoring.mjs` ile birebir, 11 sabit, 7 sınır
+  maddesi, dipnot bağlantısı çalışıyor, 375 px'te taşma yok.
+
+  **Yan not — üretimde `curl` ile içerik doğrulanamıyor.** `Shell` `useSearchParams`
+  kullandığı için statik HTML'e Suspense yedeği yazılıyor ve içerik istemcide doluyor.
+  Daha önceki curl kontrolleri dev sunucusunda çalıştığı için bu fark görünmemişti.
 
 ---
 
