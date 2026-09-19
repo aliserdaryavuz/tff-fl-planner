@@ -12,16 +12,25 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { nextMatchdayFrom } from "../lib/matchday.mjs";
 import { FOTMOB, matchPage, teamFixtures } from "./lib/fotmob.mjs";
 import { matchShortName } from "./lib/names.mjs";
 
-const matchday = Number(process.argv[2]);
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+
+// Hafta verilmezse planlanacak hafta: zamanlanmış iş her gün elle numara
+// veremez (.github/workflows/data.yml). Kural uygulamayla ortak
+// (`lib/matchday.mjs`), ikinci bir kopya sessizce sapardı.
+const matchday = Number(process.argv[2]) || defaultMatchday();
 if (!matchday) {
-  console.error("kullanım: node scripts/fetch-predicted.mjs <hafta>");
+  console.error("kullanım: node scripts/fetch-predicted.mjs [hafta]");
   process.exit(1);
 }
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+function defaultMatchday() {
+  const file = JSON.parse(readFileSync(resolve(root, "data/superlig-2026-27.json"), "utf8"));
+  return nextMatchdayFrom(file.meta, file.fixtures, 34);
+}
 const fantasy = JSON.parse(readFileSync(resolve(root, "data/fantasy-players.json"), "utf8"));
 const lineups = JSON.parse(readFileSync(resolve(root, "data/lineups.json"), "utf8"));
 

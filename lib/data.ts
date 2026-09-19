@@ -1,4 +1,5 @@
 import raw from "@/data/superlig-2026-27.json";
+import { nextMatchdayFrom } from "@/lib/matchday.mjs";
 import { slugify } from "@/lib/slug";
 
 export type Team = {
@@ -143,12 +144,9 @@ export const isPlayed = (f: Fixture) => f.hg != null && f.ag != null;
  * oynanmamış maçı olan ilk hafta (sezon bittiyse 34).
  */
 export function nextMatchday(): number {
-  const editable = meta.editableGameweek;
-  if (editable && editable >= 1 && editable <= MATCHDAYS) return editable;
-  for (let md = 1; md <= MATCHDAYS; md++) {
-    if (fixtures.some((f) => f.md === md && !isPlayed(f))) return md;
-  }
-  return MATCHDAYS;
+  // Kural `lib/matchday.mjs`'te: veri betikleri de aynı haftayı hesaplıyor ve
+  // TypeScript import edemiyorlar (bkz. `lib/scoring.mjs` ile aynı gerekçe).
+  return nextMatchdayFrom(meta, fixtures, MATCHDAYS);
 }
 
 /** Haftanın son kadro kaydı anı (ms). Oyun vermezse ilk maçtan 1 saat önce. */
