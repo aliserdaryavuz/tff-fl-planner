@@ -136,13 +136,13 @@ export function DataSources() {
 
   return (
     <div>
-      <p className="mt-0 mb-2 text-xs text-muted">{s.caption}</p>
+      <p className="mt-0 mb-2 text-caption text-muted">{s.caption}</p>
       {/* Klavyeyle kaydırılabilsin: odak alan, adlı bölge. */}
       <div className="overflow-x-auto" tabIndex={0} role="region" aria-label={s.heading}>
-        <table className="w-full min-w-[520px] border-collapse text-[13px]">
+        <table className="w-full min-w-[520px] border-collapse text-label">
           <caption className="sr-only">{s.caption}</caption>
           <thead>
-            <tr className="border-b border-line text-left text-xs text-muted">
+            <tr className="border-b border-line text-left text-caption text-muted">
               <th scope="col" className="py-1.5 pr-2 font-medium">
                 {s.colWhat}
               </th>

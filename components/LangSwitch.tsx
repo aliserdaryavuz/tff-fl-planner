@@ -24,7 +24,7 @@ export function LangSwitch({ onChange }: { onChange: (lang: Lang) => void }) {
             title={LANG_LABEL[code]}
             onClick={() => onChange(code)}
             className={[
-              "min-h-11 px-3 text-[13px] font-semibold uppercase",
+              "min-h-11 px-3 text-label font-semibold uppercase",
               on ? "bg-accent text-accent-ink" : "text-muted hover:bg-surface-2",
             ].join(" ")}
           >

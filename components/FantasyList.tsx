@@ -22,12 +22,12 @@ export function FantasyList({ teamId, open = false }: { teamId: string; open?: b
       <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 font-semibold [&::-webkit-details-marker]:hidden">
         <span className="text-accent transition-transform group-open:rotate-90">▸</span>
         {t.fantasy.heading}
-        <span className="text-[13px] font-normal text-muted">
+        <span className="text-label font-normal text-muted">
           {t.fantasy.summary(byId[teamId].name, squad.length)}
         </span>
       </summary>
 
-      <p className="mt-1.5 text-[13px] text-muted">
+      <p className="mt-1.5 text-label text-muted">
         {t.fantasy.note(fantasyMeta.source, f.money(BUDGET, 0))}
       </p>
 
@@ -37,25 +37,25 @@ export function FantasyList({ teamId, open = false }: { teamId: string; open?: b
           if (!list.length) return null;
           return (
             <div key={pos}>
-              <h3 className="font-cond text-[17px] font-semibold">
+              <h3 className="font-cond text-lead font-semibold">
                 {t.positions[pos]}{" "}
-                <span className="text-[13px] font-normal text-muted">({list.length})</span>
+                <span className="text-label font-normal text-muted">({list.length})</span>
               </h3>
               {list.map((p) => (
                 <div
                   key={p.name}
-                  className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-baseline gap-x-2.5 border-b border-line py-1.5 text-sm"
+                  className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-baseline gap-x-2.5 border-b border-line py-1.5 text-body-sm"
                 >
                   <span className="truncate">
                     <PlayerLink player={p} />
                     {p.status ? (
-                      <em className="ml-1.5 text-xs not-italic text-harder">{t.status[p.status]}</em>
+                      <em className="ml-1.5 text-caption not-italic text-harder">{t.status[p.status]}</em>
                     ) : null}
                   </span>
-                  <span className="font-cond text-lg font-bold text-accent tabular-nums">
-                    {p.price != null ? f.num(p.price, 1) : <span className="text-xs font-normal text-muted">{t.fantasy.noPrice}</span>}
+                  <span className="font-cond text-lead font-bold text-accent tabular-nums">
+                    {p.price != null ? f.num(p.price, 1) : <span className="text-caption font-normal text-muted">{t.fantasy.noPrice}</span>}
                   </span>
-                  <span className="w-11 text-right text-xs text-muted tabular-nums">
+                  <span className="w-11 text-right text-caption text-muted tabular-nums">
                     {p.sel == null ? "" : f.pct(p.sel, 1)}
                   </span>
                 </div>

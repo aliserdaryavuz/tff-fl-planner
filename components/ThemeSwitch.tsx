@@ -33,7 +33,7 @@ export function ThemeSwitch({
             title={t.theme[key]}
             onClick={() => onChange(key)}
             className={[
-              "min-h-11 px-3 text-[13px] font-semibold",
+              "min-h-11 px-3 text-label font-semibold",
               on ? "bg-accent text-accent-ink" : "text-muted hover:bg-surface-2",
             ].join(" ")}
           >

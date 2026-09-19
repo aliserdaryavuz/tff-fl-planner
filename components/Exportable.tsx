@@ -108,13 +108,13 @@ export function Exportable({
     <>
       <div className="mb-1.5 flex flex-wrap items-center justify-end gap-2">
         {error ? (
-          <span className="text-xs text-harder">{t.export.failed}</span>
+          <span className="text-caption text-harder">{t.export.failed}</span>
         ) : null}
         <button
           type="button"
           onClick={start}
           disabled={busy}
-          className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 text-xs font-medium hover:bg-surface-2 disabled:opacity-60"
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line bg-surface px-2.5 text-caption font-medium hover:bg-surface-2 disabled:opacity-60"
         >
           <svg
             aria-hidden
@@ -161,7 +161,7 @@ export function Exportable({
                     width={28}
                     height={28}
                   />
-                  <span className="font-cond text-lg leading-none font-bold tracking-wide whitespace-nowrap">
+                  <span className="font-cond text-lead leading-none font-bold tracking-wide whitespace-nowrap">
                     TFF FL Planner{" "}
                     <span className="text-accent">{meta.season}</span>
                   </span>
@@ -169,11 +169,11 @@ export function Exportable({
                 {icon}
               </div>
               <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <span className="font-cond text-[19px] leading-none font-semibold">
+                <span className="font-cond text-lead leading-none font-semibold">
                   {title}
                 </span>
                 {subtitle ? (
-                  <span className="min-w-0 text-[11px] text-muted">
+                  <span className="min-w-0 text-micro text-muted">
                     {subtitle}
                   </span>
                 ) : null}
@@ -182,7 +182,7 @@ export function Exportable({
 
             {exportChildren ?? children}
 
-            <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-2 text-[11px] text-muted">
+            <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-2 text-micro text-muted">
               <span className="font-semibold text-ink">{SITE}</span>
               <span>{t.export.footer(f.date(today()))}</span>
             </div>

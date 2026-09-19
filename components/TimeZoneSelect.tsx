@@ -18,7 +18,7 @@ export function TimeZoneSelect({ onChange }: { onChange: (tz: TimeZone) => void 
       title={t.time.label}
       value={tz}
       onChange={(e) => onChange(e.target.value as TimeZone)}
-      className="min-h-9 max-w-[190px] rounded-lg border border-line bg-surface px-2 text-xs font-medium text-ink"
+      className="min-h-9 max-w-[190px] rounded-lg border border-line bg-surface px-2 text-caption font-medium text-ink"
     >
       {TIME_ZONES.map((zone) => (
         <option key={zone} value={zone}>

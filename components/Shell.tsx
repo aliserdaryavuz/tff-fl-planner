@@ -101,7 +101,7 @@ function Body({
               priority
               className="h-10 w-10 shrink-0 desk:h-12 desk:w-12"
             />
-            <span className="m-0 min-w-0 font-cond text-[26px] leading-[1.05] font-bold tracking-wide text-ink desk:text-[32px]">
+            <span className="m-0 min-w-0 font-cond text-display leading-[1.05] font-bold tracking-wide text-ink">
               {t.header.title} <span className="whitespace-nowrap text-accent">{meta.season}</span>
             </span>
           </Link>
@@ -111,7 +111,7 @@ function Body({
           </div>
         </div>
         <div className="mt-2 flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-          <p className="m-0 text-[13px] text-muted">
+          <p className="m-0 text-label text-muted">
             {t.header.tagline(meta.source_fixtures, timeZoneLabel(t.time.zones, tz))}
           </p>
           <TimeZoneSelect onChange={onTzChange} />
@@ -124,11 +124,11 @@ function Body({
       {children}
 
       <section className="mt-8">
-        <h2 className="mb-2.5 font-cond text-xl font-semibold tracking-wide">{t.bands.heading}</h2>
+        <h2 className="mb-2.5 font-cond text-title font-semibold tracking-wide">{t.bands.heading}</h2>
         <Legend />
       </section>
 
-      <footer className="mt-10 grid gap-2.5 border-t border-line pt-4 text-[13px] text-muted">
+      <footer className="mt-10 grid gap-2.5 border-t border-line pt-4 text-label text-muted">
         <p>
           <b className="text-ink">{t.footer.how}</b> {t.footer.howText}
         </p>
@@ -148,7 +148,7 @@ function Body({
             <DataSources />
           </div>
         </details>
-        <p className="mt-1.5 border-t border-line pt-3 text-xs">{t.footer.disclaimer}</p>
+        <p className="mt-1.5 border-t border-line pt-3 text-caption">{t.footer.disclaimer}</p>
       </footer>
 
       <BottomNav />

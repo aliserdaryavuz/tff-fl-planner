@@ -12,7 +12,7 @@ export function Badge({
   return (
     <span
       title={title}
-      className="inline-block rounded-full border px-2 py-px text-xs font-semibold text-ink"
+      className="inline-block rounded-full border px-2 py-px text-caption font-semibold text-ink"
       style={{ borderColor: color ?? "var(--color-line)" }}
     >
       {children}

@@ -719,9 +719,71 @@ doğru yere insin.
   3.1 ve 3.2'de bilerek ertelenen arayüz/düzen/görsel işleri. Sıra içinde, her adım
   tarayıcıda bakılarak; toptan bir "her şeyi çevir" hamlesi görsel gerilemeyi görünmez kılar.
 
-  - **Rol belirteçlerine geçiş.** 3.2 belirteçleri tanımladı ama çağrı yerleri çevrilmedi:
-    **20 dosyada 82 px yazı boyutu** duruyor, yani rem'in asıl faydası (tarayıcının yazı
-    boyutu ayarını izleme) hâlâ gerçekleşmiyor. Sayfa sayfa çevrilecek.
+  - **Rol belirteçlerine geçiş.** 3.2 belirteçleri tanımladı ama çağrı yerleri çevrilmedi,
+    yani rem'in asıl faydası (tarayıcının yazı boyutu ayarını izleme) hâlâ gerçekleşmiyor.
+
+    **19.09'da yeniden sayıldı ve borç kaydettiğimden büyük çıktı:** 3.2'de "20 dosyada
+    82 px" yazmıştım; gerçek tablo **219 yazı boyutu**. Eksik saymamın sebebi yalnız
+    `text-[Npx]` aramış olmam — Tailwind'in adlandırılmış boyutları da ölçeğin dışında ve
+    onlar çevrilmezse ölçek ikiye bölünmüş kalır. (Ayrıca 3.4'te eklediğim yeni sayfalar
+    px ile yazıldı; borcun bir kısmını ben büyüttüm.)
+
+    | | sayı | rol karşılığı |
+    | --- | --- | --- |
+    | `text-[13px]` | 70 | `--text-label` |
+    | `text-xs` (12) | 53 | `--text-caption` |
+    | `text-sm` (14) | 22 | `--text-body-sm` |
+    | `text-[15px]` | 9 | `--text-body` |
+    | `text-[11px]` | 9 | `--text-micro` |
+    | `text-[12px]` | 8 | `--text-caption` |
+    | `text-lg` (18) | 14 | `--text-lead` (aşağıda) |
+    | `text-xl` (20) | 12 | `--text-title` |
+    | `text-[17px]` | 4 | `--text-lead` |
+    | `text-base` (16) | 5 | `--text-body` (aşağıda) |
+    | 19-22 px hücre/kontrol sayıları | 7 | `--text-lead` / `--text-title` |
+    | 24-28 px KPI | 3 | `--text-stat` |
+    | 40 px KPI (takım paneli) | 1 | `--text-stat-lg` (eklendi) |
+    | 26-34 px başlık çiftleri | 4 | `--text-display` (aşağıda) |
+    | `text-[10px]` | 1 | **erişilebilirlik düzeltmesi** |
+
+    Altı eşleme 219'un ~171'ini kapatıyor. Kuyruk küçük ama **dördü mekanik değildi**;
+    dördü de uydurmak yerine UCL'de aynı ögenin nasıl yazıldığına bakılarak çözüldü:
+
+    - *`text-lg` → `--text-lead`, `text-base` → `--text-body`.* Bunlar düzyazı değil,
+      `font-cond … tabular-nums` **sayısal gösterge**: kaydırak değeri, maç skoru, kadro
+      fiyatı, zorluk hücresi. UCL'de birebir aynı ögeler `text-lead` ve `text-body`. İkisi
+      de 1 px küçülüyor.
+    - *40 px KPI → `--text-stat-lg`.* UCL'de aynı öge bu rolde ve değeri birebir 2,5rem.
+      Token TFF'ye eklendi.
+    - *Başlık çiftleri (`28→34`, `26→32`).* Rol ölçeği duyarlı değil, yani çift tek role
+      oturmuyor. UCL'nin yaklaşımı ters yönde: `text-display` sabit, **çok dar** ekranda
+      `text-title`'a iner; masaüstünde büyümüyor. O düzen alınacak — bu, masaüstü sayfa
+      başlığını **34 px'ten 28 px'e indirir**. Nötr bir yeniden adlandırma değil, görünür
+      bir değişiklik; kullanıcı isteği "UCL'deki düzen" olduğu için seçildi, gizlenmiyor.
+    - *`text-[10px]`* (`GameweekBar`, hafta ağırlığı çipi) yeniden adlandırma değil, 5.4'ün
+      "11 px altı metin yok" kuralının ihlali: `--text-micro`'ya çıkıyor.
+
+    **19.09 — bu madde bitti.** 203 tartışmasız yer tek geçişte, 13 tekil elle çevrildi;
+    kalan px yazı boyutu **sıfır**.
+
+    **Neden tarayıcıda ölçüldü:** yeşil derleme sınıfın *yazıldığını* gösterir, çizildiğini
+    değil. Token adı yanlış olsa Tailwind o yardımcı sınıfı hiç üretmez, metin devraldığı
+    boyuta düşer ve build, typecheck, lint, testlerin **dördü de yeşil kalırdı**. Ölçüm:
+    sayfada geçen her rol tam beklenen piksele çözülüyor (micro 11 · caption 12 · label 13 ·
+    body-sm 14 · body 15 · lead 17 · title 20 · stat 28 · stat-lg 40 · display 28).
+
+    **Ölçüm, süpürmeden eski bir kusuru da yakaladı.** Açıkça yazılmış tek `text-[10px]`'i
+    düzelttim ama her sayfada **beş `<small>` 9,6 px** çiziliyordu: `<small>` tarayıcıda
+    0.8em, yani 12 px'lik kapsayıcıda 9,6 px. Sınıfla değil **devralmayla** oluştuğu için
+    hiçbir aramada görünmüyordu ve `text-xs` de 12 px olduğundan süpürmeden önce de vardı.
+    `Legend`'e açık rol verildi; yeniden ölçüm: 11 px altı metin **0**. `<small>`/`<sub>`/
+    `<sup>` taraması da yapıldı, açık rolü olmayan başka öge kalmadı.
+
+    **Görünür iki değişiklik** (nötr yeniden adlandırma değil, kayda geçsin): sayfa başlığı
+    masaüstünde 34 → 28 px, site adı 32 → 28 px. İkisi de artık ölçekte ve UCL'nin duyarlı
+    olmayan `display` yaklaşımını izliyor.
+
+    **Kalan dört madde** (aşağıdakiler) hâlâ açık; bu kalem onlarla birlikte kapanacak.
   - **`ContextBar`.** 3.1'de belirteçler olmadığı için ertelenmişti, engeli kalktı: sayfadaki
     sayıları belirleyen ayarlar başlığın altında çip olarak, her sayfada aynı sırada.
   - **Tasarım sistemi parçaları.** Başlık yardımcıları (`heading-section`/`heading-sub`),

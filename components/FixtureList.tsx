@@ -59,17 +59,17 @@ export function FixtureList({
                   weeks[i] ? "" : "opacity-40",
                 ].join(" ")}
               >
-                <div className="font-cond text-[15px] font-semibold text-muted">{fixture.md}</div>
+                <div className="font-cond text-body font-semibold text-muted">{fixture.md}</div>
                 <TeamLogo id={fixture.opp} size={22} />
-                <b className="truncate text-[13px] font-semibold">{opp.name}</b>
-                <span className="text-[11px] text-muted tabular-nums">
+                <b className="truncate text-label font-semibold">{opp.name}</b>
+                <span className="text-micro text-muted tabular-nums">
                   {score ? <b className={outcome}>{score}</b> : `${when.date} ${when.time ?? ""}`}
                 </span>
-                <div className="rounded border border-line text-center font-cond text-[12px] font-semibold">
+                <div className="rounded border border-line text-center font-cond text-caption font-semibold">
                   {home ? t.fixture.homeLabel : t.fixture.awayLabel}
                 </div>
                 <div
-                  className="rounded-md py-0.5 text-center font-cond text-base font-bold tabular-nums"
+                  className="rounded-md py-0.5 text-center font-cond text-body font-bold tabular-nums"
                   style={bandStyle(theme, band)}
                 >
                   {f.n1(value)}
@@ -85,10 +85,10 @@ export function FixtureList({
                 weeks[i] ? "" : "opacity-45",
               ].join(" ")}
             >
-              <div className="font-cond text-lg font-semibold text-muted">{fixture.md}</div>
+              <div className="font-cond text-lead font-semibold text-muted">{fixture.md}</div>
               <TeamLogo id={fixture.opp} size={32} />
               <div className="min-w-0">
-                <b className="block truncate text-base font-semibold">{opp.name}</b>
+                <b className="block truncate text-body font-semibold">{opp.name}</b>
                 <span className="mt-px block text-[12.5px] text-muted tabular-nums">
                   {when.date}{" "}
                   {score ? (
@@ -104,7 +104,7 @@ export function FixtureList({
               <div
                 title={home ? t.fixture.homeTitle : t.fixture.awayTitle}
                 className={[
-                  "rounded-md border border-line px-2 py-0.5 font-cond text-sm font-semibold",
+                  "rounded-md border border-line px-2 py-0.5 font-cond text-body-sm font-semibold",
                   home ? "bg-surface-2" : "",
                 ].join(" ")}
               >
@@ -112,7 +112,7 @@ export function FixtureList({
               </div>
               <div
                 title={t.bands[band.key]}
-                className="rounded-lg py-1 text-center font-cond text-xl font-bold tabular-nums"
+                className="rounded-lg py-1 text-center font-cond text-title font-bold tabular-nums"
                 style={bandStyle(theme, band)}
               >
                 {f.n1(value)}

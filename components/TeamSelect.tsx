@@ -24,7 +24,7 @@ export function TeamSelect({
   };
 
   const arrow =
-    "flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-line bg-surface text-xl leading-none hover:bg-surface-2";
+    "flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] border border-line bg-surface text-title leading-none hover:bg-surface-2";
 
   return (
     <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export function TeamSelect({
         onChange={(e) => onChange(e.target.value)}
         className={[
           "min-h-11 min-w-0 flex-1 rounded-[10px] border border-line bg-surface px-3 font-cond font-semibold",
-          size === "sm" ? "text-lg" : "text-[22px]",
+          size === "sm" ? "text-lead" : "text-title",
         ].join(" ")}
       >
         {displayOrder.map((id) => (

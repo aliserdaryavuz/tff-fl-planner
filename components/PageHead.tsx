@@ -25,13 +25,15 @@ export function PageHead({
       <div className="flex min-h-11 flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <h1
           id={id}
-          className="m-0 min-w-0 font-cond text-[28px] leading-[1.1] font-bold tracking-wide break-words desk:text-[34px]"
+          // Rol ölçeği duyarlı değil: masaüstünde büyümek yerine çok dar ekranda
+          // iniyor (UCL deseni). Masaüstü başlığı 34 px'ten 28'e indi.
+          className="m-0 min-w-0 font-cond text-display font-bold tracking-wide break-words max-[20rem]:text-title"
         >
           {title}
         </h1>
         {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
       </div>
-      {lead ? <p className="m-0 text-[13px] text-muted">{lead}</p> : null}
+      {lead ? <p className="m-0 text-label text-muted">{lead}</p> : null}
     </div>
   );
 }

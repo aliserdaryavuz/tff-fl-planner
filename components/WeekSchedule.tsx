@@ -27,11 +27,11 @@ export function WeekSchedule({
     <section aria-labelledby="schedule-heading">
       <h2
         id="schedule-heading"
-        className="mb-2 font-cond text-xl font-semibold tracking-wide"
+        className="mb-2 font-cond text-title font-semibold tracking-wide"
       >
         {t.schedule.heading(gw)}
       </h2>
-      <p className="mb-2 text-[13px] text-muted">{t.schedule.note}</p>
+      <p className="mb-2 text-label text-muted">{t.schedule.note}</p>
       <div className="border-t border-line">
         {matches.map((m) => {
           const when = f.kickoff(m.date, m.tsi);
@@ -46,7 +46,7 @@ export function WeekSchedule({
                 type="button"
                 onClick={() => onSelect(id)}
                 className={[
-                  "flex min-h-11 min-w-0 items-center gap-1.5 rounded-md px-1 text-left text-sm font-semibold hover:bg-white/5",
+                  "flex min-h-11 min-w-0 items-center gap-1.5 rounded-md px-1 text-left text-body-sm font-semibold hover:bg-white/5",
                   align === "right" ? "flex-row-reverse text-right" : "",
                   on ? "text-accent" : "",
                 ].join(" ")}
@@ -55,7 +55,7 @@ export function WeekSchedule({
                 <span className="truncate">{byId[id].name}</span>
                 {band && !played ? (
                   <span
-                    className="shrink-0 rounded px-1 font-cond text-[12px] tabular-nums"
+                    className="shrink-0 rounded px-1 font-cond text-caption tabular-nums"
                     style={bandStyle(theme, band)}
                     title={t.picks.difficultyTitle}
                   >
@@ -73,11 +73,11 @@ export function WeekSchedule({
               {cell(m.home, hd, "right")}
               <div className="w-[84px] text-center">
                 {played ? (
-                  <b className="font-cond text-lg font-bold tabular-nums">
+                  <b className="font-cond text-lead font-bold tabular-nums">
                     {m.hg} - {m.ag}
                   </b>
                 ) : (
-                  <span className="block text-[11px] leading-tight text-muted tabular-nums">
+                  <span className="block text-micro leading-tight text-muted tabular-nums">
                     {when.date}
                     <br />
                     {when.time ?? <em className="not-italic">{t.fixture.tbd}</em>}

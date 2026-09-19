@@ -92,11 +92,11 @@ export function PickList({
 
   return (
     <section aria-labelledby="picks-heading">
-      <h2 id="picks-heading" className="mb-2 font-cond text-xl font-semibold tracking-wide">
+      <h2 id="picks-heading" className="mb-2 font-cond text-title font-semibold tracking-wide">
         {t.picks.heading}
       </h2>
 
-      <p className="mb-2 text-[13px] text-muted">
+      <p className="mb-2 text-label text-muted">
         {t.picks.note}{" "}
         {hasLineupData && lineupsMeta.fetched
           ? t.picks.source(lineupsMeta.source, f.date(lineupsMeta.fetched), lineupsMeta.matchesPerTeam)
@@ -107,18 +107,18 @@ export function PickList({
       </p>
 
       <div className="grid gap-1.5 rounded-lg border border-line p-2">
-        <p className="text-xs text-muted">{t.pickWeights.note}</p>
+        <p className="text-caption text-muted">{t.pickWeights.note}</p>
         {PICK_SIGNALS.map((key) => {
           const id = `pick-weight-${key}`;
           const copy = t.pickWeights.signals[key];
           return (
             <div key={key} className="grid grid-cols-[1fr_auto] items-center gap-x-2.5">
-              <label htmlFor={id} className="text-sm">
+              <label htmlFor={id} className="text-body-sm">
                 {copy.label}
               </label>
               <output
                 htmlFor={id}
-                className="text-right font-cond text-lg font-semibold text-accent tabular-nums"
+                className="text-right font-cond text-lead font-semibold text-accent tabular-nums"
               >
                 {f.pct(shares[key], 0)}
               </output>
@@ -132,10 +132,10 @@ export function PickList({
                 onChange={(e) => onWeightsChange({ ...weights, [key]: Number(e.target.value) })}
                 className="col-span-2 w-full accent-accent"
               />
-              <p className="col-span-2 -mt-0.5 text-xs text-muted">{copy.note}</p>
+              <p className="col-span-2 -mt-0.5 text-caption text-muted">{copy.note}</p>
               {key === "sel" ? (
                 <>
-                  <label className="col-span-2 flex min-h-9 items-center gap-2 text-[13px]">
+                  <label className="col-span-2 flex min-h-9 items-center gap-2 text-label">
                     <input
                       type="checkbox"
                       checked={selInvert}
@@ -144,7 +144,7 @@ export function PickList({
                     />
                     {t.pickWeights.invert}
                   </label>
-                  <p className="col-span-2 -mt-1 text-xs text-muted">{t.pickWeights.invertNote}</p>
+                  <p className="col-span-2 -mt-1 text-caption text-muted">{t.pickWeights.invertNote}</p>
                 </>
               ) : null}
             </div>
@@ -152,12 +152,12 @@ export function PickList({
         })}
 
         <div className="grid grid-cols-[1fr_auto] items-center gap-x-2.5 border-t border-line pt-1.5">
-          <label htmlFor="pick-minutes" className="text-sm">
+          <label htmlFor="pick-minutes" className="text-body-sm">
             {t.pickWeights.minutes.label}
           </label>
           <output
             htmlFor="pick-minutes"
-            className="text-right font-cond text-lg font-semibold text-accent tabular-nums"
+            className="text-right font-cond text-lead font-semibold text-accent tabular-nums"
           >
             {f.num(minutesImpact, 2)}
           </output>
@@ -171,7 +171,7 @@ export function PickList({
             onChange={(e) => onMinutesImpactChange(Number(e.target.value))}
             className="col-span-2 w-full accent-accent"
           />
-          <p className="col-span-2 -mt-0.5 text-xs text-muted">{t.pickWeights.minutes.note}</p>
+          <p className="col-span-2 -mt-0.5 text-caption text-muted">{t.pickWeights.minutes.note}</p>
         </div>
 
         <button
@@ -181,7 +181,7 @@ export function PickList({
             onMinutesImpactChange(DEFAULT_MINUTES_IMPACT);
             onSelInvertChange(false);
           }}
-          className="min-h-11 justify-self-start rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+          className="min-h-11 justify-self-start rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
         >
           {t.pickWeights.reset}
         </button>
@@ -226,7 +226,7 @@ export function PickList({
             {rows.map((row, i) => (
               <PickRowView key={`${row.player.team}-${row.player.name}`} row={row} rank={i + 1} />
             ))}
-            {rows.length === 0 ? <p className="py-3 text-[13px] text-muted">{t.picks.empty}</p> : null}
+            {rows.length === 0 ? <p className="py-3 text-label text-muted">{t.picks.empty}</p> : null}
           </div>
         </Exportable>
       </div>
@@ -243,7 +243,7 @@ const ROW_GRID =
 function PickHeader() {
   const { t } = useI18n();
   return (
-    <div className={`grid ${ROW_GRID} gap-1.5 px-1 pb-1.5 text-xs text-muted`}>
+    <div className={`grid ${ROW_GRID} gap-1.5 px-1 pb-1.5 text-caption text-muted`}>
       <span>{t.picks.columns.rank}</span>
       <span>{t.picks.columns.player}</span>
       <span className="text-right">{t.picks.columns.price}</span>
@@ -320,18 +320,18 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
       className={`grid ${ROW_GRID} items-center gap-1.5 border-b border-line ${compact ? "py-1.5" : "py-2"}`}
       title={compact ? undefined : breakdownTitle(row, t, f)}
     >
-      <div className="text-right font-cond text-[15px] font-semibold text-muted tabular-nums">{rank}</div>
+      <div className="text-right font-cond text-body font-semibold text-muted tabular-nums">{rank}</div>
 
       <div className="min-w-0">
-        <b className="block truncate text-sm font-semibold">
+        <b className="block truncate text-body-sm font-semibold">
           {/* Görsel dışa aktarmada düz metne düşüyor (EntityLink): kaydedilen
               resimde altı çizili bağlantı olmaz. */}
           <PlayerLink player={row.player} />
           {row.player.status === "D" ? (
-            <em className="ml-1.5 text-xs font-normal text-harder not-italic">{t.status.D}</em>
+            <em className="ml-1.5 text-caption font-normal text-harder not-italic">{t.status.D}</em>
           ) : null}
         </b>
-        <span className="mt-px flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[12px] text-muted">
+        <span className="mt-px flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-caption text-muted">
           <span className="inline-flex shrink-0 items-center gap-1">
             <TeamLogo id={row.player.team} size={16} />
             {byId[row.player.team].name}
@@ -348,12 +348,12 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
         </span>
       </div>
 
-      <div className="text-right font-cond text-[17px] font-bold tabular-nums">
+      <div className="text-right font-cond text-lead font-bold tabular-nums">
         {row.player.price != null ? f.num(row.player.price, 1) : <span className="text-muted">–</span>}
       </div>
 
       <div
-        className="text-right text-[13px] text-muted tabular-nums"
+        className="text-right text-label text-muted tabular-nums"
         title={[
           t.picks.official(
             row.player.pts,
@@ -372,7 +372,7 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
       </div>
 
       <div
-        className="text-right font-cond text-[17px] font-bold text-accent tabular-nums"
+        className="text-right font-cond text-lead font-bold text-accent tabular-nums"
         title={signalTitle(row, t, f)}
       >
         {f.n1(row.score)}
@@ -430,10 +430,10 @@ function PriceSlider({
 }) {
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-x-2.5">
-      <label htmlFor={id} className="text-sm">
+      <label htmlFor={id} className="text-body-sm">
         {label}
       </label>
-      <output htmlFor={id} className="text-right font-cond text-lg font-semibold text-accent tabular-nums">
+      <output htmlFor={id} className="text-right font-cond text-lead font-semibold text-accent tabular-nums">
         {money(value)}
       </output>
       <input

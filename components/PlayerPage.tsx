@@ -61,11 +61,11 @@ export function PlayerPage({ player }: { player: Player }) {
         title={
           <span className="inline-flex flex-wrap items-baseline gap-x-3">
             {player.name}
-            <span className="text-[13px] font-normal text-muted">
+            <span className="text-label font-normal text-muted">
               {t.positions[player.pos]}
             </span>
             {player.status ? (
-              <span className="rounded-[var(--radius-sm)] border border-harder px-1.5 py-0.5 text-xs font-semibold text-harder">
+              <span className="rounded-[var(--radius-sm)] border border-harder px-1.5 py-0.5 text-caption font-semibold text-harder">
                 {t.status[player.status]}
               </span>
             ) : null}
@@ -94,7 +94,7 @@ export function PlayerPage({ player }: { player: Player }) {
       {/* Hafta hafta beklenen puan; girdisi olan fikstür aynı satırda. */}
       <section>
         <h2 className="mb-2 heading-sub">{t.player.byMatchday}</h2>
-        <p className="mb-2 text-[13px] text-muted">{t.player.byMatchdayNote}</p>
+        <p className="mb-2 text-label text-muted">{t.player.byMatchdayNote}</p>
         <div
           ref={weeksRef}
           style={weeksStyle}
@@ -103,9 +103,9 @@ export function PlayerPage({ player }: { player: Player }) {
           role="region"
           aria-label={t.player.byMatchday}
         >
-          <table className="w-full min-w-[520px] border-collapse text-[13px]">
+          <table className="w-full min-w-[520px] border-collapse text-label">
             <thead>
-              <tr className="border-b border-line text-left text-xs text-muted">
+              <tr className="border-b border-line text-left text-caption text-muted">
                 <th className="py-1.5 pr-2 font-medium">{t.player.matchday}</th>
                 <th className="py-1.5 pr-2 font-medium">{t.player.opponent}</th>
                 <th className="py-1.5 pr-2 text-right font-medium">{t.player.difficulty}</th>
@@ -163,7 +163,7 @@ export function PlayerPage({ player }: { player: Player }) {
                     <td className="py-1.5 pr-2 text-right text-muted tabular-nums">
                       {b ? f.n1(b.cleanSheet + b.conceded + b.saves) : "—"}
                     </td>
-                    <td className="py-1.5 text-right font-cond text-[15px] font-bold tabular-nums">
+                    <td className="py-1.5 text-right font-cond text-body font-bold tabular-nums">
                       {b ? f.n1(b.total) : "—"}
                     </td>
                   </tr>
@@ -177,7 +177,7 @@ export function PlayerPage({ player }: { player: Player }) {
       {/* Oynama beklentisinin girdileri */}
       <section>
         <h2 className="mb-2 heading-sub">{t.player.availability}</h2>
-        <ul className="m-0 grid list-none gap-1 p-0 text-[13px]">
+        <ul className="m-0 grid list-none gap-1 p-0 text-label">
           <Fact
             label={t.player.gameStatus}
             value={player.status ? t.status[player.status] : t.player.noFlag}
@@ -219,7 +219,7 @@ export function PlayerPage({ player }: { player: Player }) {
         <h2 className="mb-2 heading-sub">{t.player.recent}</h2>
         {recent.length ? (
           <>
-            <p className="mb-2 text-[13px] text-muted">
+            <p className="mb-2 text-label text-muted">
               {t.player.recentNote(
                 lineupsMeta.source,
                 lineupsMeta.fetched ? f.date(lineupsMeta.fetched) : "—",
@@ -233,9 +233,9 @@ export function PlayerPage({ player }: { player: Player }) {
               role="region"
               aria-label={t.player.recent}
             >
-              <table className="w-full min-w-[560px] border-collapse text-[13px]">
+              <table className="w-full min-w-[560px] border-collapse text-label">
                 <thead>
-                  <tr className="border-b border-line text-left text-xs text-muted">
+                  <tr className="border-b border-line text-left text-caption text-muted">
                     <th className="py-1.5 pr-2 font-medium">{t.player.date}</th>
                     <th className="py-1.5 pr-2 font-medium">{t.player.competition}</th>
                     <th className="py-1.5 pr-2 text-right font-medium">{t.player.minutes}</th>
@@ -277,14 +277,14 @@ export function PlayerPage({ player }: { player: Player }) {
             </div>
           </>
         ) : (
-          <p className="m-0 text-[13px] text-muted">{t.player.noMatches}</p>
+          <p className="m-0 text-label text-muted">{t.player.noMatches}</p>
         )}
       </section>
 
       {/* 90 dakikalık oranlar: modelin kullandığı düzeltilmiş değerler */}
       <section>
         <h2 className="mb-2 heading-sub">{t.player.rates}</h2>
-        <p className="mb-2 text-[13px] text-muted">
+        <p className="mb-2 text-label text-muted">
           {t.player.ratesNote(summary.matches, summary.minutes)}
         </p>
         <div
@@ -295,9 +295,9 @@ export function PlayerPage({ player }: { player: Player }) {
           role="region"
           aria-label={t.player.rates}
         >
-          <table className="w-full min-w-[320px] border-collapse text-[13px]">
+          <table className="w-full min-w-[320px] border-collapse text-label">
             <thead>
-              <tr className="border-b border-line text-left text-xs text-muted">
+              <tr className="border-b border-line text-left text-caption text-muted">
                 <th className="py-1.5 pr-2 font-medium">{t.player.metric}</th>
                 <th className="py-1.5 text-right font-medium">{t.player.adjusted}</th>
               </tr>
@@ -312,10 +312,10 @@ export function PlayerPage({ player }: { player: Player }) {
             </tbody>
           </table>
         </div>
-        <p className="mt-2 mb-0 text-xs text-muted">{t.player.adjustedNote}</p>
+        <p className="mt-2 mb-0 text-caption text-muted">{t.player.adjustedNote}</p>
       </section>
 
-      <p className="m-0 text-xs text-muted">
+      <p className="m-0 text-caption text-muted">
         {t.player.source(
           fantasyMeta.fetched ? f.date(fantasyMeta.fetched) : "—",
           fantasyMeta.gameweek ?? 0,
@@ -328,11 +328,11 @@ export function PlayerPage({ player }: { player: Player }) {
 function Stat({ value, label, note }: { value: string; label: string; note?: string }) {
   return (
     <div className="rounded-[var(--radius-lg)] border border-line bg-surface px-3 pt-2.5 pb-2">
-      <b className="block font-cond text-[28px] leading-none font-bold text-ink tabular-nums">
+      <b className="block font-cond text-stat font-bold text-ink tabular-nums">
         {value}
       </b>
-      <span className="mt-1 block text-xs text-muted">{label}</span>
-      {note ? <span className="mt-0.5 block text-xs text-muted">{note}</span> : null}
+      <span className="mt-1 block text-caption text-muted">{label}</span>
+      {note ? <span className="mt-0.5 block text-caption text-muted">{note}</span> : null}
     </div>
   );
 }

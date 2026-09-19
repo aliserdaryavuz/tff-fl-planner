@@ -85,7 +85,7 @@ export function TeamsTable({
 
   return (
     <section aria-labelledby="table-heading">
-      <h2 id="table-heading" className="mb-2 font-cond text-xl font-semibold tracking-wide">
+      <h2 id="table-heading" className="mb-2 font-cond text-title font-semibold tracking-wide">
         {t.table.heading}
       </h2>
 
@@ -111,9 +111,9 @@ export function TeamsTable({
               return (
                 <div
                   key={id}
-                  className="grid grid-cols-[18px_18px_minmax(0,1fr)_80px_34px] items-center gap-1.5 border-b border-line py-[5px] text-[12px]"
+                  className="grid grid-cols-[18px_18px_minmax(0,1fr)_80px_34px] items-center gap-1.5 border-b border-line py-[5px] text-caption"
                 >
-                  <span className="text-right font-cond text-[13px] font-semibold text-muted tabular-nums">
+                  <span className="text-right font-cond text-label font-semibold text-muted tabular-nums">
                     {r.rank}
                   </span>
                   <TeamLogo id={id} size={16} />
@@ -124,7 +124,7 @@ export function TeamsTable({
                   >
                     {windowCells(id, "h-[12px]")}
                   </span>
-                  <span className="text-right font-cond text-[15px] font-bold tabular-nums">
+                  <span className="text-right font-cond text-body font-bold tabular-nums">
                     {f.n1(r.total)}
                   </span>
                 </div>
@@ -133,7 +133,7 @@ export function TeamsTable({
           </div>
         }
       >
-        <div className={`grid ${ROW_COLUMNS} gap-1.5 px-1 pt-0.5 pb-1.5 text-xs text-muted`}>
+        <div className={`grid ${ROW_COLUMNS} gap-1.5 px-1 pt-0.5 pb-1.5 text-caption text-muted`}>
           <span title={t.table.columns.rankTitle}>{t.table.columns.rank}</span>
           <span>{t.table.columns.team}</span>
           <span>{t.table.columns.weeks}</span>
@@ -169,12 +169,12 @@ export function TeamsTable({
                   isSelected ? "border-l-accent bg-accent/10" : "border-l-transparent hover:bg-white/3",
                 ].join(" ")}
               >
-                <div className="text-right font-cond text-[17px] font-semibold text-muted tabular-nums">
+                <div className="text-right font-cond text-lead font-semibold text-muted tabular-nums">
                   {r.rank}
                 </div>
 
                 <div className="min-w-0">
-                  <b className="flex min-w-0 items-center gap-1.5 text-sm font-semibold">
+                  <b className="flex min-w-0 items-center gap-1.5 text-body-sm font-semibold">
                     <TeamLogo id={id} size={18} />
                     <span className="truncate">{byId[id].name}</span>
                   </b>
@@ -198,12 +198,12 @@ export function TeamsTable({
 
                 <div
                   title={t.table.columns.strengthTitle}
-                  className="text-right font-cond text-[15px] font-semibold text-muted tabular-nums"
+                  className="text-right font-cond text-body font-semibold text-muted tabular-nums"
                 >
                   {f.n1(strength[id])}
                 </div>
 
-                <div className="text-right font-cond text-[19px] font-bold tabular-nums">
+                <div className="text-right font-cond text-lead font-bold tabular-nums">
                   {f.n1(r.total)}
                 </div>
               </div>
@@ -212,7 +212,7 @@ export function TeamsTable({
         </div>
       </Exportable>
 
-      <p className="mt-2 text-[13px] text-muted">{t.table.note}</p>
+      <p className="mt-2 text-label text-muted">{t.table.note}</p>
     </section>
   );
 }

@@ -36,9 +36,9 @@ export function WeightControl({
   return (
     <div className="grid gap-1.5 rounded-lg border border-line p-2">
       <div className="flex flex-wrap items-baseline justify-between gap-x-2">
-        <span className="text-sm font-semibold">{label}</span>
+        <span className="text-body-sm font-semibold">{label}</span>
         {active === 0 ? (
-          <span className="text-xs text-accent">{t.sources.zeroWeights}</span>
+          <span className="text-caption text-accent">{t.sources.zeroWeights}</span>
         ) : null}
       </div>
 
@@ -50,12 +50,12 @@ export function WeightControl({
             key={source.key}
             className="grid grid-cols-[1fr_auto] items-center gap-x-2.5"
           >
-            <label htmlFor={id} className="text-sm">
+            <label htmlFor={id} className="text-body-sm">
               {t.sources[source.key].label}
             </label>
             <output
               htmlFor={id}
-              className="text-right font-cond text-lg font-semibold text-accent tabular-nums"
+              className="text-right font-cond text-lead font-semibold text-accent tabular-nums"
             >
               {f.pct(shares[source.key] ?? 0, 0)}
             </output>
@@ -69,7 +69,7 @@ export function WeightControl({
               onChange={(e) => set(source.key, Number(e.target.value))}
               className="col-span-2 w-full accent-accent"
             />
-            <p className="col-span-2 -mt-0.5 text-xs text-muted">
+            <p className="col-span-2 -mt-0.5 text-caption text-muted">
               {t.sources[source.key].note}
             </p>
           </div>
@@ -77,14 +77,14 @@ export function WeightControl({
       })}
 
       {missing.length ? (
-        <p className="text-xs text-muted">
+        <p className="text-caption text-muted">
           {t.sources.missing(
             missing.map((s) => t.sources[s.key].label).join(", "),
           )}
         </p>
       ) : null}
 
-      {note ? <p className="text-xs text-muted">{note}</p> : null}
+      {note ? <p className="text-caption text-muted">{note}</p> : null}
     </div>
   );
 }

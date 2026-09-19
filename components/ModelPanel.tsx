@@ -35,7 +35,7 @@ export function ModelPanel({
     <section aria-labelledby="model-heading">
       <h2
         id="model-heading"
-        className="mb-2 font-cond text-xl font-semibold tracking-wide"
+        className="mb-2 font-cond text-title font-semibold tracking-wide"
       >
         {t.model.heading}
       </h2>
@@ -47,7 +47,7 @@ export function ModelPanel({
         onChange={onModelChange}
       />
 
-      <p className="mt-1 text-[13px] text-muted">{t.model[model].desc}</p>
+      <p className="mt-1 text-label text-muted">{t.model[model].desc}</p>
 
       <div className="mt-2.5 grid gap-2.5">
         {MODEL_PARAMS.map((spec) => (
@@ -64,7 +64,7 @@ export function ModelPanel({
         <button
           type="button"
           onClick={onReset}
-          className="min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+          className="min-h-11 rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
         >
           {t.model.reset}
         </button>
@@ -100,12 +100,12 @@ function ParamControl({
   const id = `param-${spec.key}`;
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-x-2.5 gap-y-0.5">
-      <label htmlFor={id} className="text-sm">
+      <label htmlFor={id} className="text-body-sm">
         {copy.label}
       </label>
       <output
         htmlFor={id}
-        className="min-w-13 text-right font-cond text-lg font-semibold text-accent tabular-nums"
+        className="min-w-13 text-right font-cond text-lead font-semibold text-accent tabular-nums"
       >
         {f.num(Number(value))}
       </output>
@@ -119,7 +119,7 @@ function ParamControl({
         onChange={(e) => onChange(Number(e.target.value))}
         className="col-span-2 w-full accent-accent"
       />
-      <p className="col-span-2 -mt-0.5 text-xs text-muted">{copy.note}</p>
+      <p className="col-span-2 -mt-0.5 text-caption text-muted">{copy.note}</p>
     </div>
   );
 }

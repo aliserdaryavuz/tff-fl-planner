@@ -88,14 +88,14 @@ export function Results() {
         <>
           <div className="grid gap-2 rounded-lg border border-line p-2 desk:grid-cols-2">
             <div className="grid gap-1">
-              <label htmlFor="results-md" className="text-sm font-semibold">
+              <label htmlFor="results-md" className="text-body-sm font-semibold">
                 {t.results.matchdayLabel}
               </label>
               <select
                 id="results-md"
                 value={md}
                 onChange={(e) => setMd(Number(e.target.value))}
-                className="min-h-11 w-full rounded-lg border border-line bg-ground px-2.5 text-sm"
+                className="min-h-11 w-full rounded-lg border border-line bg-ground px-2.5 text-body-sm"
               >
                 <option value={0}>{t.results.allMatchdays}</option>
                 {Array.from({ length: MATCHDAYS }, (_, i) => i + 1).map((n) => (
@@ -107,14 +107,14 @@ export function Results() {
               </select>
             </div>
             <div className="grid gap-1">
-              <label htmlFor="results-team" className="text-sm font-semibold">
+              <label htmlFor="results-team" className="text-body-sm font-semibold">
                 {t.results.teamLabel}
               </label>
               <select
                 id="results-team"
                 value={team}
                 onChange={(e) => setTeam(e.target.value)}
-                className="min-h-11 w-full rounded-lg border border-line bg-ground px-2.5 text-sm"
+                className="min-h-11 w-full rounded-lg border border-line bg-ground px-2.5 text-body-sm"
               >
                 <option value="">{t.results.allTeams}</option>
                 {clubs.map((id) => (
@@ -126,7 +126,7 @@ export function Results() {
             </div>
           </div>
 
-          <p className="m-0 text-[13px] text-muted">
+          <p className="m-0 text-label text-muted">
             {t.results.showing(
               md ? t.results.matchday(md) : t.results.allMatchdays,
               team ? byId[team].name : t.results.allTeams,
@@ -140,10 +140,10 @@ export function Results() {
                 <section key={week.md} aria-labelledby={`md-${week.md}`}>
                   <h2
                     id={`md-${week.md}`}
-                    className="mb-2 flex flex-wrap items-baseline gap-x-2 font-cond text-xl font-semibold tracking-wide"
+                    className="mb-2 flex flex-wrap items-baseline gap-x-2 font-cond text-title font-semibold tracking-wide"
                   >
                     {t.results.matchday(week.md)}
-                    <span className="text-[13px] font-normal text-muted">
+                    <span className="text-label font-normal text-muted">
                       {week.played === 0
                         ? t.results.notPlayed
                         : week.played === week.matches.length
@@ -158,7 +158,7 @@ export function Results() {
                       ) : (
                         <div
                           key={`${m.home}-${m.away}`}
-                          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-b border-line py-2 text-[13px]"
+                          className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 border-b border-line py-2 text-label"
                         >
                           <Side team={m.home} align="right" />
                           <Kickoff date={m.date} tsi={m.tsi} />
@@ -171,12 +171,12 @@ export function Results() {
               ))}
             </div>
           ) : (
-            <p className="m-0 text-[13px] text-muted">{t.results.empty}</p>
+            <p className="m-0 text-label text-muted">{t.results.empty}</p>
           )}
         </>
       )}
 
-      <p className="m-0 text-xs text-muted">
+      <p className="m-0 text-caption text-muted">
         {t.results.source(resultsMeta.source, resultsMeta.fetched)}
       </p>
     </div>
@@ -215,10 +215,10 @@ function Played({ match }: { match: MatchResult }) {
 
   return (
     <details className="group border-b border-line">
-      <summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 py-2 text-[13px] [&::-webkit-details-marker]:hidden">
+      <summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 py-2 text-label [&::-webkit-details-marker]:hidden">
         <Side team={match.home} align="right" />
         {scored ? (
-          <span className="rounded-md bg-surface-2 px-2 py-0.5 text-center font-cond text-lg font-bold tabular-nums">
+          <span className="rounded-md bg-surface-2 px-2 py-0.5 text-center font-cond text-lead font-bold tabular-nums">
             {match.hg}–{match.ag}
           </span>
         ) : (
@@ -228,13 +228,13 @@ function Played({ match }: { match: MatchResult }) {
       </summary>
 
       <div className="grid gap-3 pb-3">
-        <p className="m-0 text-xs text-muted">
+        <p className="m-0 text-caption text-muted">
           {f.date(match.date)}
           <span className="ml-2 text-accent group-open:hidden">{t.results.open}</span>
         </p>
 
         {goals.length ? (
-          <ul className="m-0 grid list-none gap-1 p-0 text-[13px]">
+          <ul className="m-0 grid list-none gap-1 p-0 text-label">
             {goals.map((g, i) => (
               <li key={i} className="grid grid-cols-[34px_minmax(0,1fr)] items-baseline gap-2">
                 <span className="text-right text-muted tabular-nums">{g.min}&#39;</span>
@@ -246,13 +246,13 @@ function Played({ match }: { match: MatchResult }) {
                   />
                   <b className="font-semibold">{g.player}</b>
                   {g.own ? (
-                    <em className="ml-1.5 text-xs not-italic text-harder">{t.results.ownGoal}</em>
+                    <em className="ml-1.5 text-caption not-italic text-harder">{t.results.ownGoal}</em>
                   ) : null}
                   {g.how === "penalty" ? (
-                    <em className="ml-1.5 text-xs not-italic text-muted">{t.results.penalty}</em>
+                    <em className="ml-1.5 text-caption not-italic text-muted">{t.results.penalty}</em>
                   ) : null}
                   {g.how === "direct_free_kick" ? (
-                    <em className="ml-1.5 text-xs not-italic text-muted">{t.results.freeKick}</em>
+                    <em className="ml-1.5 text-caption not-italic text-muted">{t.results.freeKick}</em>
                   ) : null}
                   {g.assist ? (
                     <span className="ml-1.5 text-muted">
@@ -264,11 +264,11 @@ function Played({ match }: { match: MatchResult }) {
             ))}
           </ul>
         ) : (
-          <p className="m-0 text-[13px] text-muted">{t.results.noGoals}</p>
+          <p className="m-0 text-label text-muted">{t.results.noGoals}</p>
         )}
 
         {discipline.length ? (
-          <ul className="m-0 grid list-none gap-1 p-0 text-xs text-muted">
+          <ul className="m-0 grid list-none gap-1 p-0 text-caption text-muted">
             {discipline.map((e, i) => (
               <li key={i} className="grid grid-cols-[34px_minmax(0,1fr)] items-baseline gap-2">
                 <span className="text-right tabular-nums">{e.min}&#39;</span>
@@ -291,7 +291,7 @@ function Played({ match }: { match: MatchResult }) {
         ) : null}
 
         {match.potm ? (
-          <p className="m-0 text-[13px]">
+          <p className="m-0 text-label">
             <span className="text-muted">{t.results.potm}: </span>
             <b className="font-semibold">{match.potm.name}</b>
             {match.potm.rating != null ? (
@@ -308,7 +308,7 @@ function Played({ match }: { match: MatchResult }) {
             <Lineup side={match.lineups.away} team={match.away} />
           </div>
         ) : (
-          <p className="m-0 text-xs text-muted">{t.results.lineupsMissing}</p>
+          <p className="m-0 text-caption text-muted">{t.results.lineupsMissing}</p>
         )}
       </div>
     </details>
@@ -323,14 +323,14 @@ function Lineup({ side, team }: { side: MatchSide | null; team: string }) {
     <div>
       {/* Kulüp adı burada bağlantı: maç satırındaki `Side` `<summary>` içinde ve
           oraya bağlantı koymak tıklamayı hem gezinme hem panel açma yapardı. */}
-      <h3 className="mt-0 mb-1 flex items-center gap-1.5 font-cond text-[15px] font-semibold tracking-wide">
+      <h3 className="mt-0 mb-1 flex items-center gap-1.5 font-cond text-body font-semibold tracking-wide">
         <TeamLogo id={team} size={16} />
         <TeamLink team={team} />
         {side.formation ? (
-          <span className="text-[13px] font-normal text-muted">{side.formation}</span>
+          <span className="text-label font-normal text-muted">{side.formation}</span>
         ) : null}
       </h3>
-      <ul className="m-0 grid list-none gap-0.5 p-0 text-[13px]">
+      <ul className="m-0 grid list-none gap-0.5 p-0 text-label">
         {side.starters.map((p) => (
           <li key={p.id} className="flex items-baseline justify-between gap-2">
             <span className="min-w-0 truncate">{p.name}</span>
@@ -340,8 +340,8 @@ function Lineup({ side, team }: { side: MatchSide | null; team: string }) {
       </ul>
       {used.length ? (
         <>
-          <p className="mt-2 mb-0.5 text-xs text-muted">{t.results.subs}</p>
-          <ul className="m-0 grid list-none gap-0.5 p-0 text-[13px] text-muted">
+          <p className="mt-2 mb-0.5 text-caption text-muted">{t.results.subs}</p>
+          <ul className="m-0 grid list-none gap-0.5 p-0 text-label text-muted">
             {used.map((p) => (
               <li key={p.id} className="flex items-baseline justify-between gap-2">
                 <span className="min-w-0 truncate">{p.name}</span>

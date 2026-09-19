@@ -49,7 +49,7 @@ export function TeamPanel({
 
   return (
     <section id="team-panel" aria-labelledby="team-heading">
-      <h2 id="team-heading" className="mb-2 font-cond text-xl font-semibold tracking-wide">
+      <h2 id="team-heading" className="mb-2 font-cond text-title font-semibold tracking-wide">
         {t.team.heading}
       </h2>
 
@@ -112,11 +112,11 @@ export function TeamPanel({
         type="button"
         onClick={() => setAll((v) => !v)}
         aria-pressed={all}
-        className="mt-2 min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+        className="mt-2 min-h-11 rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
       >
         {all ? t.table.window(gw, to) : t.team.allFixtures}
       </button>
-      <p className="mt-2 text-[13px] text-muted">{t.team.windowHint}</p>
+      <p className="mt-2 text-label text-muted">{t.team.windowHint}</p>
 
       <FantasyList teamId={teamId} open={squadOpen} />
     </section>
@@ -134,7 +134,7 @@ function Badges({
 }) {
   const { t, f } = useI18n();
   return (
-    <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-[13px] text-muted">
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-label text-muted">
       <Badge>{t.team.last(team.last)}</Badge>
       {tableRow && tableRow.p > 0 ? (
         <Badge>{t.team.tableRow(tableRow.rank, tableRow.pts, tableRow.p)}</Badge>
@@ -210,11 +210,11 @@ function WeekCells({
             ].join(" ")}
             style={bandStyle(theme, band)}
           >
-            <small className="mb-1 block text-[11px] font-semibold opacity-85">
+            <small className="mb-1 block text-micro font-semibold opacity-85">
               {t.team.week(fixture.md)}
             </small>
-            <b className="font-cond text-[22px] font-bold tabular-nums">{f.n1(value)}</b>
-            <em className="mt-[3px] block truncate text-[11px] font-semibold not-italic opacity-85">
+            <b className="font-cond text-title font-bold tabular-nums">{f.n1(value)}</b>
+            <em className="mt-[3px] block truncate text-micro font-semibold not-italic opacity-85">
               {byId[fixture.opp].name} ({fixture.ha === "E" ? t.fixture.homeLabel : t.fixture.awayLabel})
             </em>
           </div>
@@ -237,13 +237,13 @@ function Kpi({
     <div className="rounded-xl bg-surface px-3 pt-2.5 pb-2">
       <b
         className={[
-          "block font-cond text-[40px] leading-none font-bold tabular-nums",
+          "block font-cond text-stat-lg font-bold tabular-nums",
           accent ? "text-accent" : "",
         ].join(" ")}
       >
         {value}
       </b>
-      <span className="mt-1 block text-xs text-muted">{label}</span>
+      <span className="mt-1 block text-caption text-muted">{label}</span>
     </div>
   );
 }

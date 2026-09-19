@@ -66,6 +66,11 @@
   /* Sayı vurgusu: kart içindeki tek büyük rakam. */
   --text-stat: 1.75rem;
   --text-stat--line-height: 1;
+
+  /* Panelin en büyük rakamı (takım paneli). UCL'de aynı öge `text-stat-lg` ve
+     değeri birebir bu; yuvarlama değil, karşılığı olan rol. */
+  --text-stat-lg: 2.5rem;
+  --text-stat-lg--line-height: 1;
 }
 
 /* Başlık rolleri: bölüm (h2) ve alt bölüm (h3). Aynı düzeydeki başlıklar

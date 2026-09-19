@@ -35,11 +35,11 @@ export function ShareButton() {
       <button
         type="button"
         onClick={copy}
-        className="min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+        className="min-h-11 rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
       >
         {t.share.copy}
       </button>
-      <span aria-live="polite" className="text-[13px] text-muted">
+      <span aria-live="polite" className="text-label text-muted">
         {message}
       </span>
     </>

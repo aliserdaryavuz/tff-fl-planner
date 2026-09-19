@@ -13,11 +13,13 @@ export function Legend() {
       {BANDS.map((band, i) => (
         <div
           key={band.key}
-          className="rounded-md px-1 py-1.5 text-center text-xs leading-tight font-semibold"
+          className="rounded-md px-1 py-1.5 text-center text-caption leading-tight font-semibold"
           style={bandStyle(theme, band)}
         >
           {t.bands[band.key]}
-          <small className="block font-medium opacity-80">
+          {/* Açık rol şart: `<small>` tarayıcıda 0.8em, yani 12 px'lik kapsayıcıda
+              9,6 px'e düşüyordu — 11 px sınırının altında (ölçüldü). */}
+          <small className="block text-micro font-medium opacity-80">
             {f.n1(bandFloor(i))}-
             {f.n1(i === BANDS.length - 1 ? DIFFICULTY_MAX : band.upTo)}
           </small>

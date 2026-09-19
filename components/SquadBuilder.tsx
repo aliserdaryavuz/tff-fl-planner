@@ -148,7 +148,7 @@ export function SquadBuilder({
         onClick={() => clearKey(key)}
         title={t.squad.removeChip}
         className={[
-          "min-h-11 rounded-full border px-3 text-[13px] font-semibold",
+          "min-h-11 rounded-full border px-3 text-label font-semibold",
           kind === "locked" ? "border-accent bg-accent/10 text-ink" : "border-line bg-surface text-muted line-through",
         ].join(" ")}
       >
@@ -169,7 +169,7 @@ export function SquadBuilder({
 
   const picker = (
     <div className="mb-2 grid gap-1.5 rounded-lg border border-line p-2">
-      <label htmlFor="squad-search" className="text-sm font-semibold">
+      <label htmlFor="squad-search" className="text-body-sm font-semibold">
         {t.squad.search}
       </label>
       <input
@@ -178,13 +178,13 @@ export function SquadBuilder({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t.squad.searchPlaceholder}
-        className="min-h-11 w-full rounded-lg border border-line bg-ground px-2.5 text-sm"
+        className="min-h-11 w-full rounded-lg border border-line bg-ground px-2.5 text-body-sm"
       />
 
       {clubMatches.length ? (
         <div className="grid gap-1">
           {clubMatches.map((id) => (
-            <div key={id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-1.5 border-b border-line py-1 text-[13px]">
+            <div key={id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-1.5 border-b border-line py-1 text-label">
               <span className="flex min-w-0 items-center gap-1.5">
                 <TeamLogo id={id} size={18} />
                 <b className="truncate font-semibold">{byId[id].name}</b>
@@ -195,7 +195,7 @@ export function SquadBuilder({
               <button
                 type="button"
                 onClick={() => banClub(id)}
-                className="min-h-11 rounded-lg border border-line bg-surface px-2.5 text-[13px] font-medium text-muted"
+                className="min-h-11 rounded-lg border border-line bg-surface px-2.5 text-label font-medium text-muted"
               >
                 {t.squad.banClub}
               </button>
@@ -209,7 +209,7 @@ export function SquadBuilder({
           {matches.map((r) => {
             const key = playerKey(r.player);
             return (
-              <div key={key} className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 border-b border-line py-1 text-[13px]">
+              <div key={key} className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-1.5 border-b border-line py-1 text-label">
                 <span className="flex min-w-0 items-center gap-1.5 truncate">
                   <TeamLogo id={r.player.team} size={18} />
                   <span className="min-w-0 truncate">
@@ -223,14 +223,14 @@ export function SquadBuilder({
                 <button
                   type="button"
                   onClick={() => pin(key)}
-                  className="min-h-11 rounded-lg border border-accent bg-accent/10 px-2.5 text-[13px] font-semibold"
+                  className="min-h-11 rounded-lg border border-accent bg-accent/10 px-2.5 text-label font-semibold"
                 >
                   {t.squad.pin}
                 </button>
                 <button
                   type="button"
                   onClick={() => ban(key)}
-                  className="min-h-11 rounded-lg border border-line bg-surface px-2.5 text-[13px] font-medium text-muted"
+                  className="min-h-11 rounded-lg border border-line bg-surface px-2.5 text-label font-medium text-muted"
                 >
                   {t.squad.ban}
                 </button>
@@ -242,26 +242,26 @@ export function SquadBuilder({
 
       {locked.length ? (
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs text-muted">{t.squad.lockedTitle}</span>
+          <span className="text-caption text-muted">{t.squad.lockedTitle}</span>
           {locked.map((key) => chip(key, "locked"))}
         </div>
       ) : null}
       {excluded.length ? (
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs text-muted">{t.squad.excludedTitle}</span>
+          <span className="text-caption text-muted">{t.squad.excludedTitle}</span>
           {excluded.map((key) => chip(key, "excluded"))}
         </div>
       ) : null}
       {excludedClubs.length ? (
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs text-muted">{t.squad.excludedClubsTitle}</span>
+          <span className="text-caption text-muted">{t.squad.excludedClubsTitle}</span>
           {excludedClubs.map((id) => (
             <button
               key={id}
               type="button"
               onClick={() => unbanClub(id)}
               title={t.squad.removeChip}
-              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line bg-surface py-1 pr-3 pl-1.5 text-[13px] font-semibold text-muted line-through"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line bg-surface py-1 pr-3 pl-1.5 text-label font-semibold text-muted line-through"
             >
               <TeamLogo id={id} size={20} className="opacity-60" />
               {byId[id].name} ×
@@ -278,7 +278,7 @@ export function SquadBuilder({
             setExcludedClubs([]);
             setShown(0);
           }}
-          className="min-h-11 justify-self-start rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+          className="min-h-11 justify-self-start rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
         >
           {t.squad.clear}
         </button>
@@ -287,7 +287,7 @@ export function SquadBuilder({
   );
 
   const heading = (
-    <h2 id="squad-heading" className="mb-2 font-cond text-xl font-semibold tracking-wide">
+    <h2 id="squad-heading" className="mb-2 font-cond text-title font-semibold tracking-wide">
       {t.squad.heading}
     </h2>
   );
@@ -296,7 +296,7 @@ export function SquadBuilder({
     return (
       <section aria-labelledby="squad-heading">
         {heading}
-        <p className="mb-2 rounded-lg border border-accent/60 bg-surface p-3 text-[13px]">{t.squad.noPrices}</p>
+        <p className="mb-2 rounded-lg border border-accent/60 bg-surface p-3 text-label">{t.squad.noPrices}</p>
       </section>
     );
   }
@@ -308,11 +308,11 @@ export function SquadBuilder({
     return (
       <section aria-labelledby="squad-heading">
         {heading}
-        <p className="mb-2 text-[13px] text-harder">{t.compute.failed}</p>
+        <p className="mb-2 text-label text-harder">{t.compute.failed}</p>
         <button
           type="button"
           onClick={view.retry}
-          className="mb-2 min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+          className="mb-2 min-h-11 rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
         >
           {t.compute.retry}
         </button>
@@ -326,7 +326,7 @@ export function SquadBuilder({
     return (
       <section aria-labelledby="squad-heading">
         {heading}
-        <p className="mb-2 text-[13px]">
+        <p className="mb-2 text-label">
           {view.pending ? (
             <span className="text-muted">{t.compute.working}</span>
           ) : (
@@ -352,17 +352,17 @@ export function SquadBuilder({
     <section aria-labelledby="squad-heading">
       {heading}
 
-      <p className="mb-2 text-[13px] text-muted">
+      <p className="mb-2 text-label text-muted">
         {t.squad.note(f.money(BUDGET, 0), MAX_PER_CLUB, `${FORMATION.GK}-${FORMATION.DEF}-${FORMATION.MID}-${FORMATION.FWD}`)}
       </p>
 
       {picker}
 
       <div className="mb-2 grid grid-cols-[1fr_auto] items-center gap-x-2.5 rounded-lg border border-line p-2">
-        <label htmlFor="bench-weight" className="text-sm">
+        <label htmlFor="bench-weight" className="text-body-sm">
           {t.squad.benchWeight.label}
         </label>
-        <output htmlFor="bench-weight" className="text-right font-cond text-lg font-semibold text-accent tabular-nums">
+        <output htmlFor="bench-weight" className="text-right font-cond text-lead font-semibold text-accent tabular-nums">
           {f.num(benchWeight, 2)}
         </output>
         <input
@@ -375,16 +375,16 @@ export function SquadBuilder({
           onChange={(e) => onBenchWeightChange(Number(e.target.value))}
           className="col-span-2 w-full accent-accent"
         />
-        <p className="col-span-2 -mt-0.5 text-xs text-muted">{t.squad.benchWeight.note}</p>
+        <p className="col-span-2 -mt-0.5 text-caption text-muted">{t.squad.benchWeight.note}</p>
       </div>
 
-      <p className="mb-1.5 text-[13px] text-muted">
+      <p className="mb-1.5 text-label text-muted">
         {t.squad.spent(f.money(squad.price), f.money(BUDGET - squad.price))} {t.squad.xiSpend} {f.money(squad.xiPrice)},{" "}
         {t.squad.benchSpend} {f.money(squad.price - squad.xiPrice)}. {t.squad.xiXp(f.n1(xiXp))}
       </p>
 
       <div className="mt-2 flex flex-wrap items-center gap-2">
-        <span className="text-[13px] text-muted">
+        <span className="text-label text-muted">
           {result.count === 1 ? t.squad.onlyOne : t.squad.manyOptions(result.count, result.capped ? "+" : "", shown + 1)}
         </span>
         {options.length > 1 ? (
@@ -392,14 +392,14 @@ export function SquadBuilder({
             <button
               type="button"
               onClick={showAnother}
-              className="min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+              className="min-h-11 rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
             >
               {t.squad.another}
             </button>
             <button
               type="button"
               onClick={() => setListOpen((v) => !v)}
-              className="min-h-11 rounded-lg border border-line bg-surface px-3 text-[13px] font-medium hover:bg-surface-2"
+              className="min-h-11 rounded-lg border border-line bg-surface px-3 text-label font-medium hover:bg-surface-2"
             >
               {listOpen ? t.squad.listClose : t.squad.listOpen}
             </button>
@@ -416,15 +416,15 @@ export function SquadBuilder({
               aria-pressed={i === shown}
               onClick={() => setShown(i)}
               className={[
-                "grid min-h-11 grid-cols-[28px_1fr_auto_auto] items-center gap-2 rounded-lg border px-2 text-left text-[13px]",
+                "grid min-h-11 grid-cols-[28px_1fr_auto_auto] items-center gap-2 rounded-lg border px-2 text-left text-label",
                 i === shown ? "border-accent bg-accent/10" : "border-line bg-surface hover:bg-surface-2",
               ].join(" ")}
             >
-              <span className="font-cond text-base font-semibold text-muted tabular-nums">{i + 1}</span>
+              <span className="font-cond text-body font-semibold text-muted tabular-nums">{i + 1}</span>
               <span className="truncate text-muted">
                 {formationLabel(option.formation)} · {option.xi.filter((p) => p.pos !== "GK").slice(0, 6).map((p) => p.name).join(", ")}
               </span>
-              <span className="font-cond text-base font-bold text-accent tabular-nums">{f.n1(option.xiScore)}</span>
+              <span className="font-cond text-body font-bold text-accent tabular-nums">{f.n1(option.xiScore)}</span>
               <span className="w-16 text-right text-muted tabular-nums">{f.money(option.price, 1)}</span>
             </button>
           ))}
@@ -445,10 +445,10 @@ export function SquadBuilder({
           <SquadPitch squad={squad} rows={rows} locked={locked} />
         </Exportable>
       </div>
-      <p className="mt-1.5 text-xs text-muted">{t.squad.pitchNote}</p>
-      <p className="mt-1 text-xs text-muted">{t.squad.benchNote}</p>
+      <p className="mt-1.5 text-caption text-muted">{t.squad.pitchNote}</p>
+      <p className="mt-1 text-caption text-muted">{t.squad.benchNote}</p>
 
-      <p className="mt-2 text-[13px] text-muted">
+      <p className="mt-2 text-label text-muted">
         {t.squad.clubs(
           Object.entries(clubs)
             .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "tr"))
@@ -463,10 +463,10 @@ export function SquadBuilder({
 function Kpi({ value, label, accent = false }: { value: string; label: string; accent?: boolean }) {
   return (
     <div className="rounded-xl bg-surface px-3 pt-2 pb-1.5">
-      <b className={["block truncate font-cond text-[24px] leading-none font-bold tabular-nums", accent ? "text-accent" : ""].join(" ")}>
+      <b className={["block truncate font-cond text-stat font-bold tabular-nums", accent ? "text-accent" : ""].join(" ")}>
         {value}
       </b>
-      <span className="mt-1 block truncate text-xs text-muted">{label}</span>
+      <span className="mt-1 block truncate text-caption text-muted">{label}</span>
     </div>
   );
 }

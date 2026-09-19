@@ -47,7 +47,7 @@ export function Nav() {
                 // Etkin sekme dolu blok değil, altı çizili: dört sekmeden biri
                 // sürekli dolu renk olunca göz oraya kilitleniyor.
                 className={[
-                  "relative flex min-h-11 items-center px-2.5 font-cond text-[15px]",
+                  "relative flex min-h-11 items-center px-2.5 font-cond text-body",
                   "font-semibold tracking-wide transition-colors",
                   "after:absolute after:inset-x-2 after:bottom-0 after:h-[2px] after:rounded-full",
                   active
@@ -88,7 +88,7 @@ export function BottomNav() {
               <Link
                 href={`${href}?${query}`}
                 aria-current={active ? "page" : undefined}
-                className={`flex min-h-14 flex-col items-center justify-center gap-1 px-1 text-[12px] font-semibold transition-colors ${
+                className={`flex min-h-14 flex-col items-center justify-center gap-1 px-1 text-caption font-semibold transition-colors ${
                   active ? "text-accent" : "text-muted"
                 }`}
               >

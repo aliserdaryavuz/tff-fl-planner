@@ -77,7 +77,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             korunuyor. Adres çubuğundaki durumu okuduğu için Suspense içinde.
             Telefonda alt sekme çubuğu sabit; alt boşluk footer'ı örtmesin diye. */}
         <div className="mx-auto max-w-[1040px] px-3.5 pt-3.5 pb-[calc(3.5rem+env(safe-area-inset-bottom))] sm:pb-10">
-          <Suspense fallback={<p className="text-[13px] text-muted">…</p>}>
+          <Suspense fallback={<p className="text-label text-muted">…</p>}>
             <Shell>{children}</Shell>
           </Suspense>
         </div>
