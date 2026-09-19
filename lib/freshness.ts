@@ -21,7 +21,8 @@ export type SourceKey =
   | "history"
   | "lineups"
   | "results"
-  | "predicted";
+  | "predicted"
+  | "teamHistory";
 
 export const DAY_MS = 86_400_000;
 
@@ -38,6 +39,10 @@ export const EXPECTED_DAYS: Record<SourceKey, number | null> = {
   lineups: 1,
   results: 1,
   predicted: 1,
+  // Haftalık ürün: bir hafta bitince yenilenir. Günlük beklemek, oynanmakta
+  // olan haftada sürekli "eski" uyarısı verirdi — o hafta zaten arayüzde
+  // "oynanıyor" diye işaretli.
+  teamHistory: 7,
 };
 
 /** Zamanlanmış çalışmanın gecikmesi için pay: aralık + 1 günü aşan grup bayat. */
@@ -167,6 +172,7 @@ export function sourceFreshness(now: number): Record<SourceKey, Freshness> {
       daysToNextMatchday(nextGw, now),
       now,
     ),
+    teamHistory: freshnessOf(sourceMeta.teamHistory.fetched, EXPECTED_DAYS.teamHistory, now),
   };
 }
 

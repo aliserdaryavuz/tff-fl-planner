@@ -43,6 +43,7 @@ export function buildSourceMeta() {
   const lineups = read("data/lineups.json").meta;
   const results = read("data/results.json").meta;
   const predicted = read("data/predicted-xi.json").meta;
+  const teamHistory = read("data/team-history.json").meta;
 
   return {
     note:
@@ -81,6 +82,11 @@ export function buildSourceMeta() {
         matchday: predicted.matchday ?? null,
         // Meta'da hazır sayım var; dosyanın gövdesine inmeye gerek yok.
         previews: predicted.previews ?? 0,
+      },
+      teamHistory: {
+        source: teamHistory.source,
+        fetched: teamHistory.fetched ?? null,
+        weeks: teamHistory.weeks ?? 0,
       },
     },
   };

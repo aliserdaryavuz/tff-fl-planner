@@ -13,6 +13,7 @@ export const SECTIONS = [
   { key: "players", href: "/players" },
   { key: "squad", href: "/squad" },
   { key: "results", href: "/results" },
+  { key: "season", href: "/season" },
 ] as const;
 
 export type SectionKey = (typeof SECTIONS)[number]["key"];
@@ -66,9 +67,9 @@ export function Nav() {
 }
 
 /**
- * Telefonda alt sekme çubuğu: başparmak ekranın altında. Dört bölüm olduğu için
- * "daha fazla" listesine gerek yok, hepsi sığıyor. Klavye sırasında içerikten
- * sonra gelsin diye kabuk en alta çiziyor.
+ * Telefonda alt sekme çubuğu: başparmak ekranın altında. Altı bölüm de sığıyor,
+ * "daha fazla" listesine gerek yok. Klavye sırasında içerikten sonra gelsin diye
+ * kabuk en alta çiziyor.
  */
 export function BottomNav() {
   const { t } = useI18n();
@@ -80,7 +81,7 @@ export function BottomNav() {
       aria-label={t.nav.label}
       className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-sm sm:hidden"
     >
-      <ul className="m-0 grid list-none grid-cols-5 p-0">
+      <ul className="m-0 grid list-none grid-cols-6 p-0">
         {SECTIONS.map(({ key, href }) => {
           const active = isActive(pathname, href);
           return (

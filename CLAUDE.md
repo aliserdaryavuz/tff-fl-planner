@@ -23,6 +23,12 @@ Ayrıntılı tanım `PROJECT.md` içinde — yeni bir işe başlamadan önce onu
 - Tahmini 11 dosyası tek bir haftayı anlatır; `predictedFor(player, md)` başka hafta planlanırken onu yok sayar (eski liste, adı eşleşmeyeni haksız yere "11'de değil" sayıyordu).
 - Son maç verisi `data/lineups.json` (`fetch-lineups.mjs`, FotMob, headless Chrome), tahmini 11 `data/predicted-xi.json` (`fetch-predicted.mjs`).
 - Güç kaynakları: `update-opta.mjs` (Opta Power Rankings), `update-values.mjs` (Transfermarkt); geçen sezon sırası `scripts/lib/teams.mjs` içinde.
+- Kullanıcının kendi takımının geçmişi `data/team-history.json` (`fetch-team-history.mjs`,
+  oyunun `fantasy-team/teams/<id>?gameweek-id=<n>` ucu): hafta hafta resmî puan/sıra/transfer
+  ve o haftanın 15 kişilik kadrosu + puan dökümü. Dosyaya kişisel alan (e-posta, ad, doğum
+  tarihi) **yazılmaz**. Oyunun resmî haftalık puanı ile 11+kaptan toplamımız **tutmuyor** ve
+  nedeni ölçülemedi (PLAN.md §4.3); resmî sayı yeniden hesaplanmaz, fark `gapVsOfficial`
+  alanında açıkça taşınır.
 - `verify-fixtures.mjs` tff.org ile karşılaştırır, hiçbir şey yazmaz.
 - Veri değişirse `data/validate.test.ts` geçmeli: 18 takım, 306 maç, her takım haftada bir maç, 17 ev + 17 deplasman.
 - Veritabanı yok, çalışma anında dış API yok; JSON güncellenip push edilir.

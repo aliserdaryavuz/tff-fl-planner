@@ -906,12 +906,104 @@ doğru yere insin.
   UCL'den alınacak: aday kısa listesi + kadro üstünde tam değerlendirme yöntemi.
   UCL'den alınmayacak: hak muhasebesi, ceza, çok haftalı açgözlü arama.
 
-- [ ] **4.3 Sezon günlüğü.** (M)
-  Hafta hafta gerçekte oynattığın 11 + kaptan girilir, gerçek puan hesaplanır. Oyunun
-  beslemesi yalnız birikmiş puan veriyor; kimin 11'de olduğunu bilmiyor.
-  **Alternatif ve daha iyisi:** oyunun kendi API'sinde `fantasy-team/teams/<id>?gameweek-id=<n>`
-  ucu var (PROJECT.md §3.1). Giriş varken kadro **otomatik** okunabilir; elle girmeye gerek
-  kalmaz. Oturum düştüğü için bugün doğrulanamadı (401) — 4.3'ün ilk adımı bu ucu doğrulamak.
+- [x] **4.3 Sezon günlüğü.** (M) — **bitti 19.09; uç doğrulandı, elle giriş gerekmiyor.**
+
+  Yapılanlar: `scripts/fetch-team-history.mjs` → `data/team-history.json` (6 hafta, 41 KB),
+  `lib/season-log.ts`, `components/SeasonLog.tsx`, `app/season/page.tsx`, gezinmede
+  "Sezonum" bölümü (alt çubuk 5 → 6 sekme).
+
+  Tarayıcıda ölçüldü: 6 hafta kartı, 36 istatistik kutusu (6×6), kadro kutusu açılınca
+  15 oyuncu + 15 döküm satırı; telefonda (375 px) alt çubuk 6 sekme, en dar sekme 63 px,
+  yükseklik 56 px, kırpılan etiket 0, yatay taşma yok; yapışkan şerit hâlâ `top: 0`.
+  Bir kusur ölçümde yakalandı ve düzeltildi: kulüp adı oyuncu dosyasındaki **kimlikten**
+  basılıyordu ("Besiktas"), `byId` üzerinden görünen ada çevrildi ("Beşiktaş" 16 kez, ASCII
+  hâli 0).
+
+  §10 bu adımı Faz 4'ten önce koymuştu çünkü sonucu kapsamı değiştiriyor; değiştirdi de.
+  `fantasy-team/teams/65385?gameweek-id=<n>` **200** dönüyor ve hafta hafta **gerçek kadroyu**
+  veriyor.
+
+  **Önce yanlış okudum, ölçüm düzeltti:** 1., 4. ve 6. hafta birebir aynı özeti döndürünce
+  parametrenin yok sayıldığını sandım. Oysa eşit olan alanlar (`totalPoints`, `gwPoints`,
+  `pointsHistory`) takım düzeyinde ve zaten hafta bağımsız. Kadro *içeriği* karşılaştırılınca
+  tablo tersine döndü: **8 haftada 6 farklı kadro**, kaptan 507 → 507 → 507 → 507 → 12 → 176.
+  Genel alanlara bakıp "uç çalışmıyor" demek, 4.3'ü gereksiz yere elle giriş ekranına
+  mahkûm ederdi.
+
+  7. ve 34. hafta 6. haftanın kadrosunu döndürüyor: gelecek hafta = güncel kadro. Yani geçmiş
+  gerçek, gelecek yankı — günlükte oynanmış haftalar ayrılmalı.
+
+  Ucun verdiği şekil:
+
+  ```
+  data.squad.players[15]  playerId, position, captain, viceCaptain, isStarting,
+                          slotOrder, points, matchStatus, breakdown
+  data.squad              gameweekId, formation ("3-5-2"), teamValue
+  data.pointsHistory[n]   gameweekId, points, cumulativePoints, overallRank,
+                          rankChange, weeklyRank, avgPoints, highestPoints,
+                          benchPoints, transfers, teamValue
+  ```
+
+  **Bunun 4.1'e etkisi:** 4.1 "kadroyu bir kez elle gir" diye yazılmıştı; oyunun kendi kadrosu
+  otomatik okunabildiğine göre elle giriş asıl yol değil, yedek yol. 4.1 varsayımsal kadrolar
+  (senaryo denemesi) için anlamlı kalıyor, gerçek kadro için değil.
+
+  **Ayrıca `breakdown`:** oyuncu başına puan dökümü geliyor ve alan adları TFF tablosuyla
+  birebir örtüşüyor: `APPEARANCE_1_TO_60`, `APPEARANCE_60_PLUS`, `GOAL`, `ASSIST`,
+  `CLEAN_SHEET`, `GOALS_CONCEDED_2`, `SAVES_3`, `YELLOW_CARD`, `BONUS`. Her satırda
+  `count`, `pointsPer`, `subtotal` var ve oyuncunun `points` değeri döküm toplamına eşit
+  (15 satırın 15'inde). Bu, `lib/scoring.mjs`'i gerçek dökümle sınamaya ve "`playerOfTheMatch`
+  gerçekten bonus mu" sorusunu ölçmeye kapı açıyor.
+
+  ### Ama haftalık toplam TUTMUYOR — 4.3 buna dayanamaz
+
+  Oyuncu puanları kendi içinde tutarlı ve yedek toplamı beş haftada da oyunun `benchPoints`
+  değerine **birebir** eşit (1, 9, 11, 5, 11). İlk 11 ise tutmuyor ve sorun yuvarlama değil,
+  **aritmetik imkânsızlık**: dönen 15 oyuncunun puanlarının hepsini toplayıp kaptanı iki
+  katına çıkarsam bile üç haftada oyunun resmî puanına ulaşılamıyor.
+
+  | hafta | 15'in toplamı | +kaptan (ÜST SINIR) | oyunun puanı | durum |
+  | --- | --- | --- | --- | --- |
+  | 1 | 37 | 50 | 54 | **imkânsız** |
+  | 2 | 57 | 73 | 69 | mümkün |
+  | 3 | 57 | 69 | 73 | **imkânsız** |
+  | 4 | 46 | 51 | 52 | **imkânsız** |
+  | 5 | 58 | 60 | 53 | mümkün |
+
+  Otomatik yedek girişi, vice-captain devri ve kaptan çarpanının içeride/dışarıda olması
+  ayrı ayrı denendi; hiçbiri farkı kapatmıyor (1. haftada 11'in tamamı `PLAYED`, oto giren 0).
+
+  **Sonuç:** `pointsHistory` oyunun resmî haftalık puanı olarak güvenilir (haftalık deltalar
+  `cumulativePoints` ile tutarlı, toplam 302). Kadro uçtan okunabiliyor. Ama **ikisi
+  birbirini doğrulamıyor** ve nedeni henüz bilinmiyor. 4.3 bu yüzden "oyunun puanını yeniden
+  hesaplıyoruz" diye yazılmamalı: resmî sayı `pointsHistory`'den gösterilir, kadro ve döküm
+  ayrı gösterilir, aradaki fark gizlenmez.
+
+  **Elenen açıklamalar** (hepsi ölçüldü, hiçbiri farkı kapatmıyor):
+
+  | hafta | resmî | transfer | ilk11+K | fark | önceki haftaya göre yeni oyuncu |
+  | --- | --- | --- | --- | --- | --- |
+  | 1 | 54 | 11 | 49 | +5 | — |
+  | 2 | 69 | 6 | 64 | +5 | 6 |
+  | 3 | 73 | 12 | 58 | +15 | 12 |
+  | 4 | 52 | 10 | 46 | +6 | 10 |
+  | 5 | 53 | 13 | 49 | +4 | 13 |
+  | 6 | 2 | 10 | 10 | **−8** | 10 |
+
+  - *"Dönen kadro kilit anındaki kadro değil"* — **yanlış.** Yeni oyuncu sayısı her hafta
+    transfer sayısına birebir eşit; kadro o haftanın kilit sonrası hâli.
+  - *"Fark transfer yoğunluğundan"* — **yanlış.** 11 transfer → 5, 12 → 15, 13 → 4.
+  - *"Otomatik yedek girişi"* — 1. haftada ilk 11'in tamamı `PLAYED`, giren yedek yok, fark 5.
+  - *"Kaptan çarpanı içeride/dışarıda"* ve *"vice-captain devri"* — ikisi de denendi,
+    kaptan iki haftada da oynamış.
+  - *"Eksik bir bileşen sürekli ekleniyor"* — 6. hafta farkı **negatif**; o hafta hâlâ
+    oynanıyor, yani işaret bile sabit değil.
+
+  Başka uç yazımları denendi: `/points`, `/gameweek-points`, `/history`, `/gameweeks/<n>`,
+  `/picks`, `gameweeks/<n>/teams/<id>` → 404/403. `fantasy-team/teams/<id>/squad?gameweek-id=<n>`
+  aynı gövdeyi döndüren takma ad. Sitenin JS paketinde tam yol metni yok (URL'ler parçadan
+  kuruluyor), o yüzden uç listesi paketten çıkarılamadı.
+
   UCL karşılığı: `lib/season-log.ts`, `components/SeasonLog.tsx`.
 
 - [ ] **4.4 Yöntem sayfası.** (M)

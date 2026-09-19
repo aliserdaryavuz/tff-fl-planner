@@ -115,6 +115,14 @@ export function DataSources() {
       updated: sourceMeta.predicted.fetched,
       scope: s.predictedScope(predictedCount, sourceMeta.predicted.matchday ?? 0),
     },
+    {
+      key: "teamHistory",
+      what: s.teamHistory,
+      source: splitSource(sourceMeta.teamHistory.source).name,
+      href: "https://www.tfffantezilig.com/",
+      updated: sourceMeta.teamHistory.fetched,
+      scope: s.teamHistoryScope(sourceMeta.teamHistory.weeks),
+    },
   ];
 
   // Tazelik bakanın saatine bağlı; sunucuda ve hydration'da gösterilmiyor.

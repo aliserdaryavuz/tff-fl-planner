@@ -1,0 +1,2348 @@
+{
+ "meta": {
+  "source": "TFF Fantezi Lig resmî API (tfffantezilig.com), 19.09.2026",
+  "fetched": "2026-09-19",
+  "weeks": 6,
+  "unmatchedPlayers": 0,
+  "pointsNote": "Resmî haftalık puan `official.points`; `sumWithCaptain` bizim topladığımız. İkisi tutmuyor ve nedeni bilinmiyor (PLAN.md §4.3). Resmî sayı yeniden hesaplanmaz."
+ },
+ "team": {
+  "id": 65385,
+  "name": "asyvz",
+  "totalPoints": 303,
+  "totalRank": 86013,
+  "teamValue": 100,
+  "budget": 100,
+  "remainingBudget": 0
+ },
+ "weeks": [
+  {
+   "gw": 1,
+   "order": 1,
+   "formation": "3-5-2",
+   "official": {
+    "points": 54,
+    "cumulative": 54,
+    "bench": 1,
+    "transfers": 11,
+    "weeklyRank": 82984,
+    "overallRank": 85175,
+    "rankChange": 0,
+    "avgPoints": 47.3,
+    "highestPoints": 126,
+    "teamValue": 100
+   },
+   "sumStarting": 36,
+   "sumBench": 1,
+   "sumWithCaptain": 49,
+   "gapVsOfficial": 5,
+   "squad": [
+    {
+     "id": 280,
+     "pos": "GK",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 8,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Nübel",
+     "team": "Besiktas"
+    },
+    {
+     "id": 35,
+     "pos": "DEF",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Cabral",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 11,
+     "pos": "MID",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Aral",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 18,
+     "pos": "FWD",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": true,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Onuachu",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 533,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Abdulkerim",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 281,
+     "pos": "MID",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 3,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Orkun",
+     "team": "Besiktas"
+    },
+    {
+     "id": 507,
+     "pos": "FWD",
+     "slot": 2,
+     "start": true,
+     "captain": true,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 13,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 2,
+       "per": 4,
+       "pts": 8
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Osimhen",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 180,
+     "pos": "DEF",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Ake",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 486,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Pintor",
+     "team": "Eyupspor"
+    },
+    {
+     "id": 514,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Sané",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 176,
+     "pos": "MID",
+     "slot": 4,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Greenwood",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 64,
+     "pos": "GK",
+     "slot": 1,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Orbanic",
+     "team": "Erzurumspor"
+    },
+    {
+     "id": 277,
+     "pos": "DEF",
+     "slot": 2,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "DID_NOT_PLAY",
+     "points": 0,
+     "breakdown": [],
+     "name": "Murillo",
+     "team": "Besiktas"
+    },
+    {
+     "id": 496,
+     "pos": "DEF",
+     "slot": 3,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "DID_NOT_PLAY",
+     "points": 0,
+     "breakdown": [],
+     "name": "Mendy",
+     "team": "Eyupspor"
+    },
+    {
+     "id": 492,
+     "pos": "FWD",
+     "slot": 4,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "DID_NOT_PLAY",
+     "points": 0,
+     "breakdown": [],
+     "name": "Sy",
+     "team": "Eyupspor"
+    }
+   ]
+  },
+  {
+   "gw": 2,
+   "order": 2,
+   "formation": "4-4-2",
+   "official": {
+    "points": 69,
+    "cumulative": 123,
+    "bench": 9,
+    "transfers": 6,
+    "weeklyRank": 167132,
+    "overallRank": 112401,
+    "rankChange": -27226,
+    "avgPoints": 67.3,
+    "highestPoints": 166,
+    "teamValue": 100
+   },
+   "sumStarting": 48,
+   "sumBench": 9,
+   "sumWithCaptain": 64,
+   "gapVsOfficial": 5,
+   "squad": [
+    {
+     "id": 280,
+     "pos": "GK",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Nübel",
+     "team": "Besiktas"
+    },
+    {
+     "id": 184,
+     "pos": "MID",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Nene",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 18,
+     "pos": "FWD",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": true,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Onuachu",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 533,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 6,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Abdulkerim",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 162,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 0,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Dellova",
+     "team": "Amedspor"
+    },
+    {
+     "id": 281,
+     "pos": "MID",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Orkun",
+     "team": "Besiktas"
+    },
+    {
+     "id": 507,
+     "pos": "FWD",
+     "slot": 2,
+     "start": true,
+     "captain": true,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 16,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 2,
+       "per": 4,
+       "pts": 8
+      },
+      {
+       "type": "ASSIST",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Osimhen",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 180,
+     "pos": "DEF",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Ake",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 514,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Sané",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 277,
+     "pos": "DEF",
+     "slot": 4,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Murillo",
+     "team": "Besiktas"
+    },
+    {
+     "id": 176,
+     "pos": "MID",
+     "slot": 4,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 16,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 2,
+       "per": 5,
+       "pts": 10
+      },
+      {
+       "type": "ASSIST",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      },
+      {
+       "type": "PENALTY_MISSED",
+       "count": 1,
+       "per": -2,
+       "pts": -2
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Greenwood",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 161,
+     "pos": "GK",
+     "slot": 1,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 0,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Lafont",
+     "team": "Amedspor"
+    },
+    {
+     "id": 28,
+     "pos": "DEF",
+     "slot": 2,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "DID_NOT_PLAY",
+     "points": 0,
+     "breakdown": [],
+     "name": "Pina",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 462,
+     "pos": "MID",
+     "slot": 3,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 3,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Celil",
+     "team": "Samsunspor"
+    },
+    {
+     "id": 446,
+     "pos": "FWD",
+     "slot": 4,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 6,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Fatih",
+     "team": "Samsunspor"
+    }
+   ]
+  },
+  {
+   "gw": 3,
+   "order": 3,
+   "formation": "3-4-3",
+   "official": {
+    "points": 73,
+    "cumulative": 196,
+    "bench": 11,
+    "transfers": 12,
+    "weeklyRank": 64762,
+    "overallRank": 78975,
+    "rankChange": 33426,
+    "avgPoints": 59.3,
+    "highestPoints": 141,
+    "teamValue": 100
+   },
+   "sumStarting": 46,
+   "sumBench": 11,
+   "sumWithCaptain": 58,
+   "gapVsOfficial": 15,
+   "squad": [
+    {
+     "id": 195,
+     "pos": "GK",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 3,
+     "breakdown": [
+      {
+       "type": "SAVES_3",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "İrfan Can",
+     "team": "Genclerbirligi"
+    },
+    {
+     "id": 398,
+     "pos": "DEF",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Operi",
+     "team": "Basaksehir"
+    },
+    {
+     "id": 505,
+     "pos": "MID",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Yunus",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 319,
+     "pos": "FWD",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Koïta",
+     "team": "Genclerbirligi"
+    },
+    {
+     "id": 542,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Sallai",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 176,
+     "pos": "MID",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": true,
+     "status": "PLAYED",
+     "points": 3,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Greenwood",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 404,
+     "pos": "FWD",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 9,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Shomu",
+     "team": "Basaksehir"
+    },
+    {
+     "id": 259,
+     "pos": "DEF",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Rıdvan",
+     "team": "Besiktas"
+    },
+    {
+     "id": 12,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 10,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 5,
+       "pts": 5
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Salah",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 507,
+     "pos": "FWD",
+     "slot": 3,
+     "start": true,
+     "captain": true,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 12,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "ASSIST",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Osimhen",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 330,
+     "pos": "MID",
+     "slot": 4,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Oğulcan",
+     "team": "Genclerbirligi"
+    },
+    {
+     "id": 280,
+     "pos": "GK",
+     "slot": 1,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Nübel",
+     "team": "Besiktas"
+    },
+    {
+     "id": 211,
+     "pos": "DEF",
+     "slot": 2,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Andzouana",
+     "team": "Konyaspor"
+    },
+    {
+     "id": 279,
+     "pos": "MID",
+     "slot": 3,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 8,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 5,
+       "pts": 5
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Cerny",
+     "team": "Besiktas"
+    },
+    {
+     "id": 381,
+     "pos": "DEF",
+     "slot": 4,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Opoku",
+     "team": "Basaksehir"
+    }
+   ]
+  },
+  {
+   "gw": 4,
+   "order": 4,
+   "formation": "3-4-3",
+   "official": {
+    "points": 52,
+    "cumulative": 248,
+    "bench": 5,
+    "transfers": 10,
+    "weeklyRank": 207683,
+    "overallRank": 87015,
+    "rankChange": -8040,
+    "avgPoints": 52.6,
+    "highestPoints": 137,
+    "teamValue": 100
+   },
+   "sumStarting": 41,
+   "sumBench": 5,
+   "sumWithCaptain": 46,
+   "gapVsOfficial": 6,
+   "squad": [
+    {
+     "id": 362,
+     "pos": "GK",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Fofana",
+     "team": "Rizespor"
+    },
+    {
+     "id": 356,
+     "pos": "DEF",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Mithat",
+     "team": "Rizespor"
+    },
+    {
+     "id": 12,
+     "pos": "MID",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 14,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 5,
+       "pts": 5
+      },
+      {
+       "type": "ASSIST",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      },
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Salah",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 171,
+     "pos": "FWD",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Muriqi",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 132,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 5,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Haïdara",
+     "team": "Kocaelispor"
+    },
+    {
+     "id": 505,
+     "pos": "MID",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": true,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Yunus",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 593,
+     "pos": "FWD",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 6,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Vlahović",
+     "team": "Besiktas"
+    },
+    {
+     "id": 542,
+     "pos": "DEF",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 0,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Sallai",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 352,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Laçi",
+     "team": "Rizespor"
+    },
+    {
+     "id": 507,
+     "pos": "FWD",
+     "slot": 3,
+     "start": true,
+     "captain": true,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 5,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Osimhen",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 108,
+     "pos": "MID",
+     "slot": 4,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Agyei",
+     "team": "Kocaelispor"
+    },
+    {
+     "id": 195,
+     "pos": "GK",
+     "slot": 1,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "SAVES_3",
+       "count": 2,
+       "per": 1,
+       "pts": 2
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 2,
+       "per": -1,
+       "pts": -2
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "İrfan Can",
+     "team": "Genclerbirligi"
+    },
+    {
+     "id": 299,
+     "pos": "DEF",
+     "slot": 2,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": -1,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 2,
+       "per": -1,
+       "pts": -2
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Arda (2)",
+     "team": "Goztepe"
+    },
+    {
+     "id": 611,
+     "pos": "MID",
+     "slot": 3,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 3,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Diomandé",
+     "team": "Corum"
+    },
+    {
+     "id": 162,
+     "pos": "DEF",
+     "slot": 4,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Dellova",
+     "team": "Amedspor"
+    }
+   ]
+  },
+  {
+   "gw": 5,
+   "order": 5,
+   "formation": "3-5-2",
+   "official": {
+    "points": 53,
+    "cumulative": 301,
+    "bench": 11,
+    "transfers": 13,
+    "weeklyRank": 155645,
+    "overallRank": 79583,
+    "rankChange": 7432,
+    "avgPoints": 49.2,
+    "highestPoints": 139,
+    "teamValue": 96
+   },
+   "sumStarting": 47,
+   "sumBench": 11,
+   "sumWithCaptain": 49,
+   "gapVsOfficial": 4,
+   "squad": [
+    {
+     "id": 280,
+     "pos": "GK",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 6,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Nübel",
+     "team": "Besiktas"
+    },
+    {
+     "id": 516,
+     "pos": "DEF",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 8,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Sánchez",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 877,
+     "pos": "MID",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": true,
+     "status": "PLAYED",
+     "points": 4,
+     "breakdown": [
+      {
+       "type": "ASSIST",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      },
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Batrakov",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 1471,
+     "pos": "FWD",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Dju",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 261,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 6,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Agbadou",
+     "team": "Besiktas"
+    },
+    {
+     "id": 12,
+     "pos": "MID",
+     "slot": 2,
+     "start": true,
+     "captain": true,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Salah",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 75,
+     "pos": "FWD",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 9,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 3,
+       "pts": 3
+      }
+     ],
+     "name": "Benedyczak",
+     "team": "Kasimpasa"
+    },
+    {
+     "id": 398,
+     "pos": "DEF",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": -1,
+     "breakdown": [
+      {
+       "type": "YELLOW_CARD",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 2,
+       "per": -1,
+       "pts": -2
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Operi",
+     "team": "Basaksehir"
+    },
+    {
+     "id": 273,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 9,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 5,
+       "pts": 5
+      },
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Trossard",
+     "team": "Besiktas"
+    },
+    {
+     "id": 532,
+     "pos": "MID",
+     "slot": 4,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Sara",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 4,
+     "pos": "MID",
+     "slot": 5,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Muçi",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 234,
+     "pos": "GK",
+     "slot": 1,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 3,
+     "breakdown": [
+      {
+       "type": "SAVES_3",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Felipe",
+     "team": "Corum"
+    },
+    {
+     "id": 493,
+     "pos": "DEF",
+     "slot": 2,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Jules",
+     "team": "Eyupspor"
+    },
+    {
+     "id": 162,
+     "pos": "DEF",
+     "slot": 3,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 7,
+     "breakdown": [
+      {
+       "type": "CLEAN_SHEET",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      },
+      {
+       "type": "BONUS",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Dellova",
+     "team": "Amedspor"
+    },
+    {
+     "id": 437,
+     "pos": "FWD",
+     "slot": 4,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "DID_NOT_PLAY",
+     "points": 0,
+     "breakdown": [],
+     "name": "Arda",
+     "team": "Alanyaspor"
+    }
+   ]
+  },
+  {
+   "gw": 6,
+   "order": 6,
+   "formation": "3-4-3",
+   "official": {
+    "points": 2,
+    "cumulative": 303,
+    "bench": 4,
+    "transfers": 10,
+    "weeklyRank": 213163,
+    "overallRank": 81485,
+    "rankChange": -1902,
+    "avgPoints": 1.7,
+    "highestPoints": 39,
+    "teamValue": 100
+   },
+   "sumStarting": 14,
+   "sumBench": 4,
+   "sumWithCaptain": 14,
+   "gapVsOfficial": -12,
+   "squad": [
+    {
+     "id": 280,
+     "pos": "GK",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 0,
+     "breakdown": [],
+     "name": "Nübel",
+     "team": "Besiktas"
+    },
+    {
+     "id": 516,
+     "pos": "DEF",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Sánchez",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 532,
+     "pos": "MID",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": true,
+     "status": "WAITING",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Sara",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 171,
+     "pos": "FWD",
+     "slot": 1,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 0,
+     "breakdown": [],
+     "name": "Muriqi",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 172,
+     "pos": "DEF",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 0,
+     "breakdown": [],
+     "name": "Škriniar",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 12,
+     "pos": "MID",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 6,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 5,
+       "pts": 5
+      },
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Salah",
+     "team": "Trabzonspor"
+    },
+    {
+     "id": 593,
+     "pos": "FWD",
+     "slot": 2,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 0,
+     "breakdown": [],
+     "name": "Vlahović",
+     "team": "Besiktas"
+    },
+    {
+     "id": 277,
+     "pos": "DEF",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 0,
+     "breakdown": [],
+     "name": "Murillo",
+     "team": "Besiktas"
+    },
+    {
+     "id": 539,
+     "pos": "MID",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Torreira",
+     "team": "Galatasaray"
+    },
+    {
+     "id": 404,
+     "pos": "FWD",
+     "slot": 3,
+     "start": true,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 5,
+     "breakdown": [
+      {
+       "type": "GOAL",
+       "count": 1,
+       "per": 4,
+       "pts": 4
+      },
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Shomu",
+     "team": "Basaksehir"
+    },
+    {
+     "id": 176,
+     "pos": "MID",
+     "slot": 4,
+     "start": true,
+     "captain": true,
+     "vice": false,
+     "status": "WAITING",
+     "points": 0,
+     "breakdown": [],
+     "name": "Greenwood",
+     "team": "Fenerbahce"
+    },
+    {
+     "id": 234,
+     "pos": "GK",
+     "slot": 1,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 2,
+     "breakdown": [
+      {
+       "type": "SAVES_3",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      },
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Felipe",
+     "team": "Corum"
+    },
+    {
+     "id": 567,
+     "pos": "DEF",
+     "slot": 2,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "PLAYED",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "GOALS_CONCEDED_2",
+       "count": 1,
+       "per": -1,
+       "pts": -1
+      },
+      {
+       "type": "APPEARANCE_60_PLUS",
+       "count": 1,
+       "per": 2,
+       "pts": 2
+      }
+     ],
+     "name": "Sorescu",
+     "team": "Gaziantep"
+    },
+    {
+     "id": 232,
+     "pos": "DEF",
+     "slot": 3,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "DID_NOT_PLAY",
+     "points": 0,
+     "breakdown": [],
+     "name": "Cemali",
+     "team": "Corum"
+    },
+    {
+     "id": 326,
+     "pos": "MID",
+     "slot": 4,
+     "start": false,
+     "captain": false,
+     "vice": false,
+     "status": "WAITING",
+     "points": 1,
+     "breakdown": [
+      {
+       "type": "APPEARANCE_1_TO_60",
+       "count": 1,
+       "per": 1,
+       "pts": 1
+      }
+     ],
+     "name": "Diabate",
+     "team": "Genclerbirligi"
+    }
+   ]
+  }
+ ]
+}

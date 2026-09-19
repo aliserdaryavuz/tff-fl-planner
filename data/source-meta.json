@@ -30,6 +30,11 @@
       "fetched": "2026-09-18",
       "matchday": 6,
       "previews": 9
+    },
+    "teamHistory": {
+      "source": "TFF Fantezi Lig resmî API (tfffantezilig.com), 19.09.2026",
+      "fetched": "2026-09-19",
+      "weeks": 6
     }
   }
 }
