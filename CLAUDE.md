@@ -12,6 +12,12 @@ Ayrıntılı tanım `PROJECT.md` içinde — yeni bir işe başlamadan önce onu
 - Sayı, tarih, yüzde ve para biçimi dile bağlı: `lib/format.ts` (fantasy fiyatı "M TL", kadro değeri "M€"). Bileşenler `useI18n().f` kullanır.
 - Saatler Türkiye saati (`tsi`, sabit UTC+3); TFF henüz açıklamadıysa `tsi: null`. Gösterim `lib/time.ts`.
 - Küçük adımlar. Her adımdan sonra `pnpm build`, `pnpm typecheck`, `pnpm lint`, `pnpm test` geçsin.
+- **Etkileşim ölçümü `next dev`'de değil, `next start`'ta yapılır.** Başsız Chrome dev
+  sunucusuna bağlandığında HMR WebSocket el sıkışması düşüyor ve sayfa **hiç hidre olmuyor**:
+  DOM doğru çiziliyor, CSS doğru ölçülüyor, ama tıklamalar React durumunu değiştirmiyor.
+  19.09'da bu, çalışan bir özelliği "hiç çizilmiyor" diye gösterdi; tema düğmesinin de tepki
+  vermediği görülünce anlaşıldı. Saf DOM/CSS ölçümü (yapışkanlık, taşma, `details.open`)
+  dev'de güvenilir; düğme, sekme, form sınaması değil.
 - Bir dosyayı baştan yazmadan önce sor. Yerinde düzelt.
 
 ## Veri

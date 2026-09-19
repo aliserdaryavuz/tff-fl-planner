@@ -171,6 +171,28 @@ const tr = {
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 takım, 34 hafta. Saatler: ${tz}. Fikstür: ${fixtures}.`,
   },
+  improve: {
+    viewLabel: "Görünüm",
+    fromScratch: "Sıfırdan kur",
+    mine: "Kadromu iyileştir",
+    heading: "Kadromu iyileştir",
+    note: "Oyundaki gerçek kadron okunup bu haftanın beklenen puanını yükselten takaslar aranıyor. TFF'de transfer sınırsız ve cezasız olduğu için soru 'kaç transfer yapayım' değil, 'hangi değişiklik bu haftayı yükseltir'.",
+    currentXp: "Bugünkü kadro",
+    afterXp: "Takaslardan sonra",
+    gain: "Kazanç",
+    bank: "Kalan para",
+    swapsHeading: "Önerilen takaslar",
+    out: "Çıkan",
+    in: "Giren",
+    priceDelta: "Fiyat farkı",
+    none: "Bu hafta kadronu yükselten bir takas bulunamadı. Bütçe, kulüp sınırı ve mevki kısıtları içinde elindeki 15 oyuncudan daha iyisi çıkmıyor.",
+    empty:
+      "Gerçek kadro verisi yok. Çekmek için: node scripts/fetch-team-history.mjs",
+    missingNote: (n: number) =>
+      `${n} oyuncu güncel oyuncu listesinde bulunamadı (ligden ayrılmış olabilir). O oyuncular kadro hesabına girmiyor, yani buradaki beklenen puan olduğundan düşük.`,
+    assumptions:
+      "Satış fiyatı bugünkü fiyat sayılıyor (oyunun kâr paylaşımı kuralı modellenmedi). Takaslar sırayla, her adımda en çok kazandıran seçilerek bulunuyor; bu yüzden liste 'mümkün olan en iyi kadro' değil, 'bu takaslar şu kadar kazandırıyor' demek.",
+  },
   season: {
     heading: "Sezon günlüğü",
     note: "Kendi takımının hafta hafta geçmişi: oyunun resmî puanı, sıran, transfer sayın ve o hafta sahaya sürdüğün kadro. Oyunun kendi API'sinden okunuyor; elle giriş yok.",
@@ -773,6 +795,27 @@ const en: Strings = {
     title: "TFF FL Planner",
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 teams, 34 matchweeks. Times: ${tz}. Fixtures: ${fixtures}.`,
+  },
+  improve: {
+    viewLabel: "View",
+    fromScratch: "Build from scratch",
+    mine: "Improve my squad",
+    heading: "Improve my squad",
+    note: "Your real squad is read from the game and searched for swaps that raise this week's expected points. Transfers in TFF are unlimited and free, so the question is not how many to make but which change raises this week.",
+    currentXp: "Squad today",
+    afterXp: "After the swaps",
+    gain: "Gain",
+    bank: "Money left",
+    swapsHeading: "Suggested swaps",
+    out: "Out",
+    in: "In",
+    priceDelta: "Price change",
+    none: "No swap raises your squad this week. Within budget, the club limit and the position rules, nothing beats the fifteen you already have.",
+    empty: "No real squad data yet. To fetch it: node scripts/fetch-team-history.mjs",
+    missingNote: (n: number) =>
+      `${n} player(s) were not found in the current player list (they may have left the league). They are left out of the calculation, so the expected points shown here are lower than the real figure.`,
+    assumptions:
+      "Selling price is taken as today's price; the game's profit-sharing rule is not modelled. Swaps are found one at a time, each step taking the biggest gain, so the list means \"these swaps gain this much\", not \"this is the best possible squad\".",
   },
   season: {
     heading: "My season",

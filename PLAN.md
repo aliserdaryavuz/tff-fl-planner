@@ -898,13 +898,40 @@ doğru yere insin.
   Hesap yok (CLAUDE.md yasak), bedeli dürüstçe yazılır: tek tarayıcıya bağlı.
   UCL karşılığı: `lib/saved-squads.ts`, `components/{SavedSquads,useSavedSquads}.tsx`.
 
-- [ ] **4.2 "Kadromu iyileştir" sayfası.** (M)
-  UCL'nin transfer planlayıcısının TFF'ye uyarlanmış hâli. TFF'de transfer sınırsız ve
-  cezasız olduğu için soru "kaç transfer yapayım, ceza değer mi" değil: **"elimdeki kadroda
-  hangi değişiklik bu haftanın beklenen puanını artırır"**. Çıktı: bütçe ve kulüp sınırı
-  korunarak sıralı takas listesi, her satırda kazanç.
-  UCL'den alınacak: aday kısa listesi + kadro üstünde tam değerlendirme yöntemi.
-  UCL'den alınmayacak: hak muhasebesi, ceza, çok haftalı açgözlü arama.
+- [x] **4.2 "Kadromu iyileştir".** (M) — **bitti 19.09.** Ayrı sayfa değil, kadro sayfasında
+  görünüm anahtarı: ikisi de aynı sıralamayı ve yedek ağırlığını kullanıyor, tek fark birinin
+  sıfırdan kurması. Gezinmeye yedinci sekme eklemek telefonda sekme başına 53 px bırakırdı.
+
+  Kadro elle girilmiyor: 4.3'te doğrulanan uçtan okunuyor (`lib/improve.ts` → `currentSquad`).
+
+  **Arama neden hem kesin hem ucuz:** aynı mevkide daha düşük beklenen puanlı bir oyuncuya
+  geçmek kadro hedefini asla yükseltemez — ilk 11 zaten en iyi seçimle kuruluyor ve hedef her
+  oyuncunun puanında azalmayan bir fonksiyon. Dolayısıyla çıkan her oyuncu için bütçeye ve
+  kulüp sınırına uyan adaylar arasında **en yüksek xP'li olan baskındır**. Bu, 500 adayı 1'e
+  indiriyor ve sonucu yaklaşıklaştırmıyor: adım içinde kesin. Adımlar arası açgözlülük kesin
+  değil (bütçe etkileşimi) ve arayüz bunu "en iyi kadro" diye sunmuyor.
+
+  Kısıtlar birim testle sınandı (`lib/improve.test.ts`, 6 test): 15 oyuncu ve 2-5-5-3 korunur,
+  kulüp başına üç sınırı çiğnenmez, parası yetmeyen önerilmez, daha iyisi yoksa takas
+  önerilmez, kasa eksiye düşmez. Bunlar arayüzde gözle görülmez — öneri listesi makul dururken
+  sınırı çiğnemiş olabilir ve kullanıcı ancak oyuna girip transferi denerken fark ederdi.
+
+  Gerçek veriyle ölçüldü: 63,3 → 67,2 xP (+3,9), 4 takas, kazançlar azalan sırada
+  (+1,5 / +1,4 / +0,6 / +0,4), 15 oyuncunun 15'i eşleşti, telefonda taşma yok.
+
+  **Bu turda çıkan yöntem dersi (CLAUDE.md'ye de yazıldı):** ilk ölçüm "hiçbir şey çizilmiyor"
+  dedi. Sebep özellik değildi — başsız Chrome `next dev`'e bağlandığında HMR WebSocket'i
+  düşüyor ve sayfa **hiç hidre olmuyor**; DOM doğru, tıklama ölü. Tema düğmesinin de tepki
+  vermediği görülünce anlaşıldı. Etkileşim ölçümü artık `next start`'a karşı yapılıyor.
+
+  Özgün tanımdan devralınan sınır aynen korundu: UCL'den aday kısa listesi ve kadro üstünde
+  tam değerlendirme alındı; hak muhasebesi, ceza ve çok haftalı arama **alınmadı** (TFF'de
+  transfer sınırsız ve cezasız, o muhasebenin karşılığı yok).
+
+  Açık kalan: satış fiyatı bugünkü fiyat sayılıyor — oyunun kâr paylaşımı kuralı modellenmedi
+  ve arayüzde bu yazılı. Bir de "sıfırdan kurulsa ne çıkardı" tavanı gösterilmiyor;
+  `buildSquad` ağır olduğu için ana iş parçacığında koşturmak sayfayı dondururdu, worker'a
+  taşımak ayrı bir iş.
 
 - [x] **4.3 Sezon günlüğü.** (M) — **bitti 19.09; uç doğrulandı, elle giriş gerekmiyor.**
 
