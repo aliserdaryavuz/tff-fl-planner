@@ -424,8 +424,27 @@ bağımsız, bu yüzden önce bunlar.
   sabitlenmedi (her hafta artıyor); toplam test 143 → 151.
 
   **Yapılmadı, bilerek:** oyuncu adları bağlantı değil — oyuncu sayfaları **3.4**'e ait.
-  Planın "`playerOfTheMatch` 1.1'deki bonus çözümünü doğrular" notu da **henüz yapılmadı**:
-  veri artık elimizde ama karşılaştırma yapılmadı, açık iş olarak duruyor.
+  **`playerOfTheMatch` ile bonus karşılaştırması yapıldı (19.09).** 4.3'te gelen oyun
+  dökümü bunu ilk kez mümkün kıldı: bonus bugüne kadar en küçük karelerle *geri
+  çıkarılmıştı*, doğrudan ölçülmemişti.
+
+  Eşleme ad üzerinden değil kimlik üzerinden (`gameId` → `fotmobId` → `potm.id`); adla
+  eşlemek 12.09'da 109 yanlış eşleşme yapmıştı.
+
+  | bonus | kayıt | FotMob'un maçın adamı ile aynı |
+  | --- | --- | --- |
+  | 3 | 8 | **7** |
+  | 2 | 2 | 0 |
+  | 1 | 4 | 0 |
+
+  **Sonuç: yakın ama aynı değil.** Üç puanlık bonusun 8'de 7'si maçın adamı; istisna
+  3. hafta Salah (oyun 3 bonus verdi, FotMob aynı maçta Onana'yı seçti). 2 ve 1 puanlıklarda
+  örtüşme yok — beklenen, çünkü maçın adamı tek kişi. Yani `potm`'u bonus yerine koymak
+  sekizde bir yanlış olurdu ve alt basamaklar hakkında hiçbir şey söylemezdi. Bonusu kendi
+  maç puanlarımızdan hesaplayan mevcut yol (`bonusPoints`) yerinde kalıyor.
+
+  **Örneklem dürüstçe:** 5 haftada 14 bonus kaydı ve hepsi **kendi kadromdaki** oyunculardan
+  — rastgele değil, yüksek puanlılara eğilimli. Yön güçlü ama oran kesin sayılmamalı.
 
 - [x] **2.2 Fiyat ve seçilme günlüğü.** (S) — 18.09 tamamlandı, **ilk kayıt alındı.**
   Oyun yalnız anlık değeri veriyor. "Bu hafta kim zamlandı, kim düşüyor" ancak kendi
