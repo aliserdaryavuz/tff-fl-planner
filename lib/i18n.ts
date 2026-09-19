@@ -171,6 +171,11 @@ const tr = {
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 takım, 34 hafta. Saatler: ${tz}. Fikstür: ${fixtures}.`,
   },
+  notFound: {
+    title: "Sayfa yok",
+    lead: "Bu adreste bir şey bulunamadı. Adres yanlış yazılmış olabilir ya da oyuncu artık listede olmayabilir.",
+    sections: "Bölümler",
+  },
   methodology: {
     heading: "Yöntem",
     link: "Yöntem ve sınırlar",
@@ -900,6 +905,11 @@ const en: Strings = {
     title: "TFF FL Planner",
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 teams, 34 matchweeks. Times: ${tz}. Fixtures: ${fixtures}.`,
+  },
+  notFound: {
+    title: "Page not found",
+    lead: "Nothing lives at this address. The link may be mistyped, or the player may no longer be in the list.",
+    sections: "Sections",
   },
   methodology: {
     heading: "Method",

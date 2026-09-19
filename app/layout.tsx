@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import { Suspense } from "react";
 import { Shell } from "@/components/Shell";
+import { SITE } from "@/lib/site";
 import { GROUND, GROUND_LIGHT } from "@/lib/theme";
 import "./globals.css";
 
@@ -19,7 +20,6 @@ const barlowCondensed = Barlow_Condensed({
   display: "swap",
 });
 
-const SITE = "https://tff-fl-planner.vercel.app";
 const TITLE = "TFF FL Planner 2026/27";
 const DESCRIPTION =
   "TFF Fantezi Lig 2026/27 planlayıcısı: her hafta için beklenen puana göre ilk 11 + yedek + kaptan, Süper Lig fikstür zorluğu ve oyuncu sıralaması. Türkçe ve İngilizce.";

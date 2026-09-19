@@ -1,0 +1,43 @@
+# Her push ve PR'da kapı: typecheck + lint + test + build.
+#
+# Neden: bu kapı bugüne kadar yalnız elle koşuyordu. Veri dosyaları repoda
+# olduğu için derleme hiçbir sır ya da ağ erişimi istemiyor; oyunun API'sine
+# giriş gerektiren betikler (fetch-game, fetch-team-history) burada KOŞMUYOR.
+#
+# `data/validate.test.ts` ve `data/source-meta.test.ts` testlerin içinde:
+# veri dosyaları bozulursa ya da türetilmiş özet bayatlarsa kapı düşer.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Aynı dalda arka arkaya push olursa eskisini iptal et; sıra beklemesin.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Yerelde kullanılan sürüm; Next 16 daha eski sürümlerde uyarı veriyor.
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Sıra bilinçli: en ucuz ve en çok bilgi veren önce. Tip hatası varsa
+      # derlemeyi beklemeye gerek yok.
+      - run: pnpm typecheck
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm build

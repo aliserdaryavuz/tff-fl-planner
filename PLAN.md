@@ -1091,7 +1091,12 @@ doğru yere insin.
 
 ## 8. Faz 5 — Otomasyon ve yayın kalitesi
 
-- [ ] **5.1 CI: her push'ta typecheck + lint + test + build.** (S)
+- [x] **5.1 CI: her push'ta typecheck + lint + test + build.** (S) — **bitti 19.09.**
+  `.github/workflows/ci.yml`; main'e push ve PR'da koşuyor, aynı dalda yeni push eskisini
+  iptal ediyor. Sıra en ucuzdan pahalıya: tip hatası varsa derlemeyi beklemeye gerek yok.
+  Sır ya da ağ erişimi istemiyor — veri repoda; oyuna giriş gerektiren betikler burada
+  koşmuyor. `data/validate.test.ts` ve `data/source-meta.test.ts` testlerin içinde, yani
+  veri bozulursa ya da türetilmiş özet bayatlarsa kapı düşer.
   UCL karşılığı: `.github/workflows/ci.yml`.
 
 - [ ] **5.2 Günlük veri işi — kısmi.** (M)
@@ -1103,7 +1108,26 @@ doğru yere insin.
   `source-meta` üzerinden görünsün (2.3'e bağlı).
   UCL karşılığı: `scripts/update-all.mjs`, `scripts/lib/schedule.mjs`, `.github/workflows/update-data.yml`.
 
-- [ ] **5.3 Yayın kabuğu.** (S)
+- [x] **5.3 Yayın kabuğu.** (S) — **bitti 19.09.** `app/robots.ts`, `app/sitemap.ts`,
+  `app/not-found.tsx`, `next.config.ts` başlıkları. Site adresi `lib/site.ts`'te tek yerde:
+  yerleşim, robots ve sitemap ayrışırsa site arama motoruna kendi adresini yanlış bildirir.
+
+  Ölçüldü: sitemap **553 URL** (7 bölüm + 18 kulüp + 528 oyuncu), `lastmod` veri çekim
+  tarihinden (her derlemede bugünü yazmak, hiçbir şey değişmediği hâlde "güncellendi"
+  demek olurdu), bilinmeyen adres gerçekten **404** dönüyor ve 404 sayfası kabuğun içinde,
+  seçili dilde, bölüm bağlantılarıyla geliyor.
+
+  **CSP tarayıcıda doğrulandı — ihlal 0.** Politika sıkı tutulabildi çünkü çalışma anında
+  dış kaynak yok: yazı tipleri `next/font` ile derlemede kendi sunucumuza iniyor, armalar
+  `public/logos/` altında yerel. (Veri dosyasındaki `cdn.tfffantezilig.com` adresi yalnız
+  çekim betiğinin kaynağı; bunu kontrol etmeden CSP yazsaydım ya armaları düşürürdüm ya da
+  gereksiz yere dış alan adı açardım.) Ölçüm: hidrasyon çalışıyor, 20 yazı tipi yüklü,
+  görseller geliyor.
+
+  **Bilinçli taviz:** `script-src 'unsafe-inline'`. Next hidrasyon verisini satır içi
+  betikle gönderiyor; nonce vermek middleware gerektirirdi. Taviz XSS'e karşı tam korumayı
+  bırakıyor ama **dış kaynaklı betik** yine engelli. Sitede kullanıcı girdisi, oturum ve
+  ödeme olmadığı için kalan risk sınırlı. `next.config.ts` içinde yazılı.
   `robots.ts`, `sitemap.ts`, temalı `not-found.tsx` ve `error.tsx`, güvenlik başlıkları (CSP).
 
 - [ ] **5.4 Erişilebilirlik ve mobil ölçümü.** (M)
