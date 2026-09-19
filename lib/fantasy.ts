@@ -97,7 +97,20 @@ export function playersOf(team: string, pos: Position): Player[] {
   return playersByTeam[team]?.filter((p) => p.pos === pos) ?? [];
 }
 
-/** Oyuncuyu kilitleme/dışlama listelerinde tanımlayan anahtar. */
-export function playerKey(player: { team: string; name: string }): string {
-  return `${player.team}|${player.name}`;
-}
+/**
+ * Adres parçasından oyuncu. Kulüp + ad 528 oyuncunun hepsinde benzersiz
+ * (ölçüldü: yalnız adla 44 çakışma var, yedi ayrı "Arda").
+ */
+export const playersBySlug: Record<string, Player> = Object.fromEntries(
+  players.map((p) => [playerSlug(p), p]),
+);
+
+// Anahtar ve adres artık veri içermeyen modülde (lib/player-key.ts): bağlantı
+// bileşeni adres hesaplamak için bu dosyayı, dolayısıyla 226 KB'lık oyuncu
+// verisini pakete sokmasın. Eski adla yeniden dışa aktarılıyor.
+//
+// `export … from` adı yalnız dışarı açar, bu modülün kapsamına sokmaz; aşağıdaki
+// `playersBySlug` çağırdığı için ayrıca import ediliyor.
+import { playerSlug } from "@/lib/player-key";
+
+export { playerKey, playerSlug } from "@/lib/player-key";

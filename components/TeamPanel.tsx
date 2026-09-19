@@ -27,6 +27,7 @@ export function TeamPanel({
   result,
   strength,
   model,
+  squadOpen = false,
 }: {
   teamId: string;
   onSelect: (id: string) => void;
@@ -36,6 +37,8 @@ export function TeamPanel({
   result: TeamResult;
   strength: Record<string, number>;
   model: ModelKey;
+  /** Kulüp sayfasında kadro açık başlasın; listede kapalı kalsın. */
+  squadOpen?: boolean;
 }) {
   const { t, f } = useI18n();
   const team = byId[teamId];
@@ -115,7 +118,7 @@ export function TeamPanel({
       </button>
       <p className="mt-2 text-[13px] text-muted">{t.team.windowHint}</p>
 
-      <FantasyList teamId={teamId} />
+      <FantasyList teamId={teamId} open={squadOpen} />
     </section>
   );
 }

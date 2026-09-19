@@ -1,4 +1,5 @@
 import raw from "@/data/superlig-2026-27.json";
+import { slugify } from "@/lib/slug";
 
 export type Team = {
   /** Fixture'lardaki anahtar, ör. "Fenerbahce" */
@@ -120,6 +121,20 @@ export const schedule: Record<string, TeamFixture[]> = (() => {
   for (const id of teamIds) s[id].sort((a, b) => a.md - b.md);
   return s;
 })();
+
+/**
+ * Kulübün adres parçası. Kimlikler zaten ASCII ("Besiktas", "Genclerbirligi")
+ * ama slug üretimi tek yerden geçsin: kimlik değişirse adres kendiliğinden
+ * uyar ve oyuncu adresiyle aynı kuralı kullanır (`lib/player-key.ts`).
+ */
+export function teamSlug(id: string): string {
+  return slugify(id);
+}
+
+/** Adres parçasından kulüp kimliği; tanınmayan adres için undefined. */
+export const bySlug: Record<string, string> = Object.fromEntries(
+  teamIds.map((id) => [teamSlug(id), id]),
+);
 
 export const isPlayed = (f: Fixture) => f.hg != null && f.ag != null;
 

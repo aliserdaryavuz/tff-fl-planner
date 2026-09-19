@@ -3,6 +3,7 @@
 import { useI18n } from "@/components/I18nProvider";
 import { breakdownTitle } from "@/components/PickList";
 import { TeamLogo } from "@/components/TeamLogo";
+import { PlayerLink } from "@/components/EntityLink";
 import { useTheme } from "@/components/PlannerContext";
 import { roleStyle } from "@/lib/bands";
 import { byId } from "@/lib/data";
@@ -66,7 +67,7 @@ export function SquadPitch({
         ) : null}
         <TeamLogo id={p.team} size={small ? 22 : 28} className="mx-auto block" />
         <b className="mt-1 block truncate text-[11px] leading-tight font-semibold desk:text-[12px]">
-          {p.name}
+          <PlayerLink player={p} />
           {p.status === "D" ? (
             <span className="ml-0.5 text-harder" title={t.status.D}>
               ?

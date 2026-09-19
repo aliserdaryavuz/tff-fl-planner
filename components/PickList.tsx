@@ -5,6 +5,7 @@ import { Exportable } from "@/components/Exportable";
 import { useI18n } from "@/components/I18nProvider";
 import { Segmented } from "@/components/Segmented";
 import { TeamLogo } from "@/components/TeamLogo";
+import { PlayerLink } from "@/components/EntityLink";
 import { useTheme } from "@/components/PlannerContext";
 import { bandOf, bandStyle } from "@/lib/bands";
 import { byId } from "@/lib/data";
@@ -323,7 +324,9 @@ function PickRowView({ row, rank, compact = false }: { row: PickRow; rank: numbe
 
       <div className="min-w-0">
         <b className="block truncate text-sm font-semibold">
-          {row.player.name}
+          {/* Görsel dışa aktarmada düz metne düşüyor (EntityLink): kaydedilen
+              resimde altı çizili bağlantı olmaz. */}
+          <PlayerLink player={row.player} />
           {row.player.status === "D" ? (
             <em className="ml-1.5 text-xs font-normal text-harder not-italic">{t.status.D}</em>
           ) : null}

@@ -62,6 +62,58 @@
   --text-title--line-height: 1.25;
   --text-display: 1.75rem;
   --text-display--line-height: 1.1;
+
+  /* Sayı vurgusu: kart içindeki tek büyük rakam. */
+  --text-stat: 1.75rem;
+  --text-stat--line-height: 1;
+}
+
+/* Başlık rolleri: bölüm (h2) ve alt bölüm (h3). Aynı düzeydeki başlıklar
+   bileşenden bileşene 15, 19 ve 20 px arasında dağılmıştı; boyut artık
+   başlığın rolünden geliyor. */
+@utility heading-section {
+  font-family: var(--font-cond);
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+@utility heading-sub {
+  font-family: var(--font-cond);
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* Yatay kayan şeridin kenar solması: bileşen yalnız o yönde gizli öge varken
+   `--fade-start` / `--fade-end` veriyor (components/useEdgeFade.ts). Maske
+   yalnız saydamlık taşıyor, renk değil — tema değişince bozulmasın. */
+@utility scroll-fade {
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 var(--fade-start, 0px),
+    #000 calc(100% - var(--fade-end, 0px)),
+    transparent 100%
+  );
+}
+
+/* İçeriğe geç bağlantısı: ekran dışında durur, odak alınca görünür. */
+@utility skip-link {
+  position: absolute;
+  left: 14px;
+  top: -200px;
+  z-index: var(--z-skip);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  color: var(--color-ink);
+  padding: 12px 16px;
+  font-weight: 600;
+  &:focus {
+    top: 8px;
+  }
 }
 
 /* Açık tema (kullanıcı kararı 18.09.2026: varsayılan açık, koyu seçenek).
@@ -91,6 +143,15 @@
 }
 
 @layer base {
+  /* Katman ölçeği: bileşende ham z-index yazılmasın, sıralama tek yerden
+     okunsun. Gezinme çubuğu içeriğin üstünde, atlama bağlantısı hepsinin. */
+  :root {
+    --z-sticky: 10;
+    --z-raised: 20;
+    --z-nav: 30;
+    --z-skip: 50;
+  }
+
   html {
     background: var(--color-ground);
     color-scheme: dark;

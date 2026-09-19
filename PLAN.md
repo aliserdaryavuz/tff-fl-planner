@@ -664,10 +664,75 @@ doğru yere insin.
   sayılar), `lib/` ağacında tarayıcıya özgü tek bir çağrı yok. İkisi de worker sınırının
   çalışma anında patladığı yerler olduğu için yazmadan önce bakıldı.
 
-- [ ] **3.4 Oyuncu ve kulüp sayfaları.** (M)
-  `/players/<oyuncu>`: başlama olasılığı, oranlar, hafta hafta beklenen puan dökümü.
-  `/teams/<kulüp>`: kadronun tamamı. Derleme anında statik.
-  Bugün bu bilgi yalnız `title` ipucunda; mobilde erişilemiyor.
+- [x] **3.4 Oyuncu ve kulüp sayfaları.** (M) — 19.09 tamamlandı.
+  `/players/<oyuncu>` ve `/teams/<kulüp>`, derleme anında **546 statik sayfa** (528 + 18).
+  Bu bilgi eskiden yalnız `title` ipucundaydı ve mobilde hiç erişilemiyordu.
+
+  **Adres şeması ölçülerek seçildi:** yalnız adla **44 çakışma** var (yedi ayrı "Arda", üç
+  "Enes"), `takım-ad` ile 528'de **sıfır**. `slugify` Türkçe harfleri NFD'den önce katlıyor —
+  sonra katlansa büyük `İ` ve `Ø` düşerdi.
+
+  **Statik sayfa / durum gerilimi** UCL'deki gibi çözüldü: sayfa bileşenleri istemci bileşeni
+  ve durumu bağlamdan okuyor. Kabuk yerleşimde olduğu için statik HTML kabuğu veriyor, sayılar
+  hydration'dan sonra doluyor.
+
+  **Paket tuzağına önceden kaçınıldı:** `playerKey`/`playerSlug` veri içermeyen
+  `lib/player-key.ts`'e taşındı. `lib/fantasy.ts`'te kalsalardı adres hesaplayan her bağlantı
+  bileşeni 226 KB'lık oyuncu dosyasını pakete sokardı — bu oturumda aynı tuzağa 3.1 ve 2.3'te
+  de rastlamıştım.
+
+  **Bağlantılar takıldı:** sıralama satırı, saha kartı, maç ayrıntısındaki kadro başlığı ve
+  kulüp kadro listesi. **Üç yere bilerek takılmadı**, üçü de aynı sebeple — iç içe etkileşimli
+  öge, geçersiz anlambilim ve tek dokunuşta iki iş:
+
+  - `Standings` satırları `<button>` (işi takım seçmek),
+  - `Results`'taki maç satırı `<summary>` (tıklama paneli açıyor),
+  - `TeamsTable` satırları `role="button"` + `tabIndex` + Enter/Space işleyicili `div`.
+
+  **Kendi soktuğum tekrar, ölçülüp giderildi.** Kulüp sayfasına ikinci bir kadro listesi
+  yazmıştım; oysa `TeamPanel` zaten `FantasyList`'i çiziyordu. Tarayıcı ölçümü: **8 `h3`**,
+  aynı dört mevki iki kez. Kendi bölümüm kaldırıldı, `FantasyList` tek liste oldu ve adlarına
+  bağlantı eklendi. Yeniden ölçüm: **4 `h3`**, kulüp sayfasında kadro açık, `/teams`'te kapalı,
+  iki sayfada da 29 oyuncu bağlantısı. Yan kazanç: oyuncu sayfalarına artık `/teams` listesinden
+  de gidiliyor — kulüp sayfasının giriş noktası ince kalmıyor.
+
+  **Bilerek verilen ödün:** kendi listemdeki "başlama olasılığı" sütunu gitti. İki paralel kadro
+  listesi tutup zamanla ayrışmalarına izin vermektense küçük bir bilgi kaybı seçildi.
+
+  **Tarayıcıda doğrulanan:**
+
+  | ölçülen | sonuç |
+  | --- | --- |
+  | oyuncu sayfası | tek `h1`, dört kart, dört bölüm, bozuk değer yok |
+  | sıralamadan tıklama | `/players/trabzonspor-salah`, **`gw=9` ve `h=3` korundu** |
+  | saha kartı (şüphe) | 92×76, ad bağlantısı **taşmıyor** |
+  | sıralama satırı (şüphe) | ad kutusu 806 px, **kesme çalışıyor** |
+
+  Son iki satır yazarken şüphelendiğim yerlerdi (bağlantıya sarmak `truncate` ve dar kartı
+  bozabilirdi); ölçüm ikisini de çürüttü.
+
+  **Açık kalan:** gol atan oyuncu adları bağlanmadı — `results.json`'daki adlar FotMob'un ve
+  oyun dosyasındaki adlara eşleyen bir haritamız yok. Uydurma bağlantı üretmektense düz metin
+  bırakıldı; eşleme kurulursa açılır.
+
+- [ ] **3.5 Görsel sistemi tamamla (UCL'den).** (L) — kullanıcı isteği, 19.09.
+  3.1 ve 3.2'de bilerek ertelenen arayüz/düzen/görsel işleri. Sıra içinde, her adım
+  tarayıcıda bakılarak; toptan bir "her şeyi çevir" hamlesi görsel gerilemeyi görünmez kılar.
+
+  - **Rol belirteçlerine geçiş.** 3.2 belirteçleri tanımladı ama çağrı yerleri çevrilmedi:
+    **20 dosyada 82 px yazı boyutu** duruyor, yani rem'in asıl faydası (tarayıcının yazı
+    boyutu ayarını izleme) hâlâ gerçekleşmiyor. Sayfa sayfa çevrilecek.
+  - **`ContextBar`.** 3.1'de belirteçler olmadığı için ertelenmişti, engeli kalktı: sayfadaki
+    sayıları belirleyen ayarlar başlığın altında çip olarak, her sayfada aynı sırada.
+  - **Tasarım sistemi parçaları.** Başlık yardımcıları (`heading-section`/`heading-sub`),
+    tek form dili (aynı yükseklik/çerçeve/köşe; dokunmatikte 16 px alan), odak halkası rengi,
+    katman ölçeği (`--z-*`), kabuk yükseklikleri, yatay şeritlerde kenar solması.
+  - **Yapışkan üst çubuk ve sayfa geçişleri.** Kabuk geçişte canlanmamalı; hareket azaltma
+    tercihi tümünü kapatmalı.
+  - **İçeriğe geç bağlantısı** (klavye) — 5.4'ün de gereği.
+
+  UCL karşılığı: `app/globals.css` (`@utility` blokları), `components/{ContextBar,Nav}.tsx`,
+  `docs/design-system.md`.
 
 ---
 

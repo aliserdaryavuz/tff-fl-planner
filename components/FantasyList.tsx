@@ -1,18 +1,24 @@
 "use client";
 
+import { PlayerLink } from "@/components/EntityLink";
 import { useI18n } from "@/components/I18nProvider";
 import { byId } from "@/lib/data";
 import { fantasyMeta, playersByTeam, playersOf, POSITIONS } from "@/lib/fantasy";
 import { BUDGET } from "@/lib/squad";
 
-/** Seçili takımın oyuncuları, mevki mevki (fiyat varsa fiyata göre). */
-export function FantasyList({ teamId }: { teamId: string }) {
+/**
+ * Seçili takımın oyuncuları, mevki mevki (fiyat varsa fiyata göre).
+ *
+ * Kulüp sayfasının kadro listesi de bu: ikinci bir liste yazmak, iki kopyanın
+ * zamanla ayrışması demekti. Orada açık başlasın diye `open` var.
+ */
+export function FantasyList({ teamId, open = false }: { teamId: string; open?: boolean }) {
   const { t, f } = useI18n();
   const squad = playersByTeam[teamId] ?? [];
   if (!squad.length) return null;
 
   return (
-    <details className="group mt-3 border-t border-line pt-2">
+    <details open={open} className="group mt-3 border-t border-line pt-2">
       <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 font-semibold [&::-webkit-details-marker]:hidden">
         <span className="text-accent transition-transform group-open:rotate-90">▸</span>
         {t.fantasy.heading}
@@ -41,7 +47,7 @@ export function FantasyList({ teamId }: { teamId: string }) {
                   className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-baseline gap-x-2.5 border-b border-line py-1.5 text-sm"
                 >
                   <span className="truncate">
-                    {p.name}
+                    <PlayerLink player={p} />
                     {p.status ? (
                       <em className="ml-1.5 text-xs not-italic text-harder">{t.status[p.status]}</em>
                     ) : null}

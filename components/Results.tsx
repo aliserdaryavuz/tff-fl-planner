@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { TeamLink } from "@/components/EntityLink";
 import { useI18n } from "@/components/I18nProvider";
 import { PageHead } from "@/components/PageHead";
 import { usePlanner } from "@/components/PlannerContext";
@@ -320,9 +321,11 @@ function Lineup({ side, team }: { side: MatchSide | null; team: string }) {
   const used = side.subs.filter((p) => p.minutes > 0);
   return (
     <div>
+      {/* Kulüp adı burada bağlantı: maç satırındaki `Side` `<summary>` içinde ve
+          oraya bağlantı koymak tıklamayı hem gezinme hem panel açma yapardı. */}
       <h3 className="mt-0 mb-1 flex items-center gap-1.5 font-cond text-[15px] font-semibold tracking-wide">
         <TeamLogo id={team} size={16} />
-        {byId[team].name}
+        <TeamLink team={team} />
         {side.formation ? (
           <span className="text-[13px] font-normal text-muted">{side.formation}</span>
         ) : null}
