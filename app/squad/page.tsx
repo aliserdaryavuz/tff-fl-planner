@@ -1,5 +1,6 @@
 "use client";
 
+import { ContextBar, SQUAD_CHIPS } from "@/components/ContextBar";
 import { useI18n } from "@/components/I18nProvider";
 import { PageHead } from "@/components/PageHead";
 import { usePlanner } from "@/components/PlannerContext";
@@ -17,7 +18,11 @@ export default function SquadPage() {
 
   return (
     <div className="grid gap-8">
-      <PageHead title={t.pages.squad.title} lead={t.pages.squad.lead} />
+      <PageHead
+        title={t.pages.squad.title}
+        lead={t.pages.squad.lead}
+        context={<ContextBar chips={SQUAD_CHIPS} />}
+      />
 
       <SquadBuilder
         rows={rows}

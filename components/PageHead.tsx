@@ -12,12 +12,15 @@ export function PageHead({
   title,
   lead,
   actions,
+  context,
   className = "",
 }: {
   id?: string;
   title: React.ReactNode;
   lead?: React.ReactNode;
   actions?: React.ReactNode;
+  /** Bağlam çipleri (`ContextBar`), açıklamanın altında. */
+  context?: React.ReactNode;
   className?: string;
 }) {
   return (
@@ -34,6 +37,7 @@ export function PageHead({
         {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
       </div>
       {lead ? <p className="m-0 text-label text-muted">{lead}</p> : null}
+      {context}
     </div>
   );
 }

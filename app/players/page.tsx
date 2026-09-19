@@ -1,5 +1,6 @@
 "use client";
 
+import { ContextBar, PICK_CHIPS } from "@/components/ContextBar";
 import { useI18n } from "@/components/I18nProvider";
 import { PageHead } from "@/components/PageHead";
 import { PickList } from "@/components/PickList";
@@ -20,7 +21,11 @@ export default function PlayersPage() {
 
   return (
     <div className="grid gap-8">
-      <PageHead title={t.pages.players.title} lead={t.pages.players.lead} />
+      <PageHead
+        title={t.pages.players.title}
+        lead={t.pages.players.lead}
+        context={<ContextBar chips={PICK_CHIPS} />}
+      />
 
       <PickList
         rows={rows}

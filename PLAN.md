@@ -783,10 +783,32 @@ doğru yere insin.
     masaüstünde 34 → 28 px, site adı 32 → 28 px. İkisi de artık ölçekte ve UCL'nin duyarlı
     olmayan `display` yaklaşımını izliyor.
 
-    **Kalan iki madde** — `ContextBar` ve yapışkan üst çubuk + sayfa geçişleri; bu kalem
-    onlarla birlikte kapanacak. (Tek form dili ve içeriğe geç bağlantısı 19.09'da bitti.)
-  - **`ContextBar`.** 3.1'de belirteçler olmadığı için ertelenmişti, engeli kalktı: sayfadaki
-    sayıları belirleyen ayarlar başlığın altında çip olarak, her sayfada aynı sırada.
+    **Kalan tek madde** — yapışkan üst çubuk + sayfa geçişleri; bu kalem onunla kapanacak.
+    (Tek form dili, içeriğe geç bağlantısı ve `ContextBar` 19.09'da bitti; odak halkası
+    rengi de açık.)
+  - **`ContextBar` ✓** (19.09). 3.1'de belirteçler olmadığı için ertelenmişti. Sayfadaki
+    sayıları belirleyen ayarlar başlığın altında çip olarak, her sayfada aynı sırada:
+    takımlar 2 çip (haftalar, model), oyuncular 4 (+ sıralama, süre etkisi), kadro 4
+    (+ yedek ağırlığı).
+
+    **Çip kümesi kopyalanmadı, TFF'nin durumundan kuruldu.** UCL'de hafta seçimi boolean
+    maske ve ev avantajı ayrı bir çip; burada hafta `gw` + ufuk üçlüsü, ev avantajı ise
+    modelin parametresi. Kadronun sayısını belirleyen yedek ağırlığı eklendi. Hedefler var
+    olan çıpalar: `#gw-heading`, `#model-heading`, `#picks-heading`, `#squad-heading`.
+
+    **Uyarlama ve ölçülen risk.** UCL'de çip hedefi doğrudan denetim kapsayıcısı, TFF'de ise
+    **başlık** (`<h2 id>`). Bu yüzden `reveal()` denetimi başlığın kardeşlerinde arıyor —
+    kaçırsaydı odak hiçbir yere gitmeyecek ama `preventDefault` yine çalışacaktı: tıklanınca
+    hiçbir şey yapmayan, **dört kapıdan da yeşil geçen** ölü bir çip. Ölçüldü: aynı sayfadaki
+    çipte yol değişmiyor ve odak `input#pick-weight-model`'e, ayarın kendi bölümüne gidiyor.
+
+    **Tarayıcıda doğrulanan:** uzak çip gezinip `gw=9` ve `h=3`'ü taşıyor · çip değerleri
+    gerçek durumu yansıtıyor ("Haftalar 9–11", "Sıralama %67 · 33 · 0") · dokunma hedefi
+    44 px · 1280 ve **375 px'te yatay taşma yok**.
+
+    **Çipsiz bırakılan iki sayfa, bilerek:** `/` (ayarların kendisi orada; insanın bulunduğu
+    sayfaya işaret eden çip gürültü) ve `/results` (skor, gol, kart hiçbir ayara bağlı değil;
+    çip koymak "bu ayar bu sayfayı etkiliyor" diye yanlış bilgi verirdi).
   - **Tasarım sistemi parçaları.** Başlık yardımcıları (`heading-section`/`heading-sub`) ✓,
     katman ölçeği (`--z-*`) ✓, kenar solması (`scroll-fade` + `useEdgeFade`) ✓,
     **tek form dili ✓** (19.09), odak halkası rengi — açık kalan tek parça.

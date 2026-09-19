@@ -1,5 +1,6 @@
 "use client";
 
+import { ContextBar, MODEL_CHIPS } from "@/components/ContextBar";
 import { useI18n } from "@/components/I18nProvider";
 import { PageHead } from "@/components/PageHead";
 import { useModelResults, usePlanner, useWeeks } from "@/components/PlannerContext";
@@ -19,7 +20,11 @@ export default function TeamsPage() {
 
   return (
     <div className="grid gap-8">
-      <PageHead title={t.pages.teams.title} lead={t.pages.teams.lead} />
+      <PageHead
+        title={t.pages.teams.title}
+        lead={t.pages.teams.lead}
+        context={<ContextBar chips={MODEL_CHIPS} />}
+      />
 
       <div className="grid gap-6 desk:grid-cols-2 desk:items-start desk:gap-[22px]">
         <TeamPanel

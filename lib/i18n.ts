@@ -178,6 +178,15 @@ const tr = {
     results: "Sonuçlar",
     skip: "İçeriğe geç",
   },
+  ctx: {
+    label: "Bu sayfadaki sayıları belirleyen ayarlar",
+    matchdays: "Haftalar",
+    model: "Model",
+    ranking: "Sıralama",
+    minutes: "Süre etkisi",
+    bench: "Yedek ağırlığı",
+    open: (ayar: string) => `${ayar} ayarını aç`,
+  },
   pages: {
     model: {
       title: "Model ve haftalar",
@@ -719,6 +728,15 @@ const en: Strings = {
     squad: "Squad",
     results: "Results",
     skip: "Skip to content",
+  },
+  ctx: {
+    label: "Settings that drive the numbers on this page",
+    matchdays: "Weeks",
+    model: "Model",
+    ranking: "Ranking",
+    minutes: "Minutes weight",
+    bench: "Bench weight",
+    open: (setting: string) => `Open the ${setting} setting`,
   },
   pages: {
     model: {
