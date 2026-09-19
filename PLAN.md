@@ -883,15 +883,42 @@ doğru yere insin.
 
 ## 7. Faz 4 — TFF'ye özel özellikler
 
-- [ ] **4.0 Menajer kartları modele girsin.** (M)
-  §9'daki karar (18.09) bir iş kalemine bağlanmamıştı; boşluk burada kapanıyor.
-  Beşi de kadro kurucunun hedefinde tek satırlık değişiklikler:
-  Tripleks kaptan çarpanını 2 yerine 3, Dört Dörtlük 4 yapar (kaptan seçimi kart başına
-  değişebilir); Tüm Takım Sahaya yedek ağırlığını 1'e çıkarır; Limitsiz Bütçe bütçe kısıtını
-  kaldırır; Hücum diziliş kısıtını kaldırır ve +5 M bütçe verir.
-  Çıktı: her kart için "bu hafta oynasam ne kazanırdım" farkı, kartsız plana göre.
-  Arayüz kuralı: ilk kullanımdan sonra **ücretli** olduğu her öneride yazılı kalsın;
-  model kart öneriyorsa bu para harcamayı önermek demektir.
+- [x] **4.0 Menajer kartları modele girsin.** (M) — **bitti 19.09.** `lib/cards.ts`, kadro
+  sayfasının "Kadromu iyileştir" görünümünde. Beşi de modellendi (kullanıcı kararı 18.09):
+  her kart, kadro hedefinin bir parametresi — ayrı bir hesap değil. Kazanç, o kartla
+  ulaşılabilecek en iyi hafta eksi kartsız en iyi plan; yani kartın **takas kararını
+  değiştirdiği** durum da içeride (Limitsiz Bütçe'nin tek anlamı zaten bu).
+
+  Ücretli olduğu uyarısı listenin üstünde ve **her zaman görünür** — katlanır kutuya
+  konsaydı öneriyi görüp uyarıyı görmemek mümkün olurdu (proje kuralı).
+
+  Beş kart da gösteriliyor, yalnız kazandıranlar değil: "bu kart bu hafta bir şey
+  kazandırmıyor" da bilgi ve kart ücretli olduğu için asıl işe yarayan bilgi o.
+
+  Ölçülen (19.09, üretim derlemesi): Dört Dörtlük +13,8 · Tüm Takım Sahaya +13,8 ·
+  Tripleks +6,9 · Hücum +0,0 · Limitsiz Bütçe +0,0.
+
+  **"Limitsiz Bütçe +0,0" doğru mu diye ayrıca ölçüldü** — sıfır bir kazanç, sessiz bir
+  hatanın tipik görüntüsü. Tanı: kadronun en zayıf oyuncusu Cemali (xP 0,09, bütçesi 4 M),
+  mevkisindeki en iyi sahipsiz oyuncu Brown 5 M. Tek başına bakınca paraya takılıyor; ama
+  gerçek planda o takas **zaten yapılıyor**, çünkü daha önceki Muriqi takası 3 M serbest
+  bırakıyor. Yani bu hafta bağlayıcı kısıt para değil, oyuncu kalitesi ve kulüp sınırı.
+  İlk yazdığım test bu sırayı yok sayıp adım-sıfırdaki uygunluğa baktığı için yanlış
+  alarm verdi; test yapısal iddialara indirildi (`lib/improve-real.test.ts`), çünkü veri
+  her hafta değişiyor ve bugünkü sayıları gömmek testi takvimle kırılır hâle getirirdi.
+
+  **Yan bulgu — iki görünüm farklı hedef optimize ediyor.** Kurucunun gösterdiği sayı (896,0)
+  benim gösterdiğimle (67,2) aynı birimde değil: kurucu sıralama ağırlıklarıyla harmanlanmış
+  0-100'lük **skoru**, iyileştirme görünümü doğrudan **beklenen puanı** büyütüyor. İkisi
+  farklı kadrolar önerebilir. Kartlar için beklenen puan doğru birim (skor biriminde
+  "kart kaç puan kazandırır" anlamsız olurdu), o yüzden hedef değiştirilmedi; fark arayüzde
+  yazılı hâle getirildi. Ağırlıkların bu görünümde neden etkisiz olduğu ayrı bir tasarım
+  sorusu olarak açık.
+
+  Açık kalan: kaptan çarpanı kartlarında takas planı kartsız planla aynı sayılıyor. Çarpan
+  büyüyünce daha iyi bir kaptan almak için farklı bir takas mantıklı olabilir; o arama
+  yapılmıyor, yani Tripleks ve Dört Dörtlük'ün kazancı **alt sınır**. Hücum'da takaslar
+  diziliş kısıtlı aranıp sonuç kısıtsız değerlendiriliyor. İkisi de arayüzde yazılı.
 
 - [ ] **4.1 Kadro kaydetme (tarayıcıda).** (M)
   Kadroyu bir kez gir, her hafta öneri al; dışa/içe aktarmayla cihaz değiştir.

@@ -171,6 +171,31 @@ const tr = {
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 takım, 34 hafta. Saatler: ${tz}. Fikstür: ${fixtures}.`,
   },
+  cards: {
+    heading: "Menajer kartları",
+    note: "Her kart, kadro hedefinin bir kuralını değiştiriyor. Aşağıdaki sayı, o kartı bu hafta oynasan kartsız en iyi plana göre ne kazandıracağı.",
+    // Proje kuralı: kart öneren her yerde ücretli olduğu yazılı kalır.
+    paid: "Kartlar ilk kullanımdan sonra ücretlidir. Buradaki sayı kazancı söyler, kartı oynamanı önermez.",
+    gainLabel: "Bu hafta",
+    withSwaps: (n: number) => (n === 0 ? "takassız" : n === 1 ? "1 takasla" : `${n} takasla`),
+    none: "Bu hafta hiçbir kart kayda değer bir kazanç vermiyor.",
+    names: {
+      triple: "Tripleks",
+      quad: "Dört Dörtlük",
+      allPlay: "Tüm Takım Sahaya",
+      attack: "Hücum",
+      unlimited: "Limitsiz Bütçe",
+    } as Record<string, string>,
+    descs: {
+      triple: "Kaptan ×2 yerine ×3.",
+      quad: "Kaptan ×4.",
+      allPlay: "Yedekler de tam puan getirir.",
+      attack: "Diziliş kısıtı kalkar, +5 M bütçe.",
+      unlimited: "Bütçe kısıtı kalkar.",
+    } as Record<string, string>,
+    limits:
+      "Kaptan çarpanı kartlarında takas planı kartsız planla aynı sayılıyor; çarpan büyüyünce daha iyi bir kaptan için farklı bir takas mantıklı olabilir, o arama yapılmıyor. Yani o iki kartın kazancı alt sınır. Hücum'da takaslar diziliş kısıtlı aranıp sonuç kısıtsız değerlendiriliyor.",
+  },
   improve: {
     viewLabel: "Görünüm",
     fromScratch: "Sıfırdan kur",
@@ -191,7 +216,7 @@ const tr = {
     missingNote: (n: number) =>
       `${n} oyuncu güncel oyuncu listesinde bulunamadı (ligden ayrılmış olabilir). O oyuncular kadro hesabına girmiyor, yani buradaki beklenen puan olduğundan düşük.`,
     assumptions:
-      "Satış fiyatı bugünkü fiyat sayılıyor (oyunun kâr paylaşımı kuralı modellenmedi). Takaslar sırayla, her adımda en çok kazandıran seçilerek bulunuyor; bu yüzden liste 'mümkün olan en iyi kadro' değil, 'bu takaslar şu kadar kazandırıyor' demek.",
+      "Satış fiyatı bugünkü fiyat sayılıyor (oyunun kâr paylaşımı kuralı modellenmedi). Takaslar sırayla, her adımda en çok kazandıran seçilerek bulunuyor; bu yüzden liste 'mümkün olan en iyi kadro' değil, 'bu takaslar şu kadar kazandırıyor' demek. Bu görünüm doğrudan beklenen puanı büyütür; 'Sıfırdan kur' ise sıralama ağırlıklarınla harmanlanmış skoru büyütür — ikisi farklı kadrolar önerebilir ve sayıları aynı birimde değildir.",
   },
   season: {
     heading: "Sezon günlüğü",
@@ -796,6 +821,30 @@ const en: Strings = {
     tagline: (fixtures: string, tz: string) =>
       `Trendyol Süper Lig, 18 teams, 34 matchweeks. Times: ${tz}. Fixtures: ${fixtures}.`,
   },
+  cards: {
+    heading: "Manager cards",
+    note: "Each card changes one rule of the squad objective. The number below is what playing it this week would add over the best plan without a card.",
+    paid: "Cards cost money after the first use. The number tells you the gain; it is not a recommendation to play the card.",
+    gainLabel: "This week",
+    withSwaps: (n: number) => (n === 0 ? "no swaps" : n === 1 ? "with 1 swap" : `with ${n} swaps`),
+    none: "No card gains anything worth having this week.",
+    names: {
+      triple: "Triple",
+      quad: "Quadruple",
+      allPlay: "All Play",
+      attack: "Attack",
+      unlimited: "Unlimited Budget",
+    } as Record<string, string>,
+    descs: {
+      triple: "Captain counts ×3 instead of ×2.",
+      quad: "Captain counts ×4.",
+      allPlay: "Bench players score in full.",
+      attack: "Formation rules drop, plus 5M budget.",
+      unlimited: "The budget limit drops.",
+    } as Record<string, string>,
+    limits:
+      "For the captain-multiplier cards the transfer plan is taken to be the same as without a card; a bigger multiplier can justify buying a better captain, and that search is not run, so those two gains are a lower bound. For Attack, swaps are searched under formation rules and the result is then valued without them.",
+  },
   improve: {
     viewLabel: "View",
     fromScratch: "Build from scratch",
@@ -815,7 +864,7 @@ const en: Strings = {
     missingNote: (n: number) =>
       `${n} player(s) were not found in the current player list (they may have left the league). They are left out of the calculation, so the expected points shown here are lower than the real figure.`,
     assumptions:
-      "Selling price is taken as today's price; the game's profit-sharing rule is not modelled. Swaps are found one at a time, each step taking the biggest gain, so the list means \"these swaps gain this much\", not \"this is the best possible squad\".",
+      "Selling price is taken as today's price; the game's profit-sharing rule is not modelled. Swaps are found one at a time, each step taking the biggest gain, so the list means \"these swaps gain this much\", not \"this is the best possible squad\". This view maximises expected points directly, while \"Build from scratch\" maximises the score blended from your ranking weights — the two can suggest different squads and their numbers are not in the same unit.",
   },
   season: {
     heading: "My season",

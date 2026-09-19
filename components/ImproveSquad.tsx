@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { useI18n } from "@/components/I18nProvider";
 import { PlayerLink } from "@/components/EntityLink";
+import { cardGains } from "@/lib/cards";
 import type { Player } from "@/lib/fantasy";
 import { bankOf, currentSquad, improveSquad } from "@/lib/improve";
 import type { PickRow } from "@/lib/picks";
@@ -93,9 +94,84 @@ export function ImproveSquad({
         )}
       </section>
 
+      <ManagerCards squad={players} rows={rows} benchWeight={benchWeight} />
+
       {/* Yöntemin sınırı sayfada kalsın: açgözlü sıra ve satış fiyatı varsayımı. */}
       <p className="m-0 text-caption text-muted">{s.assumptions}</p>
     </div>
+  );
+}
+
+/**
+ * Menajer kartlarının bu haftaki kazancı.
+ *
+ * Kullanıcı kararı (18.09.2026) beşinin de modellenmesi yönündeydi. Kartlar
+ * ücretli olduğu için uyarı listenin üstünde ve her zaman görünür — katlanır
+ * bir kutuya konulsaydı öneriyi görüp uyarıyı görmemek mümkün olurdu.
+ */
+function ManagerCards({
+  squad,
+  rows,
+  benchWeight,
+}: {
+  squad: Player[];
+  rows: PickRow[];
+  benchWeight: number;
+}) {
+  const { t, f } = useI18n();
+  const c = t.cards;
+  const gains = useMemo(
+    () => cardGains(squad, rows, { bank: bankOf(), benchWeight }),
+    [squad, rows, benchWeight],
+  );
+  // Beşi de gösteriliyor, kazananlar değil: "bu kart bu hafta bir şey
+  // kazandırmıyor" da bilgi ve kartlar ücretli olduğu için asıl işe yarayan
+  // bilgi o. Listeden düşen kart, hesaplanmamış kartla karışırdı.
+  const worthless = gains.every((g) => g.gain < 0.05);
+
+  return (
+    <section aria-labelledby="manager-cards">
+      <h3 id="manager-cards" className="heading-sub mb-1">
+        {c.heading}
+      </h3>
+      <p className="m-0 mb-2 text-caption text-muted">{c.note}</p>
+      <p className="m-0 mb-2.5 rounded-md border border-line bg-surface p-2.5 text-caption text-ink">
+        {c.paid}
+      </p>
+
+      {worthless ? (
+        <p className="m-0 mb-2 text-body-sm text-muted">{c.none}</p>
+      ) : null}
+
+      {(
+        <ul className="m-0 grid list-none gap-1.5 p-0">
+          {gains.map((g) => (
+            <li
+              key={g.key}
+              className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 rounded-md border border-line bg-surface px-3 py-2"
+            >
+              <span className="min-w-0">
+                <b className="text-body-sm text-ink">{c.names[g.key]}</b>{" "}
+                <span className="text-caption text-muted">{c.descs[g.key]}</span>
+              </span>
+              <span className="shrink-0 text-caption text-muted">
+                {c.gainLabel}{" "}
+                <b
+                  className={`text-body font-semibold tabular-nums ${
+                    g.gain >= 0.05 ? "text-easier" : "text-muted"
+                  }`}
+                >
+                  +{f.n1(g.gain)}
+                </b>{" "}
+                {c.withSwaps(g.swaps)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <p className="m-0 mt-2 text-caption text-muted">{c.limits}</p>
+    </section>
   );
 }
 
