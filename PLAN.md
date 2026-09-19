@@ -470,10 +470,45 @@ bağımsız, bu yüzden önce bunlar.
   **Günlük çalıştırma şart:** `node scripts/log-snapshot.mjs`. Aynı gün birden çok kez
   çalışması zararsız (son gün yeniden yazılır). 5.2'de otomatikleşecek.
 
-- [ ] **2.3 Kaynak tazeliği.** (S)
-  Her veri grubunun son güncellenme tarihi ve beklenen aralığı; dipnotta "Elo 6 gündür
-  eski" diyebilmek. Bugün kullanıcı bunu göremiyor.
-  UCL karşılığı: `lib/freshness.ts`, `lib/source-meta.ts`, `components/DataSources.tsx`.
+- [x] **2.3 Kaynak tazeliği.** (S) — 19.09 tamamlandı.
+  Dipnotta tek satırlık kaynak cümlesi vardı ve içindeki tek tarih bütün veriler güncelmiş
+  gibi okunuyordu. Artık **grup başına tarihli tablo** (`components/DataSources.tsx`), kapalı
+  bir açılır bölümde, başlığında kaç grubun eski olduğu yazılı.
+
+  **Tasarımı bir ölçüm belirledi.** Dipnot kabukta, yani **her rotada** çiziliyor. Meta
+  alanlarını `lib/fantasy.ts`, `lib/lineups.ts`, `lib/history.ts`, `lib/results.ts` üzerinden
+  okusaydım o dosyaların tamamı beş sayfaya birden girerdi: lineups 1008 KB, results 301 KB,
+  fantasy-players 226 KB, player-history 67 KB — ~1,6 MB. Onun yerine türetilmiş bir özet
+  var: `scripts/build-source-meta.mjs` → `data/source-meta.json`, **923 bayt**. `--check`
+  kipi ve `data/source-meta.test.ts` sapmayı yakalıyor; özet bayat kalırsa dipnot kullanıcıya
+  "veri taze" diye yalan söylerdi.
+
+  **Dokuz grup:** fikstür, Opta, Transfermarkt, geçen sezon sırası, oyuncu listesi, fiyat
+  günlüğü, son maç kadroları, maç içi, tahmini 11. **Elo ve bahis oranı bilerek yok** —
+  2.4 engelli (clubelo 502), 2.5 yapılmadı; olmayan kaynak için satır açmak kalıcı bir
+  "hiç çekilmedi" uyarısı üretirdi.
+
+  **Veride iki tarih biçimi var** ve ikisi de karşılandı: cümle içine gömülü "18.09.2026"
+  (fikstür, Opta, Transfermarkt) ve ISO "2026-09-18" (özet dosya). `splitSource` virgülü olan
+  ama tarihi olmayan etiketi **bölmüyor** — geçen sezon kaynağı ("Wikipedia, 2025–26 Süper Lig
+  ve TFF 1. Lig nihai tabloları") yarım görünürdü; testle sabitlendi.
+
+  **Tazelik bakanın saatine bağlı**, sayfa ise statik üretiliyor. `useNow` taşındı: sunucuda ve
+  hydration'da `null` dönüyor, yani üretilen HTML ile tarayıcının çizdiği metin ayrışmıyor.
+
+  **Tarayıcıda bulunan ve düzeltilen kusur.** İlk çizimde tarih sütunu **iki biçimi yan yana**
+  gösteriyordu ("18.09.2026" ile "Cum 18 Eyl"). Cümleden ayıklanan tarih ham geçiyordu; artık
+  hepsi ISO'ya çevrilip tek biçimde yazılıyor. Düzeltme tarayıcıda yeniden doğrulandı: dokuz
+  satırın sekizi "Cum 18 Eyl", tarihi olmayan satır "elle".
+
+  **Uyarı yolu bugünkü veriyle hiç çizilmiyor** ve bunu gizlemiyorum: her şey 18.09'da çekildi,
+  yaşlar 1 gün, eşikler 1 + 1 gün pay — yani hiçbir grup bayat değil. "Görülmedi" ile "çalışıyor"
+  aynı şey olmadığı için durumlar **17 birim testiyle** karşılandı (`lib/freshness.test.ts`):
+  bayat, hiç çekilmedi, sabit, **besleme geride** ve **eksik**. Toplam test 154 → 171.
+
+  `playersFreshness`'in "besleme geride" durumu 18.09'da gerçekten yaşananı kodluyor: dosya taze
+  ama oyunun beslemesi eski haftada kalmış. Aynı donmuş besleme 1.3'teki dakika ayrışmasında ve
+  2.1'deki skorsuz maçta da çıkmıştı.
 
 - [ ] **2.5 Piyasa beklenen golü (bahis oranları).** (M)
   The Odds API'den Süper Lig maç sonucu ve toplam gol oranları; şirket başına marj ayıklanıp

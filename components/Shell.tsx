@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { I18nProvider, useI18n } from "@/components/I18nProvider";
 import { LangSwitch } from "@/components/LangSwitch";
 import { Legend } from "@/components/Legend";
+import { DataSources, StaleSourcesNote } from "@/components/DataSources";
 import { BottomNav, Nav } from "@/components/Nav";
 import { PlannerProvider } from "@/components/PlannerContext";
 import { ThemeSwitch } from "@/components/ThemeSwitch";
@@ -134,12 +135,19 @@ function Body({
         <p>
           <b className="text-ink">{t.footer.rules}</b> {t.footer.rulesText}
         </p>
-        <p>
-          <b className="text-ink">{t.footer.sources}</b> {t.footer.sourcesText(meta.source_fixtures)}
-          {meta.opta_source ? `; ${meta.opta_source}` : ""}
-          {meta.value_source ? `; ${meta.value_source}` : ""}
-          {meta.last_source ? `; ${meta.last_source}` : ""}.
-        </p>
+        {/* Kaynaklar tek satırlık cümle değil, grup başına tarihli tablo: her
+            dosya ayrı çekiliyor ve biri bayat kalabiliyor. Kapalı duruyor,
+            başlıkta kaç grubun eski olduğu yazılı. */}
+        <details className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-2 font-semibold text-ink [&::-webkit-details-marker]:hidden">
+            <span className="text-accent transition-transform group-open:rotate-90">▸</span>
+            {t.sourcesTable.heading}
+            <StaleSourcesNote />
+          </summary>
+          <div className="mt-2">
+            <DataSources />
+          </div>
+        </details>
         <p className="mt-1.5 border-t border-line pt-3 text-xs">{t.footer.disclaimer}</p>
       </footer>
 

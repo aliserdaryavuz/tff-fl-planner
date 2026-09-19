@@ -1,0 +1,35 @@
+{
+  "note": "Türetilmiş dosya — elle düzenlenmez. Kaynağı data/ altındaki veri dosyalarının meta blokları; üreten betik scripts/build-source-meta.mjs.",
+  "sources": {
+    "players": {
+      "source": "TFF Fantezi Lig resmî API (tfffantezilig.com), 18.09.2026",
+      "fetched": "2026-09-18",
+      "gameweek": 6,
+      "players": 528
+    },
+    "history": {
+      "source": "TFF Fantezi Lig resmî API (tfffantezilig.com)",
+      "lastDay": "2026-09-18",
+      "days": 1,
+      "players": 528
+    },
+    "lineups": {
+      "source": "FotMob (fotmob.com)",
+      "fetched": "2026-09-18",
+      "teams": 18,
+      "matchesPerTeam": 9
+    },
+    "results": {
+      "source": "FotMob (fotmob.com)",
+      "fetched": "2026-09-18",
+      "matches": 46,
+      "playedFixtures": 45
+    },
+    "predicted": {
+      "source": "FotMob (fotmob.com)",
+      "fetched": "2026-09-18",
+      "matchday": 6,
+      "previews": 9
+    }
+  }
+}
