@@ -142,6 +142,14 @@ const out = {
   matches,
   unlinked,
 };
+// Boş sonuçla iyi veriyi ezme: bkz. fetch-predicted.mjs'teki aynı koruma.
+// Oyun bitmiş maç biliyorken bizim hiç maç bulamamamız çekimin düştüğü
+// anlamına gelir; sezon başında ikisi de sıfırsa yazmak zararsız.
+if (played > 0 && !matches.length) {
+  console.error(`oyun ${played} oynanmış maç bildiriyor ama hiçbiri çekilemedi; dosya yazılmadı`);
+  process.exit(1);
+}
+
 const target = resolve(root, "data/results.json");
 writeFileSync(target, JSON.stringify(out, null, 1) + "\n");
 log(`yazıldı: ${target} (${matches.length}/${played} maç, ${unlinked.length} eşlenemedi)`);

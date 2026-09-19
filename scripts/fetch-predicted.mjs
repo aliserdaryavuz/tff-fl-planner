@@ -112,6 +112,15 @@ const out = {
   },
   teams,
 };
+// Hiçbir takım bulunamadıysa YAZMA. Çekim boş dönebilir (Chrome açılmadı,
+// sayfa değişti, ağ engellendi) ve o durumda iyi veriyi boş dosyayla ezmek
+// en kötü sonuç: hata sessizce veri kaybına dönüşür. 19.09'da zamanlanmış
+// işte tam bu oldu; testler tuttu ama dosya yine de yazılmıştı.
+if (!Object.keys(teams).length) {
+  console.error("hiçbir takım için tahmini 11 bulunamadı; dosya yazılmadı");
+  process.exit(1);
+}
+
 const target = resolve(root, "data/predicted-xi.json");
 writeFileSync(target, JSON.stringify(out, null, 1) + "\n");
 log(`yazıldı: ${target} (${Object.keys(teams).length} takım)`);

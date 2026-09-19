@@ -233,6 +233,12 @@ const out = {
   players,
   unmatched,
 };
+// Boş sonuçla iyi veriyi ezme: bkz. fetch-predicted.mjs'teki aynı koruma.
+if (!Object.keys(players).length) {
+  console.error("hiçbir oyuncu toplanamadı; dosya yazılmadı");
+  process.exit(1);
+}
+
 const target = resolve(root, "data/lineups.json");
 writeFileSync(target, JSON.stringify(out, null, 1) + "\n");
 log(`yazıldı: ${target} (${Object.keys(players).length} oyuncu)`);

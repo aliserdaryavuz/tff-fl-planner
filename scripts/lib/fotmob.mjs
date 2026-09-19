@@ -41,14 +41,39 @@ export const FOTMOB = {
   Rizespor: [2166, "rizespor"],
 };
 
+/**
+ * Ek Chrome bayrakları, boşlukla ayrılmış. CI'da `--no-sandbox` gerekiyor:
+ * runner kullanıcısının sandbox için gereken namespace'leri yok ve bayrak
+ * olmadan Chrome boş DOM döndürüyor — 19.09'da ilk zamanlanmış koşu tam
+ * bundan düştü. Yerelde boş, yani masaüstünde sandbox açık kalıyor.
+ */
+const EXTRA_FLAGS = (process.env.CHROME_FLAGS ?? "").split(/\s+/).filter(Boolean);
+
 function fetchNextData(url) {
   const res = spawnSync(
     CHROME,
-    ["--headless", "--disable-gpu", "--dump-dom", "--virtual-time-budget=12000", url],
+    [
+      // `--headless=new`: eski headless yeni Chrome sürümlerinde kaldırıldı.
+      "--headless=new",
+      "--disable-gpu",
+      "--dump-dom",
+      "--virtual-time-budget=12000",
+      ...EXTRA_FLAGS,
+      url,
+    ],
     { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
   );
   const m = res.stdout?.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-  if (!m) return null;
+  if (!m) {
+    // Sessiz kalmasın: veri yoksa bunun sebebi sayfanın boş olması da olabilir,
+    // Chrome'un hiç çalışmaması da. İkisi çok farklı ve ayırt edilebilmeli.
+    if (res.status !== 0 || !res.stdout) {
+      process.stderr.write(
+        `  chrome başarısız (çıkış ${res.status}): ${String(res.stderr ?? "").slice(0, 200)}\n`,
+      );
+    }
+    return null;
+  }
   try {
     return JSON.parse(m[1]);
   } catch {

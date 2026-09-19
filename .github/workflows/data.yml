@@ -64,6 +64,11 @@ jobs:
         env:
           CHROME: ${{ steps.chrome.outputs.chrome-path }}
           TMPDIR: /home/runner/fotmob-cache
+          # Runner kullanıcısında sandbox için gereken namespace'ler yok;
+          # bayraksız Chrome boş DOM döndürüyor ve betikler "0 maç" bulup
+          # hatasız bitiyordu (19.09, ilk zamanlanmış koşu). Yerelde bu
+          # değişken boş, yani masaüstünde sandbox açık kalıyor.
+          CHROME_FLAGS: --no-sandbox
         run: |
           mkdir -p "$TMPDIR"
           node scripts/fetch-predicted.mjs
